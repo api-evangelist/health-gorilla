@@ -1,0 +1,103 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Health Gorilla
+providerId: health-gorilla
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Health
+- Interoperability
+- FHIR
+- Clinical Data
+- Lab Ordering
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Health Gorilla spend. Health Gorilla is sales-led and does
+  not publish public per-unit pricing, so cost drivers are modeled
+  qualitatively: record retrievals across the national exchange network,
+  diagnostic (lab/radiology) orders and results, clinical document exchange,
+  and event-driven subscription notifications. Actual rates are contract-based
+  and not reconciled in this artifact.
+notes: >-
+  Per-unit rates are contract-specific; obtain a usage/billing breakdown from
+  Health Gorilla and reconcile cost drivers (retrievals, orders, documents,
+  notifications) against the agreement during reconciliation.
+sources:
+- https://www.healthgorilla.com/
+- https://www.healthgorilla.com/home/contact
+- https://developer.healthgorilla.com
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Health Gorilla
+serviceCategory: Healthcare Interoperability
+billingModel:
+  pricingCategory: Contract-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Health Gorilla API
+  ServiceCategory: Healthcare Interoperability
+  ProviderName: Health Gorilla
+  PublisherName: Health Gorilla
+  InvoiceIssuerName: Health Gorilla
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Contract-Based
+meters:
+- name: record_retrievals
+  description: Person-authorized record retrievals across the national exchange network.
+  unit: retrievals
+  aggregation: sum
+  dimensions:
+  - client
+  - network
+- name: diagnostic_orders
+  description: Laboratory and radiology orders submitted to diagnostic partners.
+  unit: orders
+  aggregation: sum
+  dimensions:
+  - client
+  - partner
+- name: diagnostic_results
+  description: DiagnosticReport results retrieved from diagnostic partners.
+  unit: reports
+  aggregation: sum
+  dimensions:
+  - client
+  - partner
+- name: documents_exchanged
+  description: Clinical documents (DocumentReference / Binary) retrieved or exchanged.
+  unit: documents
+  aggregation: sum
+  dimensions:
+  - client
+- name: subscription_notifications
+  description: Event-driven notifications delivered on qualifying patient activity.
+  unit: notifications
+  aggregation: sum
+  dimensions:
+  - client
+principles:
+- name: Visibility
+  description: Request usage/billing exports from Health Gorilla; track retrievals, orders, documents, and notifications per client.
+- name: Allocation
+  description: Tag API client credentials per workload/team and map to internal cost centers.
+- name: Optimization
+  description: Scope queries to needed resource types and search parameters; avoid unnecessary $everything retrievals; batch diagnostic orders where possible.
+- name: Accountability
+  description: Assign owners per integration; review contract spend against budget on each billing cycle.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

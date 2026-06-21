@@ -1,0 +1,77 @@
+aid: health-gorilla
+name: Health Gorilla
+review:
+  question: Does Health Gorilla expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Health Gorilla's API surface is an HL7 FHIR R4 REST API over HTTPS. No
+    WebSocket (ws:// / wss://) endpoint is documented. Event-driven behavior
+    is delivered via FHIR Subscription / notification services and via
+    asynchronous record retrieval (202 Accepted with status polling), not via
+    a streaming WebSocket transport. No AsyncAPI document was authored because
+    no SSE or WebSocket streaming surface is documented.
+findings:
+  summary: |
+    Health Gorilla does not publish a documented public WebSocket API. The
+    platform exposes a FHIR R4 REST (HTTPS) API at
+    https://api.healthgorilla.com/fhir/R4 (sandbox at
+    https://sandbox.healthgorilla.com/fhir/R4), authenticated with OAuth 2.0
+    bearer tokens. Long-running, person-authorized federated record
+    retrievals are handled asynchronously - an initiate request returns 202
+    Accepted and the client polls for completed, partial, or failed status -
+    rather than via a streaming WebSocket connection. Event-driven
+    notifications are delivered through subscription services on qualifying
+    patient activity, not over WebSocket.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.healthgorilla.com/fhir/R4
+      documented: true
+    - protocol: Async Polling
+      scheme: https
+      note: Federated retrieval returns 202 Accepted; client polls a status endpoint. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in the Health Gorilla developer reference as of the review date.
+  endpointsConfirmedRest:
+    - GET  https://api.healthgorilla.com/fhir/R4/metadata
+    - GET  https://api.healthgorilla.com/fhir/R4/Patient
+    - GET  https://api.healthgorilla.com/fhir/R4/Patient/{id}
+    - GET  https://api.healthgorilla.com/fhir/R4/Patient/{id}/$everything
+    - POST https://api.healthgorilla.com/fhir/R4/RequestGroup
+    - POST https://api.healthgorilla.com/fhir/R4/ServiceRequest
+    - GET  https://api.healthgorilla.com/fhir/R4/DiagnosticReport
+    - GET  https://api.healthgorilla.com/fhir/R4/Observation
+    - GET  https://api.healthgorilla.com/fhir/R4/DocumentReference
+    - GET  https://api.healthgorilla.com/fhir/R4/Binary/{id}
+    - GET  https://api.healthgorilla.com/fhir/R4/Coverage
+    - GET  https://api.healthgorilla.com/fhir/R4/Practitioner
+sources:
+  - url: https://developer.healthgorilla.com/reference/r4-overview
+    type: Documentation
+    note: Lists FHIR R4 base URLs and OAuth 2.0 bearer auth; all interactions are HTTPS REST.
+  - url: https://developer.healthgorilla.com/reference/fhir-api-reference
+    type: APIReference
+    note: FHIR R4 resource paths follow https://api.healthgorilla.com/fhir/R4/{ResourceType}/{id}; no WebSocket.
+  - url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+    type: Documentation
+    note: Federated retrieval is asynchronous (202 Accepted, status polling); not WebSocket streaming.
+  - url: https://developer.healthgorilla.com/docs/federated-fhir
+    type: Documentation
+    note: Query model for person-authorized federated FHIR retrieval over HTTPS REST.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists and no SSE streaming surface is
+    documented, so no AsyncAPI document was authored. The apis.yml catalogs the
+    documented FHIR R4 REST products (Patients, Record Query/Retrieval, Lab
+    Ordering, Diagnostic Reports, Documents, Eligibility).
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,262 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Health Gorilla FHIR R4 API",
+    "version": "R4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Capability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the FHIR server CapabilityStatement.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/metadata"
+          },
+          "docs": "Returns the FHIR R4 CapabilityStatement describing supported resources, search parameters, operations, and authentication."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Patient",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Patient resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient"
+          },
+          "docs": "Search Patient resources by identifier, name, birthdate, or gender."
+        },
+        {
+          "info": {
+            "name": "Read a Patient resource by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the Patient."
+              }
+            ]
+          },
+          "docs": "Read a Patient resource by id."
+        },
+        {
+          "info": {
+            "name": "Create a Patient resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Patient resource."
+        },
+        {
+          "info": {
+            "name": "Retrieve all records for a patient ($everything).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient/:id/$everything",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the Patient."
+              }
+            ]
+          },
+          "docs": "FHIR $everything operation returning a Bundle of all resources in the patient compartment, including federated records."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Lab Ordering",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit a diagnostic order (RequestGroup).",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.healthgorilla.com/fhir/R4/RequestGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a RequestGroup parent order nesting one or more ServiceRequest tests for submission to a diagnostic partner."
+        },
+        {
+          "info": {
+            "name": "Read a RequestGroup order by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/RequestGroup/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the RequestGroup."
+              }
+            ]
+          },
+          "docs": "Read a RequestGroup diagnostic order by id."
+        },
+        {
+          "info": {
+            "name": "Create a ServiceRequest resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.healthgorilla.com/fhir/R4/ServiceRequest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ServiceRequest resource representing a single ordered test."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Diagnostic Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search DiagnosticReport resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/DiagnosticReport"
+          },
+          "docs": "Search DiagnosticReport resources by patient, category, or date."
+        },
+        {
+          "info": {
+            "name": "Search Observation resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Observation"
+          },
+          "docs": "Search Observation resources (individual result values) by patient and code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search DocumentReference resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/DocumentReference"
+          },
+          "docs": "Search DocumentReference resources by patient and type."
+        },
+        {
+          "info": {
+            "name": "Retrieve raw document content (Binary).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Binary/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the Binary resource."
+              }
+            ]
+          },
+          "docs": "Retrieve raw document content (CCDA, PDF, or other format) as a Binary resource."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Eligibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Coverage resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Coverage"
+          },
+          "docs": "Search Coverage resources (patient insurance coverage) by patient."
+        },
+        {
+          "info": {
+            "name": "Search Practitioner resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Practitioner"
+          },
+          "docs": "Search Practitioner resources by identifier or name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

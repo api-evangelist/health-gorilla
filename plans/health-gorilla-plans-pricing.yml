@@ -1,0 +1,106 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Health Gorilla
+providerId: health-gorilla
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Health
+- Interoperability
+- FHIR
+- Clinical Data
+- Lab Ordering
+- Plans
+description: >-
+  Health Gorilla does not publish public, self-service pricing for its
+  interoperability network and FHIR API suite. Access is sales-led: pricing
+  for record retrieval, diagnostic (lab/radiology) ordering, document exchange,
+  and subscription/notification services is quoted per contract based on use
+  case, volume, and required network access (including CalHHS DxF and TEFCA /
+  QHIN participation). An HG Accelerator program offers qualifying early-stage
+  startups free or discounted access to health-data APIs. Specific dollar
+  amounts are not documented and are not reconciled in this artifact.
+notes: >-
+  Pricing is contract-based and obtained by contacting Health Gorilla sales.
+  Verify program eligibility (e.g. HG Accelerator) and current rates during
+  reconciliation.
+sources:
+- https://www.healthgorilla.com/
+- https://www.healthgorilla.com/home/contact
+- https://developer.healthgorilla.com
+- https://www.prnewswire.com/news-releases/health-gorilla-launches-hg-accelerator-program-offering-free-access-to-health-data-apis-for-early-stage-startups-301793662.html
+plans:
+- id: health-gorilla-accelerator
+  name: HG Accelerator
+  type: free
+  description: >-
+    Free or discounted access to Health Gorilla health-data APIs for
+    qualifying early-stage startups. Eligibility and terms are determined by
+    Health Gorilla.
+  entries:
+  - label: Accelerator Access
+    name: accelerator
+    type: free
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: usa
+    unit: 1
+    price: free for qualifying startups
+    userMultiplied: false
+  elements:
+  - name: Patients (FHIR)
+  - name: Record Query/Retrieval
+  - name: Diagnostic Reports
+  - name: Documents
+- id: health-gorilla-platform
+  name: Platform / Enterprise
+  type: enterprise
+  description: >-
+    Contract-based access to the Health Gorilla interoperability network and
+    FHIR API suite. Pricing is quoted per use case, volume, and required
+    network access. Contact Health Gorilla sales.
+  entries:
+  - label: Network & API Agreement
+    name: platform
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: usa
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Patients (FHIR)
+  - name: Record Query/Retrieval
+  - name: Lab Ordering
+  - name: Diagnostic Reports
+  - name: Documents
+  - name: Eligibility
+- id: health-gorilla-diagnostics
+  name: Diagnostic Ordering
+  type: usage
+  description: >-
+    Laboratory and radiology ordering and results retrieval across
+    participating diagnostic partners. Per-order / per-result pricing is
+    contract-based and not publicly documented.
+  entries:
+  - label: Diagnostic Orders
+    name: diagnostic_orders
+    type: usage
+    metric: orders
+    limit: -1
+    timeFrame: month
+    geo: usa
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Lab Ordering
+  - name: Diagnostic Reports
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

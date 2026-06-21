@@ -1,0 +1,299 @@
+{
+  "info": {
+    "name": "Health Gorilla FHIR R4 API",
+    "description": "HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. OAuth 2.0 bearer authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.healthgorilla.com/fhir/R4"
+    }
+  ],
+  "item": [
+    {
+      "name": "Capability",
+      "item": [
+        {
+          "name": "Retrieve the FHIR server CapabilityStatement.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/metadata",
+              "host": ["{{baseUrl}}"],
+              "path": ["metadata"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patient",
+      "item": [
+        {
+          "name": "Search Patient resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Patient?name=&birthdate=",
+              "host": ["{{baseUrl}}"],
+              "path": ["Patient"],
+              "query": [
+                { "key": "name", "value": "" },
+                { "key": "birthdate", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read a Patient resource by id.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Patient/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["Patient", ":id"],
+              "variable": [
+                { "key": "id", "value": "", "description": "The logical id of the Patient." }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create a Patient resource.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/fhir+json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/Patient",
+              "host": ["{{baseUrl}}"],
+              "path": ["Patient"]
+            }
+          }
+        },
+        {
+          "name": "Retrieve all records for a patient ($everything).",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Patient/:id/$everything",
+              "host": ["{{baseUrl}}"],
+              "path": ["Patient", ":id", "$everything"],
+              "variable": [
+                { "key": "id", "value": "", "description": "The logical id of the Patient." }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lab Ordering",
+      "item": [
+        {
+          "name": "Submit a diagnostic order (RequestGroup).",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/fhir+json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"RequestGroup\",\n  \"status\": \"active\",\n  \"intent\": \"order\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/RequestGroup",
+              "host": ["{{baseUrl}}"],
+              "path": ["RequestGroup"]
+            }
+          }
+        },
+        {
+          "name": "Read a RequestGroup order by id.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/RequestGroup/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["RequestGroup", ":id"],
+              "variable": [
+                { "key": "id", "value": "", "description": "The logical id of the RequestGroup." }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create a ServiceRequest resource.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/fhir+json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"ServiceRequest\",\n  \"status\": \"active\",\n  \"intent\": \"order\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ServiceRequest",
+              "host": ["{{baseUrl}}"],
+              "path": ["ServiceRequest"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Diagnostic Reports",
+      "item": [
+        {
+          "name": "Search DiagnosticReport resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/DiagnosticReport?patient=",
+              "host": ["{{baseUrl}}"],
+              "path": ["DiagnosticReport"],
+              "query": [
+                { "key": "patient", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Observation resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Observation?patient=&code=",
+              "host": ["{{baseUrl}}"],
+              "path": ["Observation"],
+              "query": [
+                { "key": "patient", "value": "" },
+                { "key": "code", "value": "" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        {
+          "name": "Search DocumentReference resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/DocumentReference?patient=&type=",
+              "host": ["{{baseUrl}}"],
+              "path": ["DocumentReference"],
+              "query": [
+                { "key": "patient", "value": "" },
+                { "key": "type", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Retrieve raw document content (Binary).",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Binary/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["Binary", ":id"],
+              "variable": [
+                { "key": "id", "value": "", "description": "The logical id of the Binary resource." }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eligibility",
+      "item": [
+        {
+          "name": "Search Coverage resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Coverage?patient=",
+              "host": ["{{baseUrl}}"],
+              "path": ["Coverage"],
+              "query": [
+                { "key": "patient", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Practitioner resources.",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/fhir+json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/Practitioner?name=",
+              "host": ["{{baseUrl}}"],
+              "path": ["Practitioner"],
+              "query": [
+                { "key": "name", "value": "" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

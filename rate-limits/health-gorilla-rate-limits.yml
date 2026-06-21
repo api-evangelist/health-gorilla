@@ -1,0 +1,63 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Health Gorilla
+providerId: health-gorilla
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Health
+- Interoperability
+- FHIR
+- Clinical Data
+- Lab Ordering
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Health Gorilla applies per-client rate limits to its FHIR R4 API. As a
+  FHIR server, search responses are paginated (via _count and Bundle next
+  links) and large federated record retrievals are returned asynchronously
+  (202 Accepted with status polling) rather than in a single response.
+  Specific request-per-second / per-minute limits are not publicly documented
+  and are governed by each client's onboarding agreement; values are not
+  reconciled in this artifact.
+notes: >-
+  Confirm per-client throttling thresholds, pagination defaults, and async
+  retrieval polling intervals with Health Gorilla during onboarding and
+  reconciliation.
+sources:
+- https://developer.healthgorilla.com
+- https://developer.healthgorilla.com/reference/r4-overview
+- https://developer.healthgorilla.com/docs/api-endpoints-overview
+responseCodes:
+  throttled: 429
+limits:
+- name: API Requests
+  scope: client
+  metric: requests
+  limit: see provider documentation
+  notes: Per-client request throttling governed by the onboarding agreement.
+- name: Search Page Size
+  scope: request
+  metric: results
+  limit: see provider documentation
+  notes: Controlled by the FHIR _count parameter; paginate via Bundle next links.
+- name: Federated Retrieval
+  scope: client
+  metric: jobs
+  limit: asynchronous
+  notes: >-
+    Large person-authorized retrievals return 202 Accepted and are polled for
+    completed / partial / failed status rather than rate-limited inline.
+policies:
+- name: Asynchronous Retrieval
+  description: >-
+    Long-running federated queries are processed asynchronously; clients poll
+    a status endpoint instead of holding a single synchronous request open.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
