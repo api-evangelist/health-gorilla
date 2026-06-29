@@ -1,0 +1,68 @@
+arazzo: 1.0.1
+info:
+  title: Health Gorilla Patient Everything
+  summary: Locate a patient, read the Patient resource, then pull the complete US Core record with the Patient $everything operation.
+  description: >-
+    A patient-record export flow against the Health Gorilla FHIR R4 clinical and
+    lab network API. The patient is located by demographics, the Patient resource
+    is read by id, and the Patient $everything operation returns the full US Core
+    Bundle of clinical data for that patient. This mirrors the US Core
+    patient-compartment retrieval pattern over the /fhir/R4 server base. Every
+    step inlines its request so the flow is self-contained.
+  version: 1.0.0
+sourceDescriptions:
+- name: healthGorillaFhir
+  url: ../openapi/health-gorilla-openapi.yml
+  type: openapi
+workflows:
+- workflowId: patient-everything
+  summary: Retrieve the complete US Core record for a matched patient via Patient $everything.
+  description: >-
+    Finds the patient by date of birth, reads the Patient resource, and invokes
+    the Patient $everything operation to return the full clinical Bundle.
+  inputs:
+    type: object
+    required:
+    - birthdate
+    properties:
+      birthdate:
+        type: string
+        description: Patient date of birth (YYYY-MM-DD) to locate the record subject.
+  steps:
+  - stepId: findPatient
+    description: Locate the patient by date of birth.
+    operationId: searchPatients
+    parameters:
+    - name: birthdate
+      in: query
+      value: $inputs.birthdate
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      patientId: $response.body#/entry/0/resource/id
+  - stepId: readPatient
+    description: Read the matched Patient resource by id.
+    operationId: readPatient
+    parameters:
+    - name: id
+      in: path
+      value: $steps.findPatient.outputs.patientId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      patient: $response.body
+  - stepId: everything
+    description: Invoke the Patient $everything operation to return the complete US Core Bundle.
+    operationId: patientEverything
+    parameters:
+    - name: id
+      in: path
+      value: $steps.findPatient.outputs.patientId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      bundle: $response.body
+  outputs:
+    patientId: $steps.findPatient.outputs.patientId
+    patient: $steps.readPatient.outputs.patient
+    bundle: $steps.everything.outputs.bundle

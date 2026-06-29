@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: Health Gorilla FHIR Lab Order
+  summary: Confirm server capabilities, locate a patient, then place a laboratory order as a ServiceRequest grouped inside a RequestGroup.
+  description: >-
+    A FHIR R4 laboratory ordering flow against the Health Gorilla clinical and
+    lab network API. The CapabilityStatement is fetched first to confirm
+    supported resources, the patient is located by demographics, a ServiceRequest
+    is created to describe the lab order, and a RequestGroup is submitted to bind
+    the order before it is read back for confirmation. This mirrors the US Core
+    ServiceRequest and order-placement pattern over the /fhir/R4 server base.
+    Every step inlines its request so the flow is self-contained.
+  version: 1.0.0
+sourceDescriptions:
+- name: healthGorillaFhir
+  url: ../openapi/health-gorilla-openapi.yml
+  type: openapi
+workflows:
+- workflowId: lab-order
+  summary: Place a lab order by creating a ServiceRequest and submitting a RequestGroup for a matched patient.
+  description: >-
+    Discovers capabilities, finds the patient by date of birth, creates the
+    ServiceRequest lab order, submits the RequestGroup, and reads the group back
+    to confirm submission.
+  inputs:
+    type: object
+    required:
+    - birthdate
+    - serviceRequest
+    - requestGroup
+    properties:
+      birthdate:
+        type: string
+        description: Patient date of birth (YYYY-MM-DD) to locate the order subject.
+      serviceRequest:
+        type: object
+        description: The FHIR R4 ServiceRequest resource describing the laboratory order.
+      requestGroup:
+        type: object
+        description: The FHIR R4 RequestGroup resource that binds the order for submission.
+  steps:
+  - stepId: discoverCapabilities
+    description: Fetch the FHIR CapabilityStatement to confirm supported resources and endpoints.
+    operationId: getCapabilityStatement
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: findPatient
+    description: Locate the patient by date of birth.
+    operationId: searchPatients
+    parameters:
+    - name: birthdate
+      in: query
+      value: $inputs.birthdate
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      patientId: $response.body#/entry/0/resource/id
+  - stepId: createOrder
+    description: Create the ServiceRequest that places the laboratory order.
+    operationId: createServiceRequest
+    requestBody:
+      contentType: application/fhir+json
+      payload: $inputs.serviceRequest
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      serviceRequestId: $response.body#/id
+  - stepId: submitRequestGroup
+    description: Submit the RequestGroup that binds the lab order for processing.
+    operationId: createRequestGroup
+    requestBody:
+      contentType: application/fhir+json
+      payload: $inputs.requestGroup
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      requestGroupId: $response.body#/id
+  - stepId: confirmGroup
+    description: Read the submitted RequestGroup by id to confirm it was accepted.
+    operationId: readRequestGroup
+    parameters:
+    - name: id
+      in: path
+      value: $steps.submitRequestGroup.outputs.requestGroupId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      requestGroup: $response.body
+  outputs:
+    patientId: $steps.findPatient.outputs.patientId
+    serviceRequestId: $steps.createOrder.outputs.serviceRequestId
+    requestGroupId: $steps.submitRequestGroup.outputs.requestGroupId
+    requestGroup: $steps.confirmGroup.outputs.requestGroup

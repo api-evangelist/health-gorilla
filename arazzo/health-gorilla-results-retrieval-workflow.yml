@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: Health Gorilla Lab Results Retrieval
+  summary: Locate a patient, then pull their US Core laboratory DiagnosticReports, read one report, and retrieve the discrete result Observations.
+  description: >-
+    A results-retrieval flow against the Health Gorilla FHIR R4 clinical and lab
+    network API. The patient is located by demographics, their laboratory
+    DiagnosticReports are searched, a single report is read by id, and the
+    discrete Observation results are retrieved for the patient. This mirrors the
+    US Core DiagnosticReport and laboratory-result pattern over the /fhir/R4
+    server base. Every step inlines its request so the flow is self-contained.
+  version: 1.0.0
+sourceDescriptions:
+- name: healthGorillaFhir
+  url: ../openapi/health-gorilla-openapi.yml
+  type: openapi
+workflows:
+- workflowId: results-retrieval
+  summary: Retrieve laboratory diagnostic reports and result observations for a matched patient.
+  description: >-
+    Finds the patient by date of birth, searches their laboratory
+    DiagnosticReports, reads one report by id, and retrieves the patient's result
+    Observations.
+  inputs:
+    type: object
+    required:
+    - birthdate
+    properties:
+      birthdate:
+        type: string
+        description: Patient date of birth (YYYY-MM-DD) to locate the results subject.
+  steps:
+  - stepId: findPatient
+    description: Locate the patient by date of birth.
+    operationId: searchPatients
+    parameters:
+    - name: birthdate
+      in: query
+      value: $inputs.birthdate
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      patientId: $response.body#/entry/0/resource/id
+  - stepId: getReports
+    description: Search the patient's US Core laboratory DiagnosticReports.
+    operationId: searchDiagnosticReports
+    parameters:
+    - name: patient
+      in: query
+      value: $steps.findPatient.outputs.patientId
+    - name: category
+      in: query
+      value: LAB
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      reports: $response.body
+      reportId: $response.body#/entry/0/resource/id
+  - stepId: readReport
+    description: Read a single DiagnosticReport by id.
+    operationId: readDiagnosticReport
+    parameters:
+    - name: id
+      in: path
+      value: $steps.getReports.outputs.reportId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      report: $response.body
+  - stepId: getObservations
+    description: Retrieve the discrete result Observations for the patient.
+    operationId: searchObservations
+    parameters:
+    - name: patient
+      in: query
+      value: $steps.findPatient.outputs.patientId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      observations: $response.body
+  outputs:
+    patientId: $steps.findPatient.outputs.patientId
+    reports: $steps.getReports.outputs.reports
+    report: $steps.readReport.outputs.report
+    observations: $steps.getObservations.outputs.observations

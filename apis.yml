@@ -172,6 +172,20 @@ common:
   url: rate-limits/health-gorilla-rate-limits.yml
 - type: FinOps
   url: finops/health-gorilla-finops.yml
+- type: ArazzoWorkflows
+  workflows:
+  - url: arazzo/health-gorilla-coverage-workflow.yml
+    name: Health Gorilla Coverage Retrieval
+    summary: "Locate a patient, search their insurance Coverage resources, then read a single Coverage for full plan detail."
+  - url: arazzo/health-gorilla-lab-order-workflow.yml
+    name: Health Gorilla FHIR Lab Order
+    summary: "Confirm server capabilities, locate a patient, then place a laboratory order as a ServiceRequest grouped inside a RequestGroup."
+  - url: arazzo/health-gorilla-patient-everything-workflow.yml
+    name: Health Gorilla Patient Everything
+    summary: "Locate a patient, read the Patient resource, then pull the complete US Core record with the Patient $everything operation."
+  - url: arazzo/health-gorilla-results-retrieval-workflow.yml
+    name: Health Gorilla Lab Results Retrieval
+    summary: "Locate a patient, then pull their US Core laboratory DiagnosticReports, read one report, and retrieve the discrete result Observations."
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
