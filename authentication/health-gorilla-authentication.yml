@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/health-gorilla-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: 'OAuth 2.0 bearer access token. Obtain a token using the client credentials issued
+    during onboarding via the Health Gorilla OAuth 2.0 token endpoint, then pass it as `Authorization:
+    Bearer {token}`.'
+  sources:
+  - openapi/health-gorilla-openapi.yml
