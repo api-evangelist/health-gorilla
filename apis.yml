@@ -158,6 +158,8 @@ apis:
   description: Coverage and identity data via FHIR R4 Coverage resources plus the
     OAuth 2.0 identity / IAS token flow used to authorize person-level queries.
 common:
+- type: AgenticAccess
+  url: agentic-access/health-gorilla-agentic-access.yml
 - type: DomainSecurity
   url: security/health-gorilla-domain-security.yml
 - type: Authentication
