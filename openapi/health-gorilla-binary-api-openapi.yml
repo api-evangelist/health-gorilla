@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: Health Gorilla FHIR R4 Binary API
+  description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
+  termsOfService: https://www.healthgorilla.com/terms-of-service
+  contact:
+    name: Health Gorilla Developer Support
+    email: info@healthgorilla.com
+    url: https://developer.healthgorilla.com
+  version: R4
+servers:
+- url: https://api.healthgorilla.com/fhir/R4
+  description: Production
+- url: https://sandbox.healthgorilla.com/fhir/R4
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Binary
+  description: Raw clinical document content.
+paths:
+  /Binary/{id}:
+    get:
+      operationId: readBinary
+      tags:
+      - Binary
+      summary: Retrieve raw document content.
+      parameters:
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: The document content (CCDA, PDF, or other format).
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Binary'
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+  schemas:
+    Binary:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: Binary
+        id:
+          type: string
+        contentType:
+          type: string
+        data:
+          type: string
+          format: byte
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 bearer access token. Obtain a token using the client credentials issued during onboarding via the Health Gorilla OAuth 2.0 token endpoint, then pass it as `Authorization: Bearer {token}`.'

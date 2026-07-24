@@ -1,0 +1,147 @@
+openapi: 3.0.1
+info:
+  title: Health Gorilla FHIR R4 Binary DiagnosticReport API
+  description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
+  termsOfService: https://www.healthgorilla.com/terms-of-service
+  contact:
+    name: Health Gorilla Developer Support
+    email: info@healthgorilla.com
+    url: https://developer.healthgorilla.com
+  version: R4
+servers:
+- url: https://api.healthgorilla.com/fhir/R4
+  description: Production
+- url: https://sandbox.healthgorilla.com/fhir/R4
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: DiagnosticReport
+  description: Structured lab and radiology results.
+paths:
+  /DiagnosticReport:
+    get:
+      operationId: searchDiagnosticReports
+      tags:
+      - DiagnosticReport
+      summary: Search DiagnosticReport resources.
+      parameters:
+      - $ref: '#/components/parameters/patient'
+      - name: category
+        in: query
+        schema:
+          type: string
+      - name: date
+        in: query
+        schema:
+          type: string
+      - $ref: '#/components/parameters/count'
+      responses:
+        '200':
+          description: A FHIR Bundle of DiagnosticReport resources.
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+  /DiagnosticReport/{id}:
+    get:
+      operationId: readDiagnosticReport
+      tags:
+      - DiagnosticReport
+      summary: Read a DiagnosticReport resource by id.
+      parameters:
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/DiagnosticReport'
+components:
+  schemas:
+    Bundle:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: Bundle
+        type:
+          type: string
+          example: searchset
+        total:
+          type: integer
+        link:
+          type: array
+          items:
+            type: object
+            properties:
+              relation:
+                type: string
+              url:
+                type: string
+        entry:
+          type: array
+          items:
+            type: object
+            properties:
+              fullUrl:
+                type: string
+              resource:
+                type: object
+    DiagnosticReport:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: DiagnosticReport
+        id:
+          type: string
+        status:
+          type: string
+        category:
+          type: array
+          items:
+            type: object
+        code:
+          type: object
+        subject:
+          type: object
+        effectiveDateTime:
+          type: string
+          format: date-time
+        result:
+          type: array
+          items:
+            type: object
+            description: References to Observation resources.
+        presentedForm:
+          type: array
+          items:
+            type: object
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 bearer access token. Obtain a token using the client credentials issued during onboarding via the Health Gorilla OAuth 2.0 token endpoint, then pass it as `Authorization: Bearer {token}`.'

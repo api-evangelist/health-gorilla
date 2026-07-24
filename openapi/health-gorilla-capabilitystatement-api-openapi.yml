@@ -1,0 +1,58 @@
+openapi: 3.0.1
+info:
+  title: Health Gorilla FHIR R4 Binary CapabilityStatement API
+  description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
+  termsOfService: https://www.healthgorilla.com/terms-of-service
+  contact:
+    name: Health Gorilla Developer Support
+    email: info@healthgorilla.com
+    url: https://developer.healthgorilla.com
+  version: R4
+servers:
+- url: https://api.healthgorilla.com/fhir/R4
+  description: Production
+- url: https://sandbox.healthgorilla.com/fhir/R4
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: CapabilityStatement
+  description: FHIR server capability discovery.
+paths:
+  /metadata:
+    get:
+      operationId: getCapabilityStatement
+      tags:
+      - CapabilityStatement
+      summary: Retrieve the FHIR server CapabilityStatement.
+      description: Returns the FHIR R4 CapabilityStatement describing supported resources, search parameters, operations, and authentication.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/CapabilityStatement'
+components:
+  schemas:
+    CapabilityStatement:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: CapabilityStatement
+        status:
+          type: string
+        fhirVersion:
+          type: string
+          example: 4.0.1
+        rest:
+          type: array
+          items:
+            type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth 2.0 bearer access token. Obtain a token using the client credentials issued during onboarding via the Health Gorilla OAuth 2.0 token endpoint, then pass it as `Authorization: Bearer {token}`.'
