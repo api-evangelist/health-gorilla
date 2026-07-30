@@ -8,7 +8,20 @@ description: Health Gorilla operates a national health-data interoperability net
   national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology)
   ordering and results, clinical documents, and coverage/eligibility data under
   OAuth 2.0.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/health-gorilla.png
 tags:
 - Health
 - Interoperability
@@ -19,144 +32,326 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.19'
 apis:
-- aid: health-gorilla:patients-fhir
-  name: Patients (FHIR)
-  tags:
-  - Patients
-  - FHIR
-  - Demographics
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: health-gorilla:health-gorilla-binary-api
+  name: Health Gorilla Binary API
+  description: Raw clinical document content.
   humanURL: https://developer.healthgorilla.com/reference/r4-overview
   baseURL: https://api.healthgorilla.com/fhir/R4
-  properties:
-  - url: https://developer.healthgorilla.com/reference/r4-overview
-    type: Documentation
-  - url: https://developer.healthgorilla.com/reference/fhir-api-reference
-    type: APIReference
-  - url: openapi/health-gorilla-openapi.yml
-    type: OpenAPI
-  - url: collections/health-gorilla.postman_collection.json
-    type: PostmanCollection
-  - url: collections/health-gorilla.opencollection.json
-    type: OpenCollection
-  description: FHIR R4 Patient resources - read, search, create, update, and the
-    patient-scoped $everything operation for retrieving a complete patient record
-    as a FHIR Bundle.
-- aid: health-gorilla:record-query
-  name: Record Query/Retrieval
   tags:
-  - Query
-  - Record Retrieval
-  - TEFCA
-  - QHIN
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.healthgorilla.com/docs/federated-fhir
-  baseURL: https://api.healthgorilla.com/fhir/R4
-  properties:
-  - url: https://developer.healthgorilla.com/docs/federated-fhir
-    type: Documentation
-  - url: https://developer.healthgorilla.com/docs/api-endpoints-overview
-    type: APIReference
-  - url: openapi/health-gorilla-openapi.yml
-    type: OpenAPI
-  - url: collections/health-gorilla.postman_collection.json
-    type: PostmanCollection
-  - url: collections/health-gorilla.opencollection.json
-    type: OpenCollection
-  description: Person-authorized federated FHIR query and record retrieval across
-    national exchange networks. Initiate a retrieval, poll its status, and pull
-    results as FHIR Bundles of DocumentReference and Binary resources.
-- aid: health-gorilla:lab-ordering
-  name: Lab Ordering
-  tags:
-  - Lab Ordering
-  - Diagnostics
-  - ServiceRequest
-  - RequestGroup
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.healthgorilla.com/docs/diagnostic-network
-  baseURL: https://api.healthgorilla.com/fhir/R4
-  properties:
-  - url: https://developer.healthgorilla.com/docs/diagnostic-network
-    type: Documentation
-  - url: https://developer.healthgorilla.com/reference/servicerequest-1
-    type: APIReference
-  - url: openapi/health-gorilla-openapi.yml
-    type: OpenAPI
-  - url: collections/health-gorilla.postman_collection.json
-    type: PostmanCollection
-  - url: collections/health-gorilla.opencollection.json
-    type: OpenCollection
-  description: Submit laboratory and radiology orders to participating diagnostic
-    partners using a RequestGroup parent order that nests individual ServiceRequest
-    tests, then track order status.
-- aid: health-gorilla:diagnostic-reports
-  name: Diagnostic Reports
-  tags:
-  - Diagnostic Reports
-  - Results
-  - Observations
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.healthgorilla.com/reference/fhir-api-reference
-  baseURL: https://api.healthgorilla.com/fhir/R4
-  properties:
-  - url: https://developer.healthgorilla.com/reference/fhir-api-reference
-    type: Documentation
-  - url: https://developer.healthgorilla.com/reference/r4-overview
-    type: APIReference
-  - url: openapi/health-gorilla-openapi.yml
-    type: OpenAPI
-  - url: collections/health-gorilla.postman_collection.json
-    type: PostmanCollection
-  - url: collections/health-gorilla.opencollection.json
-    type: OpenCollection
-  description: Retrieve structured lab and radiology results as FHIR R4
-    DiagnosticReport resources with their associated Observation resources.
-- aid: health-gorilla:documents
-  name: Documents
-  tags:
-  - Documents
-  - DocumentReference
   - Binary
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.healthgorilla.com/reference/fhir-api-reference
-  baseURL: https://api.healthgorilla.com/fhir/R4
   properties:
-  - url: https://developer.healthgorilla.com/reference/fhir-api-reference
-    type: Documentation
-  - url: https://developer.healthgorilla.com/docs/api-endpoints-overview
-    type: APIReference
-  - url: openapi/health-gorilla-openapi.yml
-    type: OpenAPI
-  - url: collections/health-gorilla.postman_collection.json
-    type: PostmanCollection
-  - url: collections/health-gorilla.opencollection.json
-    type: OpenCollection
-  description: Access clinical documents via FHIR R4 DocumentReference resources and
-    download the underlying content as Binary resources (CCDA, PDF, and other
-    formats).
-- aid: health-gorilla:eligibility
-  name: Eligibility
+  - type: OpenAPI
+    url: openapi/health-gorilla-binary-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-capabilitystatement-api
+  name: Health Gorilla CapabilityStatement API
+  description: FHIR server capability discovery.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
   tags:
-  - Eligibility
-  - Coverage
-  - Identity
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.healthgorilla.com/reference/fhir-r4-careplan
-  baseURL: https://api.healthgorilla.com/fhir/R4
+  - CapabilityStatement
   properties:
-  - url: https://developer.healthgorilla.com/reference/r4-overview
-    type: Documentation
-  - url: https://developer.healthgorilla.com/reference/oauth-20-authentication
-    type: Authentication
-  - url: openapi/health-gorilla-openapi.yml
-    type: OpenAPI
-  - url: collections/health-gorilla.postman_collection.json
-    type: PostmanCollection
-  - url: collections/health-gorilla.opencollection.json
-    type: OpenCollection
-  description: Coverage and identity data via FHIR R4 Coverage resources plus the
-    OAuth 2.0 identity / IAS token flow used to authorize person-level queries.
+  - type: OpenAPI
+    url: openapi/health-gorilla-capabilitystatement-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-coverage-api
+  name: Health Gorilla Coverage API
+  description: Patient insurance coverage / eligibility.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - Coverage
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-coverage-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-diagnosticreport-api
+  name: Health Gorilla DiagnosticReport API
+  description: Structured lab and radiology results.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - DiagnosticReport
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-diagnosticreport-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-documentreference-api
+  name: Health Gorilla DocumentReference API
+  description: Clinical document metadata.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - DocumentReference
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-documentreference-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-observation-api
+  name: Health Gorilla Observation API
+  description: Individual result observations.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - Observation
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-observation-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-patient-api
+  name: Health Gorilla Patient API
+  description: Patient demographics and patient-scoped record retrieval.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - Patient
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-patient-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-practitioner-api
+  name: Health Gorilla Practitioner API
+  description: Ordering and rendering providers.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - Practitioner
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-practitioner-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-requestgroup-api
+  name: Health Gorilla RequestGroup API
+  description: Parent diagnostic orders nesting individual ServiceRequest tests.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - RequestGroup
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-requestgroup-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-servicerequest-api
+  name: Health Gorilla ServiceRequest API
+  description: Diagnostic (lab and radiology) order requests.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - ServiceRequest
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-servicerequest-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
 common:
 - type: AgenticAccess
   url: agentic-access/health-gorilla-agentic-access.yml
