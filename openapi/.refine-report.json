@@ -1,0 +1,32 @@
+{
+  "provider": "health-gorilla",
+  "sources": [
+    "health-gorilla-binary-api-openapi.yml",
+    "health-gorilla-capabilitystatement-api-openapi.yml",
+    "health-gorilla-coverage-api-openapi.yml",
+    "health-gorilla-diagnosticreport-api-openapi.yml",
+    "health-gorilla-documentreference-api-openapi.yml",
+    "health-gorilla-observation-api-openapi.yml",
+    "health-gorilla-patient-api-openapi.yml",
+    "health-gorilla-practitioner-api-openapi.yml",
+    "health-gorilla-requestgroup-api-openapi.yml",
+    "health-gorilla-servicerequest-api-openapi.yml"
+  ],
+  "outputs": [
+    "health-gorilla-binary-api-openapi.yml",
+    "health-gorilla-capabilitystatement-api-openapi.yml",
+    "health-gorilla-coverage-api-openapi.yml",
+    "health-gorilla-diagnosticreport-api-openapi.yml",
+    "health-gorilla-documentreference-api-openapi.yml",
+    "health-gorilla-observation-api-openapi.yml",
+    "health-gorilla-patient-api-openapi.yml",
+    "health-gorilla-practitioner-api-openapi.yml",
+    "health-gorilla-requestgroup-api-openapi.yml",
+    "health-gorilla-servicerequest-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
