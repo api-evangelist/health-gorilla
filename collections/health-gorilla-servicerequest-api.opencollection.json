@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Health Gorilla FHIR R4 Binary ServiceRequest API",
+    "version": "R4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ServiceRequest",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search ServiceRequest resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/ServiceRequest",
+            "params": [
+              {
+                "name": "patient",
+                "value": "",
+                "type": "query",
+                "description": "Reference to the subject Patient (e.g. Patient/{id})."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "_count",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page."
+              }
+            ]
+          },
+          "docs": "Search ServiceRequest resources."
+        },
+        {
+          "info": {
+            "name": "Create a ServiceRequest resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.healthgorilla.com/fhir/R4/ServiceRequest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a ServiceRequest resource."
+        },
+        {
+          "info": {
+            "name": "Read a ServiceRequest resource by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/ServiceRequest/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the resource."
+              }
+            ]
+          },
+          "docs": "Read a ServiceRequest resource by id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

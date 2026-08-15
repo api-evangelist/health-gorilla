@@ -1,0 +1,95 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.healthgorilla.com/docs/embedded-iframe
+description: >-
+  Health Gorilla ships embeddable UI surfaces rather than a component library.
+  There is no npm-distributed element set, no web components and no loader
+  script; the model is a hosted, session-authenticated application embedded in a
+  customer product through an iFrame. Three embedded surfaces are documented —
+  the general embedded portal, the Patient Chart Viewer, and the Lab Network
+  ordering UI — alongside a standalone Lab Network UI. These are distinct from
+  the API SDK surface, which is empty (see packages/).
+distribution: hosted iframe embed
+loader_libraries: []
+npm_packages: []
+components:
+- family: Embedded Portal
+  name: Embedded iFrame
+  type: hosted-iframe
+  description: >-
+    Embeds the Health Gorilla portal inside a customer application so users work
+    without leaving the host product.
+  docs: https://developer.healthgorilla.com/docs/embedded-iframe
+  auth: session established through the Health Gorilla SSO / OAuth flow
+  known_constraints:
+  - >-
+    Cross-origin embedding has produced PDF download failures in Chrome and Edge;
+    fixed in release v2629.
+  - >-
+    Session expiry on iFrame launch was a reported failure mode; fixed in
+    release v2629_6.
+- family: Patient Chart
+  name: Patient Chart Viewer
+  type: hosted-iframe
+  description: >-
+    Embeddable longitudinal patient chart with layout and navigation, patient
+    summary, HumanGraph, chart sections, search and filtering, source records and
+    provenance, and source categorisation and deduplication.
+  docs: https://developer.healthgorilla.com/docs/patient-chart-viewer
+  sections:
+  - Patient Summary
+  - HumanGraph
+  - Chart Sections
+  - Search and Filtering
+  - Source Records and Provenance
+  - Source Categorization and Deduplication
+  data_coverage: USCDI v3.1
+  access_methods: https://developer.healthgorilla.com/docs/access-methods
+  licensing: >-
+    Per-tenant. Patient Chart licensing status is reported on the Network Stats
+    Site Configuration report (release v2622).
+- family: Lab Network
+  name: Lab Network iFrame
+  type: hosted-iframe
+  description: >-
+    Embeddable lab ordering interface for placing diagnostic orders and attaching
+    files to an order from inside a host application.
+  docs: https://developer.healthgorilla.com/docs/lab-network-iframe
+  known_constraints:
+  - >-
+    Order file attachment in the iFrame was broken and fixed in release v2629_6.
+- family: Lab Network
+  name: Lab Network UI
+  type: hosted-application
+  description: >-
+    Health Gorilla-hosted lab ordering interface, offered as an alternative to
+    the Lab Network API for organisations that do not build their own ordering
+    workflow.
+  docs: https://developer.healthgorilla.com/docs/lab-network-ui
+  access_models: https://developer.healthgorilla.com/docs/access-models
+- family: Portal
+  name: Health Gorilla UI
+  type: hosted-application
+  description: >-
+    The full Health Gorilla web portal, offered as a sandbox and production entry
+    point alongside the RESTful API.
+  docs: https://developer.healthgorilla.com/docs/sandbox-environment
+single_sign_on:
+  supported: true
+  mechanism: OpenID Connect (sso-openid-connect SMART capability)
+  docs: https://developer.healthgorilla.com/docs/single-sign-on-sso
+  note: >-
+    SSO-only tenants are auto-redirected to their identity provider at login
+    (release v2629_3).
+not_found:
+  web_components: none published
+  javascript_element_library: none published
+  design_system: none published
+  cdn_distribution: none published
+related:
+- packages/health-gorilla-packages.yml
+- authentication/health-gorilla-authentication.yml
+x-evidence:
+- {url: 'https://developer.healthgorilla.com/llms.txt', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/changelog/v2629.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/changelog/v2629_6.md', http_status: 200, fetched: '2026-08-14'}

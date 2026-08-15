@@ -1,0 +1,94 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.healthgorilla.com/docs/sandbox-environment
+description: >-
+  Health Gorilla operates a full sandbox on a separate host with its own OAuth
+  authorization server and its own live FHIR CapabilityStatement. It is a closed
+  system — no outbound email or external messaging — that generates realistic
+  mock clinical data for created patients and returns mock lab results for test
+  orders. Access is request-gated: there is no self-service sandbox signup, so an
+  integrator submits the contact form and Health Gorilla provisions the account.
+  Health Gorilla publishes no magic test identifiers, test card numbers or fixed
+  fixture values; the mock data is generated per patient rather than drawn from a
+  documented set, so nothing of that kind is recorded here.
+available: true
+self_service: false
+access:
+  method: request via contact form
+  url: https://www.healthgorilla.com/home/contact
+  support: support@healthgorilla.com
+  entry_points:
+  - {name: Health Gorilla UI, description: Web interface for navigating the sandbox.}
+  - {name: RESTful API, description: Full programmatic access for integration and automated testing.}
+  note: >-
+    Password resets and user setup require Health Gorilla Support because the
+    sandbox sends no email.
+environments:
+- name: sandbox
+  host: https://sandbox.healthgorilla.com
+  fhir_base: https://sandbox.healthgorilla.com/fhir/R4
+  capability_statement: https://sandbox.healthgorilla.com/fhir/R4/metadata
+  capability_statement_status: 200
+  smart_configuration: https://sandbox.healthgorilla.com/.well-known/smart-configuration
+  smart_configuration_status: 200
+  authorization_endpoint: https://sandbox.healthgorilla.com/oauth/authorize
+  token_endpoint: https://sandbox.healthgorilla.com/oauth/token
+- name: production
+  host: https://api.healthgorilla.com
+  fhir_base: https://api.healthgorilla.com/fhir/R4
+  capability_statement: https://api.healthgorilla.com/fhir/R4/metadata
+  authorization_endpoint: https://www.healthgorilla.com/oauth/authorize
+  token_endpoint: https://www.healthgorilla.com/oauth/token
+separation:
+  model: separate host and separate authorization server
+  key_prefixes: none published
+  note: >-
+    Test and live are separated by host, not by a key prefix or a mode flag on a
+    single credential. A sandbox client_id is issued against the sandbox
+    authorization server and does not work against production.
+test_data:
+  mock_patients: >-
+    Creating a patient in the sandbox causes the system to generate realistic
+    mock clinical data for that patient.
+  documents: >-
+    Continuity of Care Documents (CCDs) are randomly assigned to sandbox patients
+    from a predefined pool to simulate diverse medical histories.
+  lab_orders: >-
+    Test orders may be placed with sandbox labs and return mock results. Results
+    are randomly generated, are not clinically valid, and exist to verify that an
+    application handles diagnostics workflows.
+  fixed_test_values: none published
+  fixed_test_values_note: >-
+    Health Gorilla documents no magic identifiers, test MRNs, test NPIs, test
+    card numbers or trigger values. Values are generated per sandbox tenant, so
+    there is nothing static to capture. Nothing was invented to fill this field.
+  test_patient_guide: https://developer.healthgorilla.com/docs/create-a-test-patient
+  submit_test_data: https://developer.healthgorilla.com/docs/submit-test-data
+release_management:
+  sandbox_first: true
+  description: >-
+    New feature releases deploy to the sandbox before production, giving
+    integrators a window to test against upcoming changes.
+  detail: changelog/health-gorilla-changelog.yml
+closed_system:
+  outbound_email: disabled
+  external_messaging: disabled
+  implication: >-
+    Flows that depend on email verification (password reset, user invitation)
+    must be completed through Health Gorilla Support.
+testing_guidance:
+  docs:
+  - https://developer.healthgorilla.com/docs/testing-guidelines
+  - https://developer.healthgorilla.com/docs/shareback-testing
+  - https://developer.healthgorilla.com/docs/validating-shareback-readiness
+  practices:
+  - Begin every implementation, feature and third-party integration in the sandbox.
+  - Simulate complete workflows end to end (patient creation, query, document download).
+  - Protect API tokens and avoid hardcoding credentials even in test.
+related:
+- authentication/health-gorilla-authentication.yml
+- fhir/health-gorilla-fhir.yml
+x-evidence:
+- {url: 'https://developer.healthgorilla.com/docs/sandbox-environment.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://sandbox.healthgorilla.com/fhir/R4/metadata', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://sandbox.healthgorilla.com/.well-known/smart-configuration', http_status: 200, fetched: '2026-08-14'}

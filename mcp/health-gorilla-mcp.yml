@@ -1,0 +1,68 @@
+generated: '2026-08-14'
+method: probed
+status: published
+source: https://developer.healthgorilla.com/mcp
+description: >-
+  Health Gorilla serves a live remote MCP endpoint from its own developer-portal
+  host. An agent can reach it today at https://developer.healthgorilla.com/mcp —
+  no install step, no local process. What it exposes, however, is the
+  DOCUMENTATION, not the FHIR API: it is the MCP server ReadMe provisions for a
+  hosted developer portal, so its tools search and read developer.healthgorilla.com
+  pages rather than call api.healthgorilla.com. tools/list is auth-gated
+  (JSON-RPC -32001 "Authorization required"), so the real tool schemas could not
+  be read anonymously and none were invented. There is no MCP server in front of
+  the FHIR API itself, and none is listed in the official MCP registry.
+deployment:
+  mode: remote
+  endpoint: https://developer.healthgorilla.com/mcp
+  auth: unknown
+  verified: probed
+  note: >-
+    POST returns HTTP 401 with {"jsonrpc":"2.0","error":{"code":-32001,"message":
+    "Authorization required"}}. No WWW-Authenticate header and no RFC 9728
+    protected-resource metadata are served, so the authorization server backing
+    this endpoint is not discoverable — a client cannot mechanically learn how to
+    authenticate. Auth is therefore recorded as unknown rather than oauth.
+server:
+  name: health-gorilla-docs
+  transport: http
+  protocol: JSON-RPC 2.0 over HTTP (Streamable HTTP)
+  url: https://developer.healthgorilla.com/mcp
+  scope: documentation
+  operator: Health Gorilla (developer portal hosted on ReadMe)
+  platform: ReadMe
+probe:
+- {url: 'https://developer.healthgorilla.com/mcp', method: GET, http_status: 200, body: 'This URL can only be accessed with a MCP client.'}
+- {url: 'https://developer.healthgorilla.com/mcp', method: 'POST initialize', http_status: 401, body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'}
+- {url: 'https://developer.healthgorilla.com/mcp', method: 'POST tools/list', http_status: 401, body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'}
+- {url: 'https://developer.healthgorilla.com/.well-known/oauth-protected-resource', http_status: 404}
+- {url: 'https://developer.healthgorilla.com/.well-known/oauth-authorization-server', http_status: 404}
+- {url: 'https://api.healthgorilla.com/mcp', http_status: 404}
+- {url: 'https://mcp.healthgorilla.com/mcp', http_status: 0, note: 'DNS does not resolve'}
+- {url: 'https://registry.modelcontextprotocol.io/v0/servers?search=health-gorilla', http_status: 200, result: '0 servers'}
+- {url: 'https://registry.modelcontextprotocol.io/v0/servers?search=healthgorilla', http_status: 200, result: '0 servers'}
+tools:
+  discovered: []
+  note: >-
+    tools/list is auth-gated, so the live tool set and its inputSchemas could not
+    be read. Health Gorilla's llms.txt indexes the documentation corpus but does
+    not publish an MCP tool list, so there is no published fallback to record
+    either. No tool names were guessed.
+  requires: authenticated introspection
+api_mcp_server:
+  exists: false
+  note: >-
+    No MCP server fronts the Health Gorilla FHIR API. The FHIR surface is
+    reachable only as REST at https://api.healthgorilla.com/fhir/R4 with an
+    OAuth 2.0 bearer token. A candidate tool set derived from that surface is
+    recorded in mcp/health-gorilla-tool-crosswalk.yml as rest_only capability,
+    not as a server that exists.
+related:
+- mcp/health-gorilla-tool-crosswalk.yml
+- llms/health-gorilla-llms.txt
+- fhir/health-gorilla-fhir.yml
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://developer.healthgorilla.com/mcp
+  http_status: 401
+  content_type: application/json; charset=utf-8

@@ -1,16 +1,125 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-08-14'
+method: searched
 source: openapi/health-gorilla-openapi.yml
+docs: https://developer.healthgorilla.com/reference/oauth-20-authentication
+description: >-
+  Health Gorilla authenticates every API call with an OAuth 2.0 bearer access
+  token and implements the SMART App Launch profile on top of FHIR. The
+  authorization server is www.healthgorilla.com; the resource server is
+  api.healthgorilla.com. Both a SMART configuration and an OpenID Connect
+  discovery document are served anonymously from the API host, so the full
+  endpoint set, grant set and scope set are machine-discoverable without
+  onboarding. Scopes are bound to the client at registration and cannot be
+  self-expanded.
 summary:
-  types:
-  - http
+  types: [oauth2, openIdConnect, http]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, implicit, refreshToken, jwtBearer, clientCredentials]
+  smart_on_fhir: true
+  openid_connect: true
+  dynamic_client_registration: true
+  transport: TLS 1.2 or higher required; plain HTTP rejected
+authorization_server:
+  issuer: https://www.healthgorilla.com
+  authorization_endpoint: https://www.healthgorilla.com/oauth/authorize
+  token_endpoint: https://www.healthgorilla.com/oauth/token
+  registration_endpoint: https://www.healthgorilla.com/oauth/register
+  introspection_endpoint: https://www.healthgorilla.com/oauth/info
+  revocation_endpoint: https://www.healthgorilla.com/oauth/cancel
+  userinfo_endpoint: https://www.healthgorilla.com/oauth/userinfo
+  jwks_uri: https://www.healthgorilla.com/.well-known/jwks.json
+  token_endpoint_auth_methods: [none, client_secret_post, private_key_jwt]
+  id_token_signing_alg_values_supported: [RS256]
+  discovery:
+  - {path: /.well-known/smart-configuration, host: api.healthgorilla.com, status: 200, file: well-known/health-gorilla-smart-configuration.json}
+  - {path: /.well-known/openid-configuration, host: api.healthgorilla.com, status: 200, file: well-known/health-gorilla-openid-configuration.json}
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
   bearerFormat: JWT
-  description: 'OAuth 2.0 bearer access token. Obtain a token using the client credentials issued
-    during onboarding via the Health Gorilla OAuth 2.0 token endpoint, then pass it as `Authorization:
-    Bearer {token}`.'
+  description: >-
+    OAuth 2.0 bearer access token presented as `Authorization: Bearer <token>`
+    on every request to a protected FHIR endpoint.
+  sources: [openapi/health-gorilla-openapi.yml]
+- name: SMARTonFHIR
+  type: oauth2
+  description: >-
+    SMART App Launch authorization declared by the live FHIR CapabilityStatement
+    (restful-security-service code SMART-on-FHIR) and by the SMART configuration
+    document served at api.healthgorilla.com/.well-known/smart-configuration.
+  smart_capabilities:
+  - launch-standalone
+  - client-public
+  - client-confidential-symmetric
+  - permission-offline
+  - permission-user
+  - permission-system
+  - permission-hg
+  - sso-openid-connect
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://www.healthgorilla.com/oauth/authorize
+    tokenUrl: https://www.healthgorilla.com/oauth/token
+    refreshUrl: https://www.healthgorilla.com/oauth/token
+    required_params: [response_type=code, client_id, redirect_uri, client_secret]
+    refresh_token: issued
+  - flow: implicit
+    authorizationUrl: https://www.healthgorilla.com/oauth/authorize
+    required_params: [response_type=token, client_id, redirect_uri]
+    refresh_token: not issued
+    note: Client must re-authorize when the access token expires.
+  - flow: jwtBearer
+    grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer
+    tokenUrl: https://www.healthgorilla.com/oauth/token
+    required_params: [assertion, client_id]
+    assertion_signing_alg: HS256
+    assertion_audience: https://api.healthgorilla.com/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://www.healthgorilla.com/oauth/token
+    note: >-
+      Used for the system/*.* backend-services scope tier and for securing
+      customer-operated webhook endpoints (Subscription channel OAuth extension).
   sources:
-  - openapi/health-gorilla-openapi.yml
+  - well-known/health-gorilla-smart-configuration.json
+  - fhir/health-gorilla-r4-capabilitystatement.json
+  - https://developer.healthgorilla.com/reference/oauth-20-authentication
+- name: OpenIDConnect
+  type: openIdConnect
+  openIdConnectUrl: https://api.healthgorilla.com/.well-known/openid-configuration
+  claims_supported: [sub, aud, iss, fhirUser, name, given_name, family_name, birthdate, gender]
+  scopes_supported: [openid, profile, fhirUser]
+  sources: [well-known/health-gorilla-openid-configuration.json]
+token:
+  type: Bearer
+  lifetime_field: expires_in
+  example_lifetime_seconds: 3600
+  refresh: >-
+    Refresh tokens are issued for selected grants (authorization code). A
+    refreshed token is bound to the originally granted scope; scope cannot be
+    expanded on refresh.
+  validation: GET /oauth/info?access_token=<token> returns client_name, client_id, expires_in, scope
+  revocation: GET /oauth/cancel?token=<token> returns 200 OK and also invalidates the paired refresh token
+  version_pinning:
+    parameter: hg_rest_api_version
+    response_field: hg_rest_api_version
+    error: unsupported_api_version (400)
+    note: A specific REST API version may be bound to the token at issuance.
+failure_modes:
+- {condition: expired token, status: 401, error: expired_token}
+- {condition: invalid token, status: 401, error: invalid_token}
+- {condition: missing required scope, status: 403, error: insufficient_scope}
+- {condition: client authentication failed / unknown client_id, status: 400, error: invalid_client}
+- {condition: bad or expired code, refresh token or assertion, status: 400, error: invalid_grant}
+- {condition: unsupported grant, status: 400, error: unsupported_grant_type}
+related:
+- scopes/health-gorilla-scopes.yml
+- well-known/health-gorilla-well-known.yml
+- fhir/health-gorilla-fhir.yml
+- conventions/health-gorilla-conventions.yml
+x-evidence:
+- {url: 'https://api.healthgorilla.com/.well-known/smart-configuration', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://api.healthgorilla.com/.well-known/openid-configuration', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://www.healthgorilla.com/.well-known/jwks.json', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/oauth-20-authentication.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/docs/token-lifecycle.md', http_status: 200, fetched: '2026-08-14'}

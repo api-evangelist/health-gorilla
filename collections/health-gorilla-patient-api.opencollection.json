@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Health Gorilla FHIR R4 Binary Patient API",
+    "version": "R4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Patient",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Patient resources.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "A resource identifier (system|value)."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "A portion of the name."
+              },
+              {
+                "name": "birthdate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "gender",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "_count",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page."
+              }
+            ]
+          },
+          "docs": "Search Patient resources."
+        },
+        {
+          "info": {
+            "name": "Create a Patient resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Patient resource."
+        },
+        {
+          "info": {
+            "name": "Read a Patient resource by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the resource."
+              }
+            ]
+          },
+          "docs": "Read a Patient resource by id."
+        },
+        {
+          "info": {
+            "name": "Update a Patient resource.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Patient resource."
+        },
+        {
+          "info": {
+            "name": "Retrieve all records for a patient.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/Patient/:id/$everything",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the resource."
+              }
+            ]
+          },
+          "docs": "FHIR $everything operation returning a Bundle of all resources in the patient compartment, including federated records retrieved across the national exchange network."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

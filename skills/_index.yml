@@ -1,0 +1,76 @@
+generated: '2026-08-14'
+method: generated
+source: >-
+  openapi/*.yml, fhir/health-gorilla-r4-capabilitystatement.json, arazzo/*.yml,
+  conventions/health-gorilla-conventions.yml, errors/health-gorilla-problem-types.yml,
+  asyncapi/health-gorilla-webhooks.yml
+description: >-
+  Packaged Agent Skills for the Health Gorilla FHIR R4 API — one per marquee
+  flow, mirroring the native Arazzo workflows in arazzo/ and adding the
+  cross-cutting rules an agent gets wrong without being told: the RequestGroup /
+  ServiceRequest ordering shape, the HG-Idempotency-Key contract on clinical
+  writes, opaque cursor pagination, the OperationOutcome error envelope, and the
+  webhook signature and auto-disable rules. Every operationId referenced is
+  verified present in the linked OpenAPI; no operation was invented.
+provider_published_skills: none found
+provider_published_skills_note: >-
+  Searched the developer portal, its llms.txt index and the healthgorilla GitHub
+  organisation for AGENTS.md or provider-published skill files. None exist, so
+  every skill here is generated.
+skills:
+- file: health-gorilla-place-lab-order.md
+  name: Place a Health Gorilla lab order
+  summary: >-
+    Confirm capabilities, resolve the patient, create a ServiceRequest per test,
+    and group them into a RequestGroup requisition with idempotency keys.
+  api: openapi/health-gorilla-requestgroup-api-openapi.yml
+  operations: [getCapabilityStatement, searchPatients, createServiceRequest, createRequestGroup, readRequestGroup]
+  arazzo: arazzo/health-gorilla-lab-order-workflow.yml
+  risk: write — creates real clinical orders
+- file: health-gorilla-retrieve-lab-results.md
+  name: Retrieve Health Gorilla lab results
+  summary: >-
+    Search DiagnosticReports for a patient, page with the opaque FHIR cursor,
+    read a report, and pull the discrete Observation values behind it.
+  api: openapi/health-gorilla-diagnosticreport-api-openapi.yml
+  operations: [searchPatients, searchDiagnosticReports, readDiagnosticReport, searchObservations]
+  arazzo: arazzo/health-gorilla-results-retrieval-workflow.yml
+  risk: read
+- file: health-gorilla-pull-patient-record.md
+  name: Pull a complete Health Gorilla patient record
+  summary: >-
+    Resolve a patient, read demographics, pull the longitudinal record with
+    $everything, fetch document content via DocumentReference and Binary, and
+    understand where the asynchronous Patient360 federated path begins.
+  api: openapi/health-gorilla-patient-api-openapi.yml
+  operations: [searchPatients, readPatient, patientEverything, searchDocumentReferences, readDocumentReference, readBinary]
+  arazzo: arazzo/health-gorilla-patient-everything-workflow.yml
+  risk: read — but Patient360 retrieval initiates queries against other organizations under TEFCA governance
+- file: health-gorilla-check-coverage.md
+  name: Check Health Gorilla patient coverage
+  summary: >-
+    Resolve a patient, list their insurance Coverage resources, and read one for
+    payer, member id, order of benefits and active period before ordering.
+  api: openapi/health-gorilla-coverage-api-openapi.yml
+  operations: [searchPatients, searchCoverage, readCoverage]
+  arazzo: arazzo/health-gorilla-coverage-workflow.yml
+  risk: read
+- file: health-gorilla-subscribe-to-events.md
+  name: Subscribe to Health Gorilla clinical events
+  summary: >-
+    Register a FHIR Subscription, meet the HTTPS/TLS endpoint requirements,
+    verify the HMAC-SHA512 signature, stay inside the 30-subscription cap, and
+    reconcile with _lastUpdated against the auto-disable rules.
+  api: fhir/health-gorilla-r4-capabilitystatement.json
+  operations: [searchDiagnosticReports, searchDocumentReferences]
+  fhir_resources: [Subscription]
+  detail: asyncapi/health-gorilla-webhooks.yml
+  risk: write — creates a subscription; delivers PHI to a customer endpoint
+shared_rules:
+  auth: OAuth 2.0 bearer token; scopes fixed at client registration and not self-expandable
+  idempotency: 'HG-Idempotency-Key (UUID v4) on every POST; 409 on key reuse with a different payload'
+  pagination: opaque _cursor from Bundle.link.next; never construct it; _offset discouraged
+  errors: FHIR OperationOutcome in application/fhir+json; read issue[].code
+  tracing: log X-HG-Request-Id from every response
+  transport: TLS 1.2 or higher; plain HTTP rejected
+  sandbox: build against https://sandbox.healthgorilla.com/fhir/R4 first

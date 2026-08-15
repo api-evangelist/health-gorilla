@@ -1,0 +1,71 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Health Gorilla FHIR R4 Binary DiagnosticReport API
+  version: 1.0.0
+extends: openapi/health-gorilla-diagnosticreport-api-openapi.yml
+x-generated: '2026-08-14'
+x-method: generated
+x-source: apis.yml + repo artifacts (fhir/, conventions/, errors/, authentication/, asyncapi/)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: health-gorilla
+    x-apievangelist-artifacts:
+      capability-statement: fhir/health-gorilla-r4-capabilitystatement.json
+      authentication: authentication/health-gorilla-authentication.yml
+      scopes: scopes/health-gorilla-scopes.yml
+      conventions: conventions/health-gorilla-conventions.yml
+      errors: errors/health-gorilla-problem-types.yml
+      webhooks: asyncapi/health-gorilla-webhooks.yml
+      lifecycle: lifecycle/health-gorilla-lifecycle.yml
+      sandbox: sandbox/health-gorilla-sandbox.yml
+      data-model: data-model/health-gorilla-data-model.yml
+    x-fhir-version: 4.0.1
+    x-capability-statement: https://api.healthgorilla.com/fhir/R4/metadata
+- target: $.servers
+  update:
+  - url: https://api.healthgorilla.com/fhir/R4
+    description: Production
+    x-capability-statement: https://api.healthgorilla.com/fhir/R4/metadata
+  - url: https://sandbox.healthgorilla.com/fhir/R4
+    description: Sandbox
+    x-capability-statement: https://sandbox.healthgorilla.com/fhir/R4/metadata
+    x-access: request via https://www.healthgorilla.com/home/contact
+- target: $.components.securitySchemes['bearerAuth']
+  update:
+    x-oauth-authorization-url: https://www.healthgorilla.com/oauth/authorize
+    x-oauth-token-url: https://www.healthgorilla.com/oauth/token
+    x-smart-configuration: https://api.healthgorilla.com/.well-known/smart-configuration
+    x-openid-configuration: https://api.healthgorilla.com/.well-known/openid-configuration
+    x-scopes-artifact: scopes/health-gorilla-scopes.yml
+- target: $.paths.*.*
+  update:
+    x-error-envelope: FHIR OperationOutcome (application/fhir+json)
+    x-error-catalog: errors/health-gorilla-problem-types.yml
+    x-request-id-headers:
+    - X-HG-Request-Id
+    - X-Request-Id
+    - X-Correlation-Id
+- target: $.paths.*.get
+  update:
+    x-pagination:
+      style: cursor
+      params:
+      - _count
+      - _cursor
+      - _offset
+      next: Bundle.link[relation=next].url
+      docs: https://developer.healthgorilla.com/reference/pagination
+- target: $.paths.*.post
+  update:
+    x-idempotency:
+      header: HG-Idempotency-Key
+      format: uuid-v4
+      window: up to 1 hour
+      conflict: 409
+      in_flight: 202
+      docs: https://developer.healthgorilla.com/reference/idempotent-requests
+- target: $.tags
+  update:
+  - name: DiagnosticReport
+    x-fhir-resource: DiagnosticReport

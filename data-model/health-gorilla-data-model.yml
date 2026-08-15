@@ -1,0 +1,180 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  fhir/health-gorilla-r4-capabilitystatement.json, openapi/*.yml,
+  https://developer.healthgorilla.com/reference/fhir-versions
+description: >-
+  Entity-relationship graph for the Health Gorilla FHIR R4 surface. The data
+  model is HL7 FHIR R4 — Health Gorilla does not define a proprietary object
+  model, so entity shapes and reference semantics come from the FHIR
+  specification. What is Health Gorilla-specific, and what this file records, is
+  which resources it actually serves, how they are keyed, and the reference
+  conventions its own documentation publishes.
+base_standard:
+  name: HL7 FHIR
+  version: R4 (4.0.1)
+  legacy_version: STU3 (/fhir/3.0)
+  spec: https://hl7.org/fhir/R4/
+identifiers:
+  primary_key: FHIR logical id
+  id_format: >-
+    24-character lowercase hexadecimal string (for example
+    d5da4352b3f978a445475a22). Not a UUID and not prefixed by resource type.
+  id_prefixes: none
+  resource_path: 'https://api.healthgorilla.com/fhir/R4/{ResourceType}/{id}'
+  literal_reference:
+    form: '{"reference": "Patient/d5da4352b3f978a445475a22", "display": "Tom Sower"}'
+    description: Relative reference using the resource type and internal FHIR id.
+  logical_references:
+  - {type: MRN, code: MR, system: 'https://www.healthgorilla.com', code_system: 'http://terminology.hl7.org/CodeSystem/v2-0203'}
+  - {type: SSN, code: SB, system: 'http://hl7.org/fhir/sid/us-ssn', code_system: 'http://terminology.hl7.org/CodeSystem/v2-0203'}
+  - {type: NPI, system: 'http://hl7.org/fhir/sid/us-npi'}
+  docs: https://developer.healthgorilla.com/reference/fhir-versions
+core_entities:
+- entity: Patient
+  role: root
+  description: The person whose records are exchanged; every clinical resource hangs off it.
+  interactions: [create, read, update, search-type]
+  search_params: 13
+  operations: [everything, export-ccda, merge, qhin-search, hghin-search, ehex-search, cq-search, cw-search, cw-match, cw-lookup, cw-enroll, cw-unenroll, enrollForUpdates, enabledForSharing, patient-enroll-import-docs, patient-enroll-retrieve-docs, patient-import-doc, retrieve-document, patient-qhin-smart-endpoints, update-external-ial2, updateExternalIdentityVerification]
+  spec: openapi/health-gorilla-patient-api-openapi.yml
+- entity: Practitioner
+  role: actor
+  description: Ordering and rendering providers, keyed nationally by NPI.
+  interactions: [read, search-type]
+  search_params: 11
+  spec: openapi/health-gorilla-practitioner-api-openapi.yml
+- entity: PractitionerRole
+  role: actor-binding
+  description: Binds a Practitioner to an Organization and Location, and carries order signatures.
+  operations: [addSignature, removeSignature, signatures]
+- entity: Organization
+  role: tenant
+  description: The practice, facility or network participant. Sub-tenancy is supported.
+  search_params: 15
+  operations: [requisition-settings, remove-subtenant]
+- entity: Location
+  role: place
+  description: Physical service location; carries requisition settings and location-specific account numbers.
+  operations: [requisition-settings]
+- entity: RequestGroup
+  role: order-parent
+  description: Parent diagnostic order that nests the individual tests as ServiceRequests.
+  interactions: [create, read, patch, search-type]
+  operations: [submit, pdf, label, abn]
+  spec: openapi/health-gorilla-requestgroup-api-openapi.yml
+- entity: ServiceRequest
+  role: order-line
+  description: An individual laboratory or radiology test request.
+  interactions: [create, read, search-type]
+  operations: [pdf]
+  spec: openapi/health-gorilla-servicerequest-api-openapi.yml
+- entity: DiagnosticReport
+  role: result-parent
+  description: A completed lab, radiology or clinical test result set.
+  interactions: [create, read, patch, delete, search-type]
+  search_params: 12
+  operations: [pdf, hl7]
+  spec: openapi/health-gorilla-diagnosticreport-api-openapi.yml
+- entity: Observation
+  role: result-line
+  description: A discrete result value within a DiagnosticReport.
+  search_params: 9
+  spec: openapi/health-gorilla-observation-api-openapi.yml
+- entity: DocumentReference
+  role: document-metadata
+  description: Metadata for a clinical document, including documents retrieved from external networks.
+  search_params: 9
+  operations: [p360-search, p360-retrieve, qhin-search, hghin-search, ehex-search, cw-search, cq-search, export-ccda, ocr, pdf]
+  spec: openapi/health-gorilla-documentreference-api-openapi.yml
+- entity: Binary
+  role: document-content
+  description: Raw bytes of a clinical document referenced by a DocumentReference.
+  spec: openapi/health-gorilla-binary-api-openapi.yml
+- entity: Coverage
+  role: financial
+  description: Patient insurance coverage used for eligibility and order billing.
+  spec: openapi/health-gorilla-coverage-api-openapi.yml
+- entity: Subscription
+  role: eventing
+  description: Registers a webhook or websocket channel for resource change notifications.
+  detail: asyncapi/health-gorilla-webhooks.yml
+- entity: Consent
+  role: governance
+  description: Patient authorization governing access, required for person-authorized retrieval.
+- entity: Provenance
+  role: governance
+  description: Source attribution for aggregated records; read-only.
+- entity: Group
+  role: cohort
+  description: A cohort of patients used for bulk operations.
+  operations: [add-to-group, remove-from-group, members, everything]
+- entity: Bundle
+  role: envelope
+  description: Search result container, transaction/batch envelope, and the carrier for ADT messages.
+  operations: [qhinMessageDelivery]
+relationships:
+- {from: Patient, to: Coverage, type: has_many, via: Coverage.beneficiary}
+- {from: Patient, to: RequestGroup, type: has_many, via: RequestGroup.subject}
+- {from: Patient, to: ServiceRequest, type: has_many, via: ServiceRequest.subject}
+- {from: Patient, to: DiagnosticReport, type: has_many, via: DiagnosticReport.subject}
+- {from: Patient, to: Observation, type: has_many, via: Observation.subject}
+- {from: Patient, to: DocumentReference, type: has_many, via: DocumentReference.subject}
+- {from: Patient, to: Encounter, type: has_many, via: Encounter.subject}
+- {from: Patient, to: Condition, type: has_many, via: Condition.subject}
+- {from: Patient, to: AllergyIntolerance, type: has_many, via: AllergyIntolerance.patient}
+- {from: Patient, to: Immunization, type: has_many, via: Immunization.patient}
+- {from: Patient, to: MedicationRequest, type: has_many, via: MedicationRequest.subject}
+- {from: Patient, to: MedicationDispense, type: has_many, via: MedicationDispense.subject}
+- {from: Patient, to: MedicationStatement, type: has_many, via: MedicationStatement.subject}
+- {from: Patient, to: Procedure, type: has_many, via: Procedure.subject}
+- {from: Patient, to: CarePlan, type: has_many, via: CarePlan.subject}
+- {from: Patient, to: Goal, type: has_many, via: Goal.subject}
+- {from: Patient, to: Consent, type: has_many, via: Consent.patient}
+- {from: Patient, to: RelatedPerson, type: has_many, via: RelatedPerson.patient}
+- {from: Patient, to: FamilyMemberHistory, type: has_many, via: FamilyMemberHistory.patient}
+- {from: Patient, to: DeviceUseStatement, type: has_many, via: DeviceUseStatement.subject}
+- {from: Patient, to: NutritionOrder, type: has_many, via: NutritionOrder.patient}
+- {from: RequestGroup, to: ServiceRequest, type: has_many, via: RequestGroup.action.resource}
+- {from: ServiceRequest, to: DiagnosticReport, type: has_many, via: DiagnosticReport.basedOn}
+- {from: DiagnosticReport, to: Observation, type: has_many, via: DiagnosticReport.result}
+- {from: DiagnosticReport, to: Practitioner, type: belongs_to, via: DiagnosticReport.performer}
+- {from: DocumentReference, to: Binary, type: has_one, via: DocumentReference.content.attachment.url}
+- {from: DocumentReference, to: Practitioner, type: belongs_to, via: DocumentReference.author}
+- {from: Composition, to: DocumentReference, type: has_one, via: Composition.section.entry}
+- {from: ServiceRequest, to: Practitioner, type: belongs_to, via: ServiceRequest.requester}
+- {from: RequestGroup, to: Practitioner, type: belongs_to, via: RequestGroup.author}
+- {from: PractitionerRole, to: Practitioner, type: belongs_to, via: PractitionerRole.practitioner}
+- {from: PractitionerRole, to: Organization, type: belongs_to, via: PractitionerRole.organization}
+- {from: PractitionerRole, to: Location, type: has_many, via: PractitionerRole.location}
+- {from: Location, to: Organization, type: belongs_to, via: Location.managingOrganization}
+- {from: Coverage, to: Organization, type: belongs_to, via: Coverage.payor}
+- {from: Group, to: Patient, type: has_many, via: Group.member.entity}
+- {from: Subscription, to: 'any resource', type: watches, via: Subscription.criteria}
+- {from: Provenance, to: 'any resource', type: describes, via: Provenance.target}
+- {from: Encounter, to: Practitioner, type: has_many, via: Encounter.participant.individual}
+- {from: Observation, to: Encounter, type: belongs_to, via: Observation.encounter}
+traversal_shortcuts:
+- {operation: 'Patient/$everything', description: 'Returns the complete record graph for one patient in a single Bundle, replacing manual per-resource traversal.'}
+- {operation: 'Patient/$export-ccda', description: 'Returns the full medical history as a single C-CDA document.'}
+- {operation: 'Group/$everything', description: 'The cohort equivalent of Patient $everything.'}
+- {parameters: [_include, _revinclude], description: 'FHIR reference chaining within a single search.'}
+terminology:
+- {system: LOINC, used_by: [Observation, DiagnosticReport], validation: 'invalid codes rejected with an OperationOutcome issue code invalid'}
+- {system: 'http://hl7.org/fhir/sid/us-npi', used_by: [Practitioner, PractitionerRole]}
+- {system: 'http://terminology.hl7.org/CodeSystem/v2-0203', used_by: [Patient.identifier]}
+- {resolution: ['ValueSet/$expand', 'ValueSet/$search', 'CodeSystem/$lookup']}
+coverage:
+  resources_declared: 43
+  resources_modelled_here: 17
+  resources_with_openapi: 10
+  note: >-
+    The core_entities list covers the resources that carry Health Gorilla-specific
+    behaviour or custom operations. The remaining declared resources are standard
+    FHIR clinical resources hanging off Patient; their relationships are captured
+    in relationships[] without a separate entity block.
+render: null
+render_note: No subway/ visual exists for this provider.
+related:
+- fhir/health-gorilla-fhir.yml
+- conventions/health-gorilla-conventions.yml

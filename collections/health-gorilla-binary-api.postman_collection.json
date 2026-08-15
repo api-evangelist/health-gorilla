@@ -1,0 +1,134 @@
+{
+  "item": [
+    {
+      "id": "327ffe17-2dcb-48bb-9ab2-ced41522c1d1",
+      "name": "Binary",
+      "description": {
+        "content": "Raw clinical document content.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "661271ca-0dc2-4a2a-824e-a0f5bf817852",
+          "name": "Retrieve raw document content.",
+          "request": {
+            "name": "Retrieve raw document content.",
+            "description": {},
+            "url": {
+              "path": [
+                "Binary",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The logical id of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "42652cae-d720-4bdd-98d2-6d1995fcdd00",
+              "name": "The document content (CCDA, PDF, or other format).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "Binary",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The logical id of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"Binary\",\n  \"id\": \"string\",\n  \"contentType\": \"string\",\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.healthgorilla.com/fhir/R4",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f5ff239a-fe51-42bc-806e-9ec143563f05",
+    "name": "Health Gorilla FHIR R4 Binary API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.\n\nContact Support:\n Name: Health Gorilla Developer Support\n Email: info@healthgorilla.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "item": [
+    {
+      "id": "90bf5342-7f2a-4cea-9cf9-35b6409a6c85",
+      "name": "RequestGroup",
+      "description": {
+        "content": "Parent diagnostic orders nesting individual ServiceRequest tests.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "94db3f16-680e-44b9-8d03-9f781df3d50a",
+          "name": "Submit a diagnostic order.",
+          "request": {
+            "name": "Submit a diagnostic order.",
+            "description": {
+              "content": "Creates a RequestGroup parent order that nests one or more ServiceRequest resources (individual tests) for submission to a participating diagnostic laboratory or radiology partner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "RequestGroup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"<string>\",\n  \"id\": \"<string>\",\n  \"status\": \"<string>\",\n  \"intent\": \"<string>\",\n  \"subject\": \"<object>\",\n  \"author\": \"<object>\",\n  \"action\": [\n    {\n      \"resource\": \"<object>\"\n    },\n    {\n      \"resource\": \"<object>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48ad6e9f-135a-4b36-a3c0-182919d56c1c",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "RequestGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"resourceType\": \"RequestGroup\",\n  \"id\": \"<string>\",\n  \"status\": \"active\",\n  \"intent\": \"order\",\n  \"subject\": \"<object>\",\n  \"author\": \"<object>\",\n  \"action\": [\n    {\n      \"resource\": \"<object>\"\n    },\n    {\n      \"resource\": \"<object>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"RequestGroup\",\n  \"id\": \"<string>\",\n  \"status\": \"active\",\n  \"intent\": \"order\",\n  \"subject\": \"<object>\",\n  \"author\": \"<object>\",\n  \"action\": [\n    {\n      \"resource\": \"<object>\"\n    },\n    {\n      \"resource\": \"<object>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "066b82e0-4f09-4688-913a-5f03ea8cedfc",
+          "name": "Search RequestGroup orders.",
+          "request": {
+            "name": "Search RequestGroup orders.",
+            "description": {},
+            "url": {
+              "path": [
+                "RequestGroup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "patient",
+                  "value": "<string>",
+                  "description": "Reference to the subject Patient (e.g. Patient/{id})."
+                },
+                {
+                  "disabled": false,
+                  "key": "_count",
+                  "value": "<integer>",
+                  "description": "Number of results per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "40e2df03-384f-4b14-93b3-f2f3345ed478",
+              "name": "A FHIR Bundle of RequestGroup resources.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "RequestGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "patient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_count",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"searchset\",\n  \"total\": 6188,\n  \"link\": [\n    {\n      \"relation\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"relation\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"entry\": [\n    {\n      \"fullUrl\": \"string\",\n      \"resource\": {}\n    },\n    {\n      \"fullUrl\": \"string\",\n      \"resource\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a23ae7b-a2aa-45db-9e44-c1e17f259237",
+          "name": "Read a RequestGroup order by id.",
+          "request": {
+            "name": "Read a RequestGroup order by id.",
+            "description": {},
+            "url": {
+              "path": [
+                "RequestGroup",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The logical id of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8248de11-2f52-4ee2-b90a-b87efc1b5046",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "RequestGroup",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The logical id of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/fhir+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/fhir+json"
+                }
+              ],
+              "body": "{\n  \"resourceType\": \"RequestGroup\",\n  \"id\": \"<string>\",\n  \"status\": \"active\",\n  \"intent\": \"order\",\n  \"subject\": \"<object>\",\n  \"author\": \"<object>\",\n  \"action\": [\n    {\n      \"resource\": \"<object>\"\n    },\n    {\n      \"resource\": \"<object>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.healthgorilla.com/fhir/R4",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "80c5ac67-7098-4312-8cb4-dc88c9820fd3",
+    "name": "Health Gorilla FHIR R4 Binary RequestGroup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.\n\nContact Support:\n Name: Health Gorilla Developer Support\n Email: info@healthgorilla.com",
+      "type": "text/plain"
+    }
+  }
+}

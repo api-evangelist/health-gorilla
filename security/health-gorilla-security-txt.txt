@@ -1,0 +1,15 @@
+# Harvested verbatim from https://www.healthgorilla.com/home/security-txt on 2026-08-14.
+# NOTE: Health Gorilla publishes this document as an HTML page, NOT as a served
+# RFC 9116 file at /.well-known/security.txt (that path returns the Webflow
+# soft-404 shell). The lines below are the document's own content, unmodified.
+
+# Our Security Email Address
+Contact: mailto: security@healthgorilla.com
+# Our OpenPGP Key
+Encryption: https://healthgorilla.com/pgp-key.txt
+# Our Security/Privacy Policy
+Policy: https://www.healthgorilla.com/home/privacy-policy
+# Page Expiration
+Expires: 2025-12-31
+# Our Preferred Language for communication
+Preferred-Languages: EN

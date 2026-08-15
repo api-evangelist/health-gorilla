@@ -1,0 +1,93 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.healthgorilla.com/reference/fhir-versions
+description: >-
+  Versioning, release and operational-transparency posture for the Health
+  Gorilla API. Versions are selected by URL path (R4 current, STU3 legacy), an
+  additional legacy REST API version can be pinned to the OAuth token at
+  issuance, and releases ship on a numbered train published as a dated public
+  changelog. Health Gorilla runs a public Atlassian status page with
+  component-level health for the API server, both Patient360 gateways, and lab
+  connectivity. No formal written deprecation policy with Sunset/Deprecation
+  header support was found.
+versioning:
+  scheme: uri-path
+  current: R4
+  versions:
+  - {version: R4, path: /fhir/R4, status: current, description: 'Direct access to normalized FHIR resources and most synchronous interactions.'}
+  - {version: STU3, path: /fhir/3.0, status: legacy, description: 'Legacy workflows including Patient360 record retrieval and document aggregation.'}
+  discovery: GET /fhir/R4/metadata
+  docs: https://developer.healthgorilla.com/reference/fhir-versions
+  token_pinned_version:
+    parameter: hg_rest_api_version
+    example: '10-01-2019'
+    response_field: hg_rest_api_version
+    error: 400 error=unsupported_api_version
+    docs: https://developer.healthgorilla.com/reference/oauth-20-authentication
+release_train:
+  scheme: numbered release with dotted patch suffix
+  format: v<train>_<patch>
+  current: v2629_7
+  cadence: rolling; patch releases ship days apart
+  sandbox_first: >-
+    New feature releases are deployed to the sandbox before production, giving
+    integrators a window to test against upcoming changes.
+  changelog: https://developer.healthgorilla.com/changelog
+  detail: changelog/health-gorilla-changelog.yml
+deprecation:
+  policy_url: null
+  policy_documented: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  note: >-
+    No written deprecation or sunset policy was found on the developer portal,
+    in the llms.txt documentation index, or on the website. STU3 is described as
+    "legacy" and remains supported with no announced retirement date. Health
+    Gorilla directs integrators requiring a different FHIR version or workflow to
+    contact Support rather than to a published policy.
+  searched:
+  - https://developer.healthgorilla.com/llms.txt
+  - https://developer.healthgorilla.com/reference/fhir-versions
+  - https://developer.healthgorilla.com/reference/user-identity-api-versioning
+status_page:
+  url: https://status.healthgorilla.com
+  provider: Atlassian Statuspage
+  alias: https://healthgorilla.statuspage.io
+  http_status: 200
+  components:
+  - Web Portal
+  - API Server
+  - P360 Initiating Gateway
+  - P360 Responding Gateway
+  - Lab Network
+  - Lab Connectivity (General)
+  - Lab Connectivity (Quest)
+  - Lab Connectivity (Labcorp)
+  - Fax Gateway
+  - Direct Messaging
+  - Non-Health Gorilla Component
+  subscriptions: [email, Slack, Atom, RSS]
+  incident_history: published
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment is published. Service levels are governed
+    by the customer's contract; pricing and terms are sales-led.
+support:
+  email: support@healthgorilla.com
+  portal: https://support.healthgorilla.com
+  contact_form: https://www.healthgorilla.com/home/contact
+terms:
+  api_terms_of_use: https://developer.healthgorilla.com/docs/terms-of-use
+  website_terms: https://www.healthgorilla.com/home/terms-of-use
+  privacy: https://www.healthgorilla.com/home/privacy-policy
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in openapi/ carries deprecated: true, and the live R4
+  CapabilityStatement declares no deprecated resources or operations.
+x-evidence:
+- {url: 'https://developer.healthgorilla.com/reference/fhir-versions.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://status.healthgorilla.com/', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/changelog', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://support.healthgorilla.com', http_status: 200, fetched: '2026-08-14'}

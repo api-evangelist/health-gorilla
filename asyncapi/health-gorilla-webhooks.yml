@@ -1,0 +1,170 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.healthgorilla.com/reference/webhooks-notifications
+description: >-
+  Health Gorilla operates a real event surface built on FHIR R4 Subscription
+  resources with rest-hook and websocket channels. It publishes no AsyncAPI
+  document — searched the docs, the llms.txt index, the GitHub org and
+  /asyncapi.yaml on every host, all misses — so this artifact captures the
+  webhook catalog the provider does document: channels, criteria, supported
+  resources, payload media types, HMAC signing, delivery retry policy and
+  subscription lifecycle. No AsyncAPI was fabricated.
+spec_type: none
+asyncapi_published: false
+asyncapi_probe:
+- {url: 'https://api.healthgorilla.com/asyncapi.yaml', http_status: 404, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/asyncapi.yaml', http_status: 404, fetched: '2026-08-14'}
+transport:
+  mechanism: FHIR R4 Subscription
+  endpoint: https://api.healthgorilla.com/fhir/R4/Subscription
+  interactions: [create, read, update (FHIR Patch), delete, search-type]
+  search_params: [status, type]
+  fhir_versions: [R4, STU3]
+  docs: https://developer.healthgorilla.com/reference/subscribing-to-events
+channels:
+- type: rest-hook
+  description: HTTPS POST delivery of the triggering resource to a customer endpoint.
+  requirements:
+  - Endpoint must use HTTPS
+  - TLS 1.2 or higher required
+  - Self-signed or invalid certificates cause delivery failure
+  - Plain http:// endpoints are rejected
+  payload_media_types:
+  - application/fhir+json
+  - application/hg-event+json
+  - application/hg-ocr+json
+  - 'none (no payload — poll with _lastUpdated instead)'
+  user_agent: HealthGorilla-FHIR-Webhook
+- type: websocket
+  description: Event-driven notifications over a persistent connection.
+  auth: OAuth 2.0 access token required
+  endpoint_discovery: declared in the FHIR CapabilityStatement
+events:
+  criteria_model: >-
+    The Subscription.criteria field is a FHIR search expression naming the
+    resource type and optional attribute filters. Health Gorilla asks integrators
+    to agree criteria with their integration team.
+  examples:
+  - {resource: DocumentReference, criteria: 'DocumentReference?status=current'}
+  - {resource: Encounter, criteria: 'Encounter?status=finished'}
+  - {resource: AllergyIntolerance, criteria: 'AllergyIntolerance?clinical-status=active'}
+  - {resource: Observation, criteria: 'Observation?code=XXX'}
+  - {resource: Immunization, criteria: 'Immunization?status=completed'}
+  - {resource: Bundle, criteria: 'Bundle?message.event=admin-notify', family: ADT}
+  - {resource: Patient, criteria: Patient.P360, family: Patient360 document import}
+  supported_resources:
+  - DiagnosticReport
+  - DocumentReference
+  - Condition
+  - AllergyIntolerance
+  - Immunization
+  - MedicationRequest
+  - MedicationStatement
+  - Observation
+  - Encounter
+  - CarePlan
+  - Goal
+  - Procedure
+  - Coverage
+  trigger: resource matching the criteria is created or updated
+  note: Additional resources and criteria may be enabled per configuration.
+event_families:
+- name: Clinical resource notifications
+  description: Fires when a matching clinical resource is created or updated.
+  payload: full FHIR resource (application/fhir+json)
+- name: ADT notifications
+  description: Admission, discharge and transfer message events delivered as FHIR Bundles.
+  criteria: 'Bundle?message.event=admin-notify'
+  search_params:
+  - {name: message.event, type: token, values: [admin-notify], required: true}
+  - {name: message.focus, type: reference, description: Patient logical ID, required: false}
+  - {name: _lastUpdated, type: date, required: false}
+  - {name: _offset, type: number, default: 0, required: false}
+  - {name: _count, type: number, default: 100, required: false}
+  - {name: eventType, type: string, description: HL7 v2 event codes A01 through A62, required: false}
+  docs: https://developer.healthgorilla.com/docs/adt-network
+- name: Patient360 document import
+  description: Fires when new documents are imported for a patient via Patient360 retrieval, single import, or batch import.
+  criteria: Patient.P360
+  payload_shape: '{"resource": "Patient", "id": "Patient/<id>"}'
+- name: Lightweight event pointer
+  description: Minimal reference payload naming only the resource type and id, for clients that re-fetch.
+  media_type: application/hg-event+json
+  payload_shape: '{"resource": "RequestGroup", "id": "RequestGroup/<id>"}'
+security:
+  signing:
+    algorithm: HMAC-SHA512
+    signature_header: X-Hg-Signature
+    signature_prefix: sha512=
+    signed_headers: [Date, X-Hg-EventId, Digest]
+    string_to_sign: "<Date>\\n<X-Hg-EventId>\\n<Digest>"
+    verification: >-
+      Compute the HMAC-SHA512 of the constructed string using the configured
+      signing secret, prefix with sha512=, and compare to X-Hg-Signature.
+  notification_headers: [Date, Digest, X-Hg-EventId, X-Hg-EventCreated, X-Hg-Signature]
+  delivery_headers: [Content-Type, User-Agent, X-Hg-EventId]
+  outbound_oauth:
+    supported: true
+    grant_type: client-credentials
+    extension_url: https://www.healthgorilla.com/fhir/StructureDefinition/subscription-channelRestHookOAuth
+    required_attributes: [clientId, clientSecret, endpoint]
+    optional_attributes: [scope, header]
+    note: >-
+      Credentials used to authenticate Health Gorilla to the customer's webhook
+      endpoint must be issued by the customer's own organization, not the OAuth
+      credentials Health Gorilla issues for API access.
+  docs: https://developer.healthgorilla.com/reference/webhook-delivery-security
+delivery:
+  success_statuses: [200, 202]
+  failure_conditions:
+  - non-2xx response status
+  - request timeout
+  - 4xx or 5xx from the endpoint
+  - invalid or expired SSL certificate
+  - endpoint unreachable or DNS resolution failure
+  retry_policy:
+    strategy: exponential backoff
+    attempts:
+    - {attempt: 1, delay: ~5 seconds}
+    - {attempt: 2, delay: ~30 seconds}
+    - {attempt: 3, delay: ~2 minutes}
+    - {attempt: final, delay: ~10 minutes}
+    after_final: event is discarded and will not be redelivered
+  subscription_retry:
+    interval: every 15 minutes
+    note: >-
+      Documented separately on the Subscribing to Events page as the
+      subscription-level redelivery cadence, alongside the per-event backoff above.
+  consumer_idempotency:
+    required: recommended
+    strategies:
+    - Track resource.id plus meta.lastUpdated to detect duplicates.
+    - Store hashes or delivery timestamps to prevent double ingestion.
+  reconciliation: >-
+    Webhook delivery is not guaranteed. Periodically reconcile against the API
+    using the FHIR _lastUpdated search parameter to catch missed events.
+  docs: https://developer.healthgorilla.com/reference/handling-failures-retries
+lifecycle:
+  active_subscription_limit: 30
+  limit_increase: available on request
+  over_limit_status: 422
+  auto_disable_conditions:
+  - Last successful delivery is 3 days old or older AND delivery has failed more than 10 times
+  - No successful delivery has ever occurred AND delivery has failed more than 20 times
+  re_enable: A disabled subscription must be re-enabled before notifications resume.
+polling_fallback:
+  supported: true
+  mechanism: FHIR search with the _lastUpdated parameter
+  posture: >-
+    Health Gorilla states webhooks are the preferred method and polling should
+    only be used when webhook delivery is not feasible.
+  docs: https://developer.healthgorilla.com/reference/polling
+related:
+- conventions/health-gorilla-conventions.yml
+- fhir/health-gorilla-fhir.yml
+- errors/health-gorilla-problem-types.yml
+x-evidence:
+- {url: 'https://developer.healthgorilla.com/reference/webhooks-notifications.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/subscribing-to-events.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/webhook-delivery-security.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/handling-failures-retries.md', http_status: 200, fetched: '2026-08-14'}

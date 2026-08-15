@@ -1,0 +1,124 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.healthgorilla.com/reference/error-handling
+description: >-
+  Health Gorilla returns a standard HTTP status plus a FHIR OperationOutcome
+  resource on every failure, across both the R4 and STU3 surfaces. It does not
+  use RFC 9457 application/problem+json; OperationOutcome is the FHIR-native
+  equivalent and carries the same machine-readable role. Statuses and issue
+  codes below are published by Health Gorilla; the worked scenarios come from its
+  Common Error Scenarios page verbatim.
+format: fhir-operationoutcome
+media_type: application/fhir+json
+rfc9457: false
+envelope:
+  resourceType: OperationOutcome
+  fields:
+  - {name: 'issue[].severity', type: code, values: [fatal, error, warning, information]}
+  - {name: 'issue[].code', type: code, description: coded classification of the issue}
+  - {name: 'issue[].diagnostics', type: string, description: human-readable explanation}
+  - {name: 'issue[].location', type: 'string[]', description: FHIR path or JSONPath to the offending field}
+  - {name: 'issue[].details.text', type: string, description: optional short description}
+  docs: https://developer.healthgorilla.com/reference/fhir-operationoutcome-format
+statuses:
+- {status: 200, meaning: OK, description: The request succeeded and a response body is returned.}
+- {status: 201, meaning: Created, description: A new FHIR resource was created.}
+- {status: 202, meaning: Accepted, description: 'Accepted for asynchronous processing (for example $p360-retrieve), or an in-flight idempotent replay.'}
+- {status: 204, meaning: No Content, description: The operation succeeded with no response body.}
+- {status: 400, meaning: Bad Request, description: Missing fields, wrong types, invalid values, or a malformed or empty request body.}
+- {status: 401, meaning: Unauthorized, description: Missing, expired or invalid access token.}
+- {status: 403, meaning: Forbidden, description: Valid token lacking the required scope or role.}
+- {status: 404, meaning: Not Found, description: The specified resource does not exist.}
+- {status: 409, meaning: Conflict, description: Resource already exists, cannot be updated due to conflict, or an idempotency key was reused with a different payload.}
+- {status: 422, meaning: Unprocessable Entity, description: 'Semantically correct request that failed FHIR validation, an unresolvable reference, or an exceeded active-subscription limit.'}
+- {status: 500, meaning: Internal Server Error, description: Unexpected system error; retry later.}
+- {status: 503, meaning: Service Unavailable, description: Temporarily unavailable due to maintenance or overload.}
+issue_codes:
+- {code: invalid, meaning: General input validation error}
+- {code: required, meaning: Missing required field}
+- {code: forbidden, meaning: Access denied due to permissions}
+- {code: not-found, meaning: Referenced resource does not exist}
+- {code: duplicate, meaning: Duplicate resource or identifier}
+- {code: conflict, meaning: Data conflict or business rule violation}
+- {code: structure, meaning: Payload is structurally invalid}
+- {code: processing, meaning: Unexpected internal processing error}
+  # The complete registry is the HL7 FHIR issue-type value set; Health Gorilla
+  # publishes the partial list above and links to the HL7 specification.
+issue_code_registry: https://hl7.org/fhir/operationoutcome-definitions.html#OperationOutcome.issue.code
+problems:
+- status: 422
+  issue_code: required
+  title: Missing required field
+  diagnostics_example: "The 'patient' field is required."
+  location_example: AllergyIntolerance.patient
+  remediation: Populate every element the FHIR profile marks as required before POSTing the resource.
+  source: https://developer.healthgorilla.com/reference/common-error-scenarios
+- status: 422
+  issue_code: invalid
+  title: Invalid code value
+  diagnostics_example: "The code 'INVALID-CODE' is not recognized for LOINC."
+  remediation: >-
+    Validate coding.code against the coding.system's value set. Use the
+    ValueSet $expand and CodeSystem $lookup operations declared in the
+    CapabilityStatement to resolve valid codes before submission.
+  source: https://developer.healthgorilla.com/reference/common-error-scenarios
+- status: 403
+  issue_code: forbidden
+  title: Unauthorized scope
+  diagnostics_example: The current access token does not allow write access to this resource.
+  oauth_error: insufficient_scope
+  remediation: >-
+    The token lacks the scope required for the operation. Scopes are fixed at
+    client registration and cannot be self-expanded — request the additional
+    scope through Health Gorilla, then re-authorize.
+  source: https://developer.healthgorilla.com/reference/common-error-scenarios
+- status: 409
+  issue_code: duplicate
+  title: Duplicate resource conflict
+  diagnostics_example: A resource with this identifier already exists.
+  remediation: Search by identifier before creating, or update the existing resource instead.
+  source: https://developer.healthgorilla.com/reference/common-error-scenarios
+- status: 422
+  issue_code: not-found
+  title: Invalid reference
+  diagnostics_example: Patient/1234 could not be resolved.
+  remediation: Resolve every literal reference to an existing resource before submitting the payload.
+  source: https://developer.healthgorilla.com/reference/common-error-scenarios
+- status: 409
+  issue_code: conflict
+  title: Idempotency key reused with a different payload
+  diagnostics_example: '(empty body; Content-Length: 0)'
+  headers: [X-HG-Request-Id]
+  remediation: >-
+    Generate a fresh UUID v4 for HG-Idempotency-Key whenever the request payload
+    changes. Replays of the same payload inside the window return the original
+    response instead.
+  source: https://developer.healthgorilla.com/reference/idempotent-requests
+- status: 422
+  issue_code: processing
+  title: Active subscription limit exceeded
+  remediation: >-
+    Health Gorilla allows 30 active FHIR Subscriptions by default. Delete unused
+    subscriptions or request a higher limit.
+  source: https://developer.healthgorilla.com/reference/subscribing-to-events
+- status: 401
+  issue_code: security
+  title: Expired or invalid access token
+  oauth_error: [expired_token, invalid_token]
+  remediation: Refresh the token if a refresh token was issued, otherwise re-run the authorization flow.
+  source: https://developer.healthgorilla.com/reference/oauth-20-authentication
+oauth_errors:
+- {error: invalid_grant, description: 'The authorization code, refresh token or JWT assertion is invalid, expired, or does not match the client.', status: 400}
+- {error: invalid_client, description: Client authentication failed or the client_id is not recognized., status: 400}
+- {error: unsupported_grant_type, description: The requested grant type is not supported., status: 400}
+- {error: unsupported_api_version, description: The hg_rest_api_version requested at token issuance is not supported., status: 400}
+- {error: insufficient_scope, description: The access token does not include the scope required for the API., status: 403}
+troubleshooting: https://developer.healthgorilla.com/reference/troubleshooting-tips
+related:
+- conventions/health-gorilla-conventions.yml
+- authentication/health-gorilla-authentication.yml
+x-evidence:
+- {url: 'https://developer.healthgorilla.com/reference/error-handling.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/http-status-codes.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/fhir-operationoutcome-format.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/reference/common-error-scenarios.md', http_status: 200, fetched: '2026-08-14'}

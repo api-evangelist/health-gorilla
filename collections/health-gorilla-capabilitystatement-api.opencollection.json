@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Health Gorilla FHIR R4 Binary CapabilityStatement API",
+    "version": "R4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CapabilityStatement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the FHIR server CapabilityStatement.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/metadata"
+          },
+          "docs": "Returns the FHIR R4 CapabilityStatement describing supported resources, search parameters, operations, and authentication."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

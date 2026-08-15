@@ -1,0 +1,125 @@
+generated: '2026-08-14'
+method: probed
+source: live GET of /.well-known/* on every apis.yml + OpenAPI servers[] host
+description: >-
+  Well-known discovery probe of every Health Gorilla host. The FHIR API host
+  api.healthgorilla.com serves two real machine-readable discovery documents at
+  RFC 8615 paths — a SMART App Launch configuration and an OpenID Connect
+  discovery document — and the web host serves the matching JWKS. All other
+  probed paths miss. The marketing host www.healthgorilla.com is a Webflow
+  single-page catch-all that answers HTTP 200 with the same HTML shell for every
+  unknown path, so its 200s on /.well-known/* are soft-404s and are recorded as
+  misses, not documents.
+hosts:
+- host: https://api.healthgorilla.com
+  role: FHIR R4 API host (apis.yml baseURL + OpenAPI servers[])
+  documents:
+  - path: /.well-known/smart-configuration
+    spec: SMART App Launch 2.x (HL7)
+    status: 200
+    content_type: application/json
+    file: health-gorilla-smart-configuration.json
+    document: true
+  - path: /.well-known/openid-configuration
+    spec: OpenID Connect Discovery 1.0
+    status: 200
+    content_type: application/json
+    file: health-gorilla-openid-configuration.json
+    document: true
+  - path: /.well-known/oauth-authorization-server
+    spec: RFC 8414
+    status: 404
+    document: false
+  - path: /.well-known/security.txt
+    spec: RFC 9116
+    status: 404
+    document: false
+  - path: /.well-known/api-catalog
+    spec: RFC 9727
+    status: 404
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    spec: A2A 1.0.0
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    spec: A2A pre-0.3 legacy
+    status: 404
+    document: false
+- host: https://www.healthgorilla.com
+  role: website + OAuth 2.0 authorization server (issuer per openid-configuration)
+  documents:
+  - path: /.well-known/jwks.json
+    spec: RFC 7517 JSON Web Key Set
+    status: 200
+    content_type: application/json
+    file: health-gorilla-jwks.json
+    document: true
+    note: >-
+      Referenced as jwks_uri by the openid-configuration served on
+      api.healthgorilla.com.
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    note: >-
+      Soft-404. Webflow catch-all returns the site HTML shell for every unknown
+      path; body is <!DOCTYPE html>, not RFC 9116 text. A security.txt document
+      IS published by Health Gorilla, but as an HTML page at
+      /home/security-txt rather than at the well-known path — captured in
+      security/health-gorilla-vulnerability-disclosure.yml.
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    note: Soft-404 HTML shell, not an AgentCard. Rejected.
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    note: Soft-404 HTML shell, not an AgentCard. Rejected.
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    note: Soft-404 HTML shell. Rejected.
+- host: https://sandbox.healthgorilla.com
+  role: sandbox FHIR R4 host (OpenAPI servers[])
+  documents:
+  - path: /.well-known/smart-configuration
+    spec: SMART App Launch 2.x (HL7)
+    status: 200
+    content_type: application/json
+    document: true
+    note: >-
+      Sandbox twin of the production document; OAuth endpoints point at
+      sandbox.healthgorilla.com rather than www.healthgorilla.com. Not saved
+      separately — the production document is the canonical capture.
+- host: https://developer.healthgorilla.com
+  role: developer portal / docs host (ReadMe)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    spec: RFC 9728
+    status: 404
+    document: false
+    note: >-
+      Probed because developer.healthgorilla.com/mcp is a live MCP endpoint that
+      returns 401 Authorization required; it publishes no RFC 9728 protected
+      resource metadata to discover its authorization server.
+  - path: /.well-known/oauth-authorization-server
+    spec: RFC 8414
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    status: 404
+    document: false
+summary:
+  hosts_probed: 4
+  paths_probed: 22
+  real_documents: 4
+  soft_404_rejected: 5

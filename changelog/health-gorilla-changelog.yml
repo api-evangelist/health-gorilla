@@ -1,0 +1,141 @@
+generated: '2026-08-14'
+method: searched
+source: https://developer.healthgorilla.com/changelog
+description: >-
+  Health Gorilla publishes a dated public changelog on its developer portal,
+  organised by numbered release train. Entries are grouped by product area
+  (Interoperability, Administration, ADT Notifications, Patient Chart Viewer,
+  Patient360, Lab Network) and split into new features, enhancements and
+  resolutions. Releases land in the sandbox first and are folded into production
+  days later, and the entries name the sandbox and production dates separately.
+  Items with a visible interface change are marked [UI]. Recent window only — the
+  live changelog is the source of truth.
+scheme: numbered release train with dotted patch suffix (v<train>_<patch>)
+current_version: v2629_7
+cadence: >-
+  A major train roughly every 7 weeks with patch releases every few days;
+  sandbox deployment precedes production by about a week on a major train.
+breaking_change_policy: >-
+  Not published. No deprecation or breaking-change policy accompanies the
+  changelog; the entries observed in this window are additive or corrective.
+feed: null
+feed_note: No RSS/Atom feed or machine-readable changelog endpoint was found for the developer-portal changelog.
+entries:
+- version: v2629_7
+  date: '2026-08-05'
+  environment: production
+  breaking: false
+  additions: []
+  resolutions:
+  - 'Patient360 ADT-triggered refresh: fixed silently dropped "last retrieved" updates from ADT messages.'
+  - 'Lab Network vendor accounts: fixed the Vendors screen failing to load for practices with many vendor accounts.'
+  url: https://developer.healthgorilla.com/changelog/v2629_7
+- version: v2629_6
+  date: '2026-08-03'
+  environment: production
+  breaking: false
+  additions: []
+  resolutions:
+  - 'Patient Chart iFrame launch: fixed a "session has expired" error blocking iFrame launch.'
+  - 'Lab Network order attachments: fixed file attachment failing in the Lab Network iFrame.'
+  - 'ADT-initiated document query: fixed a timing issue returning no documents when patient matching had not finished.'
+  url: https://developer.healthgorilla.com/changelog/v2629_6
+- version: v2629_5
+  date: '2026-07-23'
+  environment: production
+  breaking: false
+  additions: []
+  resolutions:
+  - 'Ask-on-Order-Entry questionnaire: FHIR R4 code searches now return questions for certain lab tests.'
+  - 'Patient Chart immunization overlay close button fixed.'
+  - Removed the Community Data Only icon from Patient Chart document grids.
+  url: https://developer.healthgorilla.com/changelog/v2629_5
+- version: v2629_3
+  date: '2026-07-21'
+  environment: production
+  sandbox_date: '2026-07-16'
+  breaking: false
+  additions: []
+  resolutions:
+  - 'SSO login page cleanup: removed non-functional Okta and Azure buttons; SSO-only tenants now auto-redirect to their identity provider.'
+  url: https://developer.healthgorilla.com/changelog/v2629_3
+- version: v2629
+  date: '2026-07-14'
+  environment: production
+  sandbox_date: '2026-07-07'
+  breaking: false
+  additions:
+  - 'FHIR R4 DiagnosticReport now supports a clinical test result type alongside lab and radiology results.'
+  - 'PractitionerRole API accepts organization and identifier (NPI) parameters together in a single query.'
+  - 'ADT: HL7 v2 A29 (Delete Patient) message support.'
+  - 'ADT (Canada): HL7 v2 A40 patient merge support.'
+  - 'ADT (Canada): patient identifier OID enrichment when an inbound message lacks the facility OID.'
+  - 'Patient Chart Viewer: USCDI v3 data classes — SDOH Goals, Health Concerns, Interventions, Assessments; lab specimen elements; Related Person contact detail; Clinical Tests category.'
+  - 'Network Administration: Purpose of Use filter, and Initiating/Responding organization columns on the Transactions screen.'
+  resolutions:
+  - 'ADT patient matching now treats name suffixes (Jr., Sr., III) as non-distinguishing.'
+  - 'Malformed request bodies now return 400 Bad Request instead of 500 Internal Server Error.'
+  - 'Fixed PractitionerRole.location being ignored, which blocked location-specific account numbers.'
+  - 'Fixed HTTP 500 from care-teams/members when the requested offset exceeded the total result count.'
+  - 'Fixed PDF download in Chrome and Edge when the portal is embedded in a cross-origin iFrame.'
+  - 'Patient Chart: fixed duplicate medication listings and "undefined" Related Person name rendering.'
+  url: https://developer.healthgorilla.com/changelog/v2629
+- version: v2622_8
+  date: null
+  environment: production
+  breaking: false
+  additions: []
+  resolutions:
+  - 'IAS query address matching: send the patient address exactly as verified on the access token, without reformatting.'
+  - 'Patient Chart document retrieval: records without a service date are retained instead of dropped.'
+  url: https://developer.healthgorilla.com/changelog/v2622_8
+- version: v2622_7
+  date: null
+  environment: production
+  breaking: false
+  additions: []
+  resolutions:
+  - 'CommonWell document import: extended the v4.4 document-handling fix across all import paths.'
+  url: https://developer.healthgorilla.com/changelog/v2622_7
+- version: v2622_6
+  date: null
+  environment: production
+  breaking: false
+  additions: []
+  resolutions:
+  - 'Lab result-to-order linking expanded beyond order number to include patient details.'
+  - 'Fixed parsing and processing errors blocking some CommonWell document imports.'
+  url: https://developer.healthgorilla.com/changelog/v2622_6
+- version: v2622
+  date: null
+  environment: production
+  breaking: false
+  additions:
+  - 'Patient Chart APIs support additional USCDI v3.1 data classes: Clinical Tests, laboratory specimen details, Health Insurance, Care Team Members, Encounter disposition, and new medical history record types (Goals, Health Concerns, Interventions, Indications).'
+  - 'New Related Person endpoints on the Patient endpoint; expanded Gender and Ethnicity demographic metadata.'
+  - 'Network Stats Site Configuration report now reports Patient Chart licensing status per tenant.'
+  resolutions: []
+  url: https://developer.healthgorilla.com/changelog/v2622
+- version: v2615
+  date: null
+  environment: production
+  breaking: false
+  additions:
+  - 'Shareback channel attribution: channel classification for medical history records, internal/external source identification, and a new localImport channel for self-locator flows.'
+  - 'Network Admin links HIN request statistics to Patient360 audit transactions.'
+  resolutions: []
+  url: https://developer.healthgorilla.com/changelog/v2615
+window:
+  entries_captured: 10
+  oldest: v2615
+  newest: v2629_7
+  note: >-
+    Dates are recorded only where the entry states one. Entries v2622 and older
+    publish no date in their body; the changelog index orders them but the
+    per-entry markdown carries no date line.
+related:
+- lifecycle/health-gorilla-lifecycle.yml
+x-evidence:
+- {url: 'https://developer.healthgorilla.com/changelog', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/changelog/v2629_7.md', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://developer.healthgorilla.com/changelog/v2629.md', http_status: 200, fetched: '2026-08-14'}

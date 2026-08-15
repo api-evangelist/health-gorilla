@@ -1,0 +1,226 @@
+generated: '2026-08-14'
+method: searched
+source: https://api.healthgorilla.com/fhir/R4/metadata
+description: >-
+  Standards conformance for the Health Gorilla API, asserted from the live FHIR
+  R4 CapabilityStatement, the SMART and OpenID Connect discovery documents served
+  from the API host, and Health Gorilla's own published documentation. Health
+  Gorilla is unusually well positioned here: it is a dual-designated TEFCA QHIN
+  and California QHIO, and its conformance to FHIR R4 and SMART-on-FHIR is
+  machine-verifiable from documents it serves anonymously rather than only
+  claimed in prose.
+standards:
+- id: fhir-r4
+  name: HL7 FHIR R4
+  conforms: true
+  version: 4.0.1
+  evidence: >-
+    Live CapabilityStatement at https://api.healthgorilla.com/fhir/R4/metadata
+    declares fhirVersion 4.0.1, 43 resource types, and mode server.
+  source: fhir/health-gorilla-r4-capabilitystatement.json
+- id: fhir-stu3
+  name: HL7 FHIR STU3
+  conforms: true
+  evidence: >-
+    Documented legacy surface at /fhir/3.0 used by Patient360 record retrieval
+    and document aggregation.
+  source: https://developer.healthgorilla.com/reference/about-stu3
+  note: The STU3 CapabilityStatement is not served anonymously (GET /fhir/3.0/metadata returned 404).
+- id: smart-on-fhir
+  name: SMART App Launch
+  conforms: true
+  evidence: >-
+    CapabilityStatement rest.security.service declares code SMART-on-FHIR with
+    the smarthealthit oauth-uris extension; a SMART configuration document is
+    served at /.well-known/smart-configuration listing capabilities
+    launch-standalone, client-public, client-confidential-symmetric,
+    permission-offline, permission-user, permission-system, sso-openid-connect.
+  source: well-known/health-gorilla-smart-configuration.json
+- id: us-core
+  name: HL7 US Core Implementation Guide
+  conforms: partial
+  evidence: >-
+    US Core profiles are referenced across the reference documentation
+    (US Core laboratory DiagnosticReport, US Core record via Patient $everything)
+    and the FHIR Profiles reference page. The CapabilityStatement does not carry
+    a us-core instantiates declaration, so this is asserted from docs rather than
+    machine-verified.
+  source: https://developer.healthgorilla.com/reference/fhir-profiles
+- id: uscdi-v3
+  name: USCDI v3 / v3.1
+  conforms: true
+  evidence: >-
+    Dedicated USCDI v3.1 coverage page; release v2622 and v2629 changelog entries
+    expand Patient Chart APIs and the FHIR surface to additional USCDI v3.1 data
+    classes.
+  source: https://developer.healthgorilla.com/docs/uscdi-v31-coverage
+- id: tefca
+  name: Trusted Exchange Framework and Common Agreement
+  conforms: true
+  role: Qualified Health Information Network (QHIN)
+  evidence: >-
+    Health Gorilla is a designated TEFCA QHIN and operates QHIN exchange
+    operations ($qhin-search on Patient and DocumentReference, qhinMessageDelivery
+    on Bundle, patient-qhin-smart-endpoints — all declared in the live
+    CapabilityStatement). Compliance and governance documented under IAS.
+  source: https://developer.healthgorilla.com/docs/network-participation
+- id: calhhs-dxf
+  name: CalHHS Data Exchange Framework
+  conforms: true
+  role: Qualified Health Information Organization (QHIO)
+  evidence: >-
+    Health Gorilla states it is the nation's first dual-designated QHIN and
+    California QHIO.
+  source: https://www.healthgorilla.com/home/company/health-data-security
+- id: ias
+  name: TEFCA Individual Access Services
+  conforms: true
+  evidence: >-
+    Full IAS product documentation covering retrieval lifecycle, enrollment and
+    authorization, token content and validation, and RCE/TEFCA governance
+    alignment.
+  source: https://developer.healthgorilla.com/docs/ias
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749)
+  conforms: true
+  evidence: >-
+    Authorization code, implicit, refresh token, JWT bearer
+    (urn:ietf:params:oauth:grant-type:jwt-bearer) and client credentials grants
+    documented; authorize/token/introspect/revoke endpoints published.
+  source: authentication/health-gorilla-authentication.yml
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration served at 200 with issuer, authorization
+    and token endpoints, jwks_uri, RS256 id_token signing, and the fhirUser claim.
+  source: well-known/health-gorilla-openid-configuration.json
+- id: rfc7517-jwks
+  name: JSON Web Key Set (RFC 7517)
+  conforms: true
+  evidence: RS256 signing key set served at https://www.healthgorilla.com/.well-known/jwks.json
+  source: well-known/health-gorilla-jwks.json
+- id: rfc7523-jwt-bearer
+  name: JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants
+  conforms: true
+  evidence: >-
+    grant_type urn:ietf:params:oauth:grant-type:jwt-bearer documented with an
+    assertion signed HS256 and aud set to https://api.healthgorilla.com/oauth/token.
+    private_key_jwt is also advertised as a token endpoint auth method.
+  source: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- id: rfc7591-dynamic-registration
+  name: OAuth 2.0 Dynamic Client Registration
+  conforms: partial
+  evidence: >-
+    A registration_endpoint (https://www.healthgorilla.com/oauth/register) is
+    advertised in the SMART configuration. Health Gorilla's own docs state scopes
+    are assigned during onboarding and cannot be self-assigned, so registration
+    is administratively gated in practice.
+- id: rfc9728-oauth-protected-resource
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-protected-resource returned 404 on both
+    api.healthgorilla.com and developer.healthgorilla.com, including for the
+    live MCP endpoint at developer.healthgorilla.com/mcp which returns 401
+    without a WWW-Authenticate resource_metadata pointer.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    Errors use the FHIR OperationOutcome resource in application/fhir+json, not
+    application/problem+json. This is the FHIR-native equivalent, not a gap.
+  source: errors/health-gorilla-problem-types.yml
+- id: idempotency
+  name: Idempotent request handling
+  conforms: true
+  evidence: >-
+    HG-Idempotency-Key header (UUID v4) on POST with a documented replay window,
+    409 Conflict on key reuse with a differing payload, and 202 Accepted while
+    the original request is in flight.
+  source: conventions/health-gorilla-conventions.yml
+- id: pagination
+  name: Cursor pagination
+  conforms: true
+  evidence: FHIR Bundle link.next with an opaque _cursor, plus _count and a discouraged _offset.
+  source: conventions/health-gorilla-conventions.yml
+- id: rfc8594-sunset
+  name: RFC 8594 Sunset header
+  conforms: unknown
+  evidence: No deprecation or sunset policy is published; header support is undocumented.
+- id: hipaa
+  name: HIPAA
+  conforms: true
+  type: regulatory
+  evidence: >-
+    "Complying with applicable health data laws, including HIPAA, is ingrained in
+    our culture, processes, and staff training."
+  source: https://www.healthgorilla.com/home/company/health-data-security
+- id: hitrust-r2
+  name: HITRUST Risk-based, 2-year (r2) Certification
+  conforms: true
+  type: certification
+  evidence: Named on the Health Data Security page; recertification announced on the company blog.
+  source: https://www.healthgorilla.com/home/company/health-data-security
+- id: soc2-type2
+  name: SOC 2 Type 2
+  conforms: true
+  type: certification
+  evidence: >-
+    Named on the Health Data Security page covering security, availability,
+    processing integrity, confidentiality and privacy.
+  source: https://www.healthgorilla.com/home/company/health-data-security
+- id: nist-800-63a-ial2
+  name: NIST SP 800-63A Identity Assurance Level 2
+  conforms: true
+  type: framework
+  evidence: >-
+    Identity verification performed to IAL2 as specified in NIST SP 800-63A;
+    the FHIR API exposes $update-external-ial2 and
+    $updateExternalIdentityVerification operations on Patient.
+  source: https://www.healthgorilla.com/home/company/health-data-security
+- id: hl7-v2-adt
+  name: HL7 v2 ADT messaging
+  conforms: true
+  evidence: >-
+    ADT network ingests HL7 v2 admission/discharge/transfer messages with event
+    codes A01 through A62, including A29 patient delete and A40 patient merge.
+  source: https://developer.healthgorilla.com/docs/adt-network
+- id: c-cda
+  name: HL7 C-CDA
+  conforms: true
+  evidence: >-
+    $export-ccda operations on Patient and DocumentReference; CCDs are the
+    document format exchanged across the retrieval network.
+  source: fhir/health-gorilla-r4-capabilitystatement.json
+- id: direct-secure-messaging
+  name: Direct Secure Messaging
+  conforms: true
+  evidence: >-
+    DirectMessage resource with $searchProviders declared in the
+    CapabilityStatement; Direct Messaging is a component on the public status page.
+  source: fhir/health-gorilla-r4-capabilitystatement.json
+- id: loinc
+  name: LOINC
+  conforms: true
+  evidence: LOINC coding validated on Observation and DiagnosticReport; invalid codes rejected with an OperationOutcome.
+- id: npi
+  name: NPI (National Provider Identifier)
+  conforms: true
+  evidence: NPI identifiers used as logical references (system http://hl7.org/fhir/sid/us-npi).
+summary:
+  conforms: 22
+  partial: 2
+  does_not_conform: 2
+  unknown: 1
+  certifications: [HITRUST r2, SOC 2 Type 2]
+  regulatory: [HIPAA, TEFCA, CalHHS Data Exchange Framework]
+related:
+- security/health-gorilla-trust-center.yml
+- authentication/health-gorilla-authentication.yml
+- fhir/health-gorilla-fhir.yml
+x-evidence:
+- {url: 'https://api.healthgorilla.com/fhir/R4/metadata', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://api.healthgorilla.com/.well-known/smart-configuration', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://api.healthgorilla.com/.well-known/openid-configuration', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://www.healthgorilla.com/home/company/health-data-security', http_status: 200, fetched: '2026-08-14'}

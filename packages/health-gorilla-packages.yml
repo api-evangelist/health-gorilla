@@ -1,0 +1,111 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  npm registry search, PyPI, RubyGems, crates.io, NuGet, Maven Central,
+  github.com/healthgorilla, and the Health Gorilla developer portal
+description: >-
+  Health Gorilla ships no first-party client library in any public package
+  registry. Every registry was queried directly and every one missed. The company
+  GitHub organisation holds two repositories: a sample-code repository last
+  pushed in January 2023, and a fork of the MongoDB Java driver. Integrators are
+  expected to call the FHIR REST API directly or to use a third-party FHIR
+  toolkit. The only maintained packages carrying the Health Gorilla name are
+  Medplum's connector modules, which are built and released by Medplum, not by
+  Health Gorilla.
+official_sdk_count: 0
+packages:
+- language: python
+  registry: github
+  name: healthgorilla/examples
+  url: https://github.com/healthgorilla/examples
+  official: true
+  type: sample-code
+  version: null
+  published: '2023-01-04'
+  note: >-
+    Not a package — a sample-code repository, unversioned and unreleased to any
+    registry, so there is no version to record. Contains Patient360 workflow
+    samples in Python, Node and PHP, a Patient360 Postman collection, CPOE order
+    and result round-trip payloads, and FHIR R4/STU3 example resources. Last
+    pushed 2023-01-04; 21 stars. It predates the current developer portal, the
+    R4 reference documentation and the release trains recorded in
+    changelog/health-gorilla-changelog.yml by more than three years.
+  contents:
+  - Patient360/Python/p360flow.py
+  - Patient360/Node/p360flow.js
+  - Patient360/PHP/p360CWflow.php
+  - Patient360/p360.postman_collection.json
+  - CPOE/Test_Order_with_RoundTrip.json
+  - CPOE/Test_Result_withRoundTrip.json
+  - FHIR R4/PractitionerRole/create_provider_user.json
+  - FHIR STU3/Bundle.json
+- language: javascript
+  registry: npm
+  name: '@medplum/health-gorilla-core'
+  url: https://www.npmjs.com/package/@medplum/health-gorilla-core
+  install: npm install @medplum/health-gorilla-core
+  official: false
+  publisher: Medplum
+  version: 5.1.30
+  published: '2026-08-13'
+  note: >-
+    Third-party. Medplum's Health Gorilla connector, actively maintained and
+    released the day before this probe. Recorded because it is the only current,
+    dated client library for this API in any registry — but it is Medplum's
+    integration with Health Gorilla, not a Health Gorilla SDK.
+- language: javascript
+  registry: npm
+  name: '@medplum/health-gorilla-react'
+  url: https://www.npmjs.com/package/@medplum/health-gorilla-react
+  install: npm install @medplum/health-gorilla-react
+  official: false
+  publisher: Medplum
+  version: 5.1.30
+  published: '2026-08-13'
+  note: Third-party. React bindings for the Medplum Health Gorilla connector.
+- language: javascript
+  registry: npm
+  name: '@medplum/health-gorilla'
+  url: https://www.npmjs.com/package/@medplum/health-gorilla
+  official: false
+  publisher: Medplum
+  version: 3.2.9
+  published: '2024-09-10'
+  note: >-
+    Third-party, superseded. Medplum's original single-package connector,
+    unreleased since September 2024 and replaced by the -core / -react split above.
+registries_probed:
+- {registry: npm, query: healthgorilla, results: 1, first_party: 0, note: 'only health-gorilla-ui-kit-test 0.0.3 (2019), an individual developer playground'}
+- {registry: npm, query: health-gorilla, first_party: 0, note: 'the @medplum/* connectors above are the only relevant hits'}
+- {registry: pypi, queries: [healthgorilla, health-gorilla, health_gorilla], http_status: 404, results: 0}
+- {registry: rubygems, queries: [healthgorilla, health_gorilla], http_status: 404, results: 0}
+- {registry: crates.io, query: healthgorilla, results: 0}
+- {registry: nuget, query: healthgorilla, results: 0}
+- {registry: maven-central, query: healthgorilla, results: 0}
+- {registry: github, org: healthgorilla, repos: 2, note: 'examples (Python, pushed 2023-01-04) and mongo-java-driver (a fork)'}
+collections:
+  note: >-
+    In place of an SDK, Health Gorilla's practical client surface is Postman.
+    The docs include a "Test in Postman" quickstart step, and the sample-code
+    repository ships a Patient360 Postman collection. Repo-local Postman and
+    OpenCollection artifacts generated from the OpenAPI live in collections/.
+  provider_published: https://github.com/healthgorilla/examples/blob/master/Patient360/p360.postman_collection.json
+  third_party_workspace:
+    url: https://www.postman.com/postman-atlas/health-gorilla
+    publisher: Postman Atlas
+    official: false
+    collections: 6
+    note: >-
+      Published by Postman's own Atlas team, not by Health Gorilla. Not recorded
+      as a provider-published Postman workspace.
+finding: >-
+  A first-party SDK gap. Health Gorilla ships a maintained API — ten release
+  trains in the recent changelog window, the newest patch dated 2026-08-05 — but
+  its only first-party code artifact has not been touched since January 2023, and
+  no client library exists in any registry. The freshest client code for this API
+  is maintained by a third party (Medplum, 2026-08-13).
+x-evidence:
+- {url: 'https://registry.npmjs.org/-/v1/search?text=healthgorilla', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://pypi.org/pypi/healthgorilla/json', http_status: 404, fetched: '2026-08-14'}
+- {url: 'https://rubygems.org/api/v1/gems/healthgorilla.json', http_status: 404, fetched: '2026-08-14'}
+- {url: 'https://api.github.com/orgs/healthgorilla/repos', http_status: 200, fetched: '2026-08-14'}

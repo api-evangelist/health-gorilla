@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Health Gorilla FHIR R4 Binary RequestGroup API",
+    "version": "R4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RequestGroup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search RequestGroup orders.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/RequestGroup",
+            "params": [
+              {
+                "name": "patient",
+                "value": "",
+                "type": "query",
+                "description": "Reference to the subject Patient (e.g. Patient/{id})."
+              },
+              {
+                "name": "_count",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page."
+              }
+            ]
+          },
+          "docs": "Search RequestGroup orders."
+        },
+        {
+          "info": {
+            "name": "Submit a diagnostic order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.healthgorilla.com/fhir/R4/RequestGroup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a RequestGroup parent order that nests one or more ServiceRequest resources (individual tests) for submission to a participating diagnostic laboratory or radiology partner."
+        },
+        {
+          "info": {
+            "name": "Read a RequestGroup order by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.healthgorilla.com/fhir/R4/RequestGroup/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The logical id of the resource."
+              }
+            ]
+          },
+          "docs": "Read a RequestGroup order by id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

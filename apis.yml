@@ -2,12 +2,10 @@ aid: health-gorilla
 url: https://raw.githubusercontent.com/api-evangelist/health-gorilla/refs/heads/main/apis.yml
 name: Health Gorilla
 kind: company
-description: Health Gorilla operates a national health-data interoperability network
-  and a FHIR-first API suite for healthcare developers. Its HL7 FHIR R4 REST API
-  provides access to patient records, person-authorized record retrieval across
-  national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology)
-  ordering and results, clinical documents, and coverage/eligibility data under
-  OAuth 2.0.
+description: Health Gorilla operates a national health-data interoperability network and a FHIR-first API suite for healthcare
+  developers. Its HL7 FHIR R4 REST API provides access to patient records, person-authorized record retrieval across national
+  exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility
+  data under OAuth 2.0.
 accessModel:
   pricing: enterprise
   onboarding: self-serve
@@ -28,8 +26,16 @@ tags:
 - FHIR
 - Clinical Data
 - Lab Ordering
+- TEFCA
+- QHIN
+- Health Information Exchange
+- Lab Results
+- Clinical Documents
+- SMART on FHIR
+- Patient Records
+- HL7
 created: '2026-06-21'
-modified: '2026-06-21'
+modified: '2026-08-14'
 specificationVersion: '0.19'
 apis:
 - aid: health-gorilla:health-gorilla-binary-api
@@ -64,6 +70,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-binary-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-capabilitystatement-api
   name: Health Gorilla CapabilityStatement API
   description: FHIR server capability discovery.
@@ -96,6 +104,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-capabilitystatement-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-coverage-api
   name: Health Gorilla Coverage API
   description: Patient insurance coverage / eligibility.
@@ -128,6 +138,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-coverage-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-diagnosticreport-api
   name: Health Gorilla DiagnosticReport API
   description: Structured lab and radiology results.
@@ -160,6 +172,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-diagnosticreport-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-documentreference-api
   name: Health Gorilla DocumentReference API
   description: Clinical document metadata.
@@ -192,6 +206,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-documentreference-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-observation-api
   name: Health Gorilla Observation API
   description: Individual result observations.
@@ -224,6 +240,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-observation-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-patient-api
   name: Health Gorilla Patient API
   description: Patient demographics and patient-scoped record retrieval.
@@ -256,6 +274,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-patient-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-practitioner-api
   name: Health Gorilla Practitioner API
   description: Ordering and rendering providers.
@@ -288,6 +308,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-practitioner-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-requestgroup-api
   name: Health Gorilla RequestGroup API
   description: Parent diagnostic orders nesting individual ServiceRequest tests.
@@ -320,6 +342,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-requestgroup-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-servicerequest-api
   name: Health Gorilla ServiceRequest API
   description: Diagnostic (lab and radiology) order requests.
@@ -352,6 +376,8 @@ apis:
     url: https://developer.healthgorilla.com/reference/r4-overview
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+  - type: Overlay
+    url: overlays/health-gorilla-servicerequest-api-overlay.yaml
 common:
 - type: AgenticAccess
   url: agentic-access/health-gorilla-agentic-access.yml
@@ -377,16 +403,90 @@ common:
   workflows:
   - url: arazzo/health-gorilla-coverage-workflow.yml
     name: Health Gorilla Coverage Retrieval
-    summary: "Locate a patient, search their insurance Coverage resources, then read a single Coverage for full plan detail."
+    summary: Locate a patient, search their insurance Coverage resources, then read a single Coverage for full plan detail.
   - url: arazzo/health-gorilla-lab-order-workflow.yml
     name: Health Gorilla FHIR Lab Order
-    summary: "Confirm server capabilities, locate a patient, then place a laboratory order as a ServiceRequest grouped inside a RequestGroup."
+    summary: Confirm server capabilities, locate a patient, then place a laboratory order as a ServiceRequest grouped inside
+      a RequestGroup.
   - url: arazzo/health-gorilla-patient-everything-workflow.yml
     name: Health Gorilla Patient Everything
-    summary: "Locate a patient, read the Patient resource, then pull the complete US Core record with the Patient $everything operation."
+    summary: Locate a patient, read the Patient resource, then pull the complete US Core record with the Patient $everything
+      operation.
   - url: arazzo/health-gorilla-results-retrieval-workflow.yml
     name: Health Gorilla Lab Results Retrieval
-    summary: "Locate a patient, then pull their US Core laboratory DiagnosticReports, read one report, and retrieve the discrete result Observations."
+    summary: Locate a patient, then pull their US Core laboratory DiagnosticReports, read one report, and retrieve the discrete
+      result Observations.
+- type: WellKnown
+  url: well-known/health-gorilla-well-known.yml
+- type: CapabilityStatement
+  url: fhir/health-gorilla-fhir.yml
+- type: OAuthScopes
+  url: scopes/health-gorilla-scopes.yml
+- type: Conventions
+  url: conventions/health-gorilla-conventions.yml
+- type: Idempotency
+  url: conventions/health-gorilla-conventions.yml
+- type: ErrorCatalog
+  url: errors/health-gorilla-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/health-gorilla-lifecycle.yml
+- type: StatusPage
+  url: https://status.healthgorilla.com
+- type: ChangeLog
+  url: changelog/health-gorilla-changelog.yml
+- type: ChangeLog
+  url: https://developer.healthgorilla.com/changelog
+- type: Sandbox
+  url: sandbox/health-gorilla-sandbox.yml
+- type: Conformance
+  url: conformance/health-gorilla-conformance.yml
+- type: Compliance
+  url: https://www.healthgorilla.com/home/company/health-data-security
+- type: TrustCenter
+  url: security/health-gorilla-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/health-gorilla-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.healthgorilla.com/home/security-txt
+- type: Webhooks
+  url: asyncapi/health-gorilla-webhooks.yml
+- type: LLMsTxt
+  url: llms/health-gorilla-llms.txt
+- type: MCPServer
+  url: mcp/health-gorilla-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/health-gorilla-tool-crosswalk.yml
+- type: Packages
+  url: packages/health-gorilla-packages.yml
+- type: Components
+  url: components/health-gorilla-components.yml
+- type: DataModel
+  url: data-model/health-gorilla-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://developer.healthgorilla.com
+- type: APIReference
+  url: https://developer.healthgorilla.com/reference/api-reference
+- type: GettingStarted
+  url: https://developer.healthgorilla.com/docs/developer-quickstart
+- type: Support
+  url: https://support.healthgorilla.com
+- type: Blog
+  url: https://www.healthgorilla.com/home/resources/blogs
+- type: TermsOfService
+  url: https://www.healthgorilla.com/home/terms-of-use
+- type: TermsOfService
+  url: https://developer.healthgorilla.com/docs/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.healthgorilla.com/home/privacy-policy
+- type: Login
+  url: https://www.healthgorilla.com/login
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 40
+  pass: local-v1

@@ -1,0 +1,76 @@
+generated: '2026-08-14'
+method: searched
+probe: true
+source: https://www.healthgorilla.com/home/company/health-data-security
+description: >-
+  Health Gorilla publishes a Health Data Security page naming its certifications,
+  its identity-assurance standard and its encryption posture. There is no
+  dedicated trust portal (trust.healthgorilla.com does not resolve) and no
+  self-serve document request; the security posture is stated on a marketing page
+  rather than in a Vanta/Drata-style trust center. The certifications named are
+  specific, dated by accompanying company blog announcements, and consistent with
+  the company's TEFCA QHIN designation.
+url: https://www.healthgorilla.com/home/company/health-data-security
+portal_type: security page (no dedicated trust portal)
+certifications:
+- name: HITRUST r2
+  full_name: HITRUST Risk-based, 2-year Certification
+  status: certified
+  evidence: >-
+    "We're HITRUST R2 certified, which means that we successfully manage
+    cybersecurity risks by exceeding industry-defined information security
+    requirements."
+  announcement: https://www.healthgorilla.com/blog/strengthening-our-security-canopy-health-gorilla-earns-hitrust-r2-recertification
+- name: SOC 2 Type 2
+  status: certified
+  trust_service_criteria: [security, availability, processing integrity, confidentiality, privacy]
+  evidence: >-
+    "SOC 2 Type 2 is a stamp of approval on our controls relevant to data
+    security, availability, processing, integrity, confidentiality, and privacy."
+  announcement: https://www.healthgorilla.com/blog/health-gorilla-is-now-soc-2-type-2-certified
+- name: HIPAA
+  status: compliance program
+  evidence: >-
+    "Complying with applicable health data laws, including HIPAA, is ingrained in
+    our culture, processes, and staff training."
+frameworks:
+- name: NIST SP 800-63A IAL2
+  description: >-
+    Identity verified to Identity Assurance Level 2 as specified in NIST Special
+    Publication 800-63A, described as one of the highest forms of personal
+    verification.
+- name: TEFCA
+  description: >-
+    Designated Qualified Health Information Network operating under the Trusted
+    Exchange Framework and Common Agreement and its Recognized Coordinating Entity.
+- name: CalHHS Data Exchange Framework
+  description: Designated Qualified Health Information Organization in California.
+controls_published:
+- {control: Encryption in transit and at rest, description: 'Medical records are encrypted in transit and at rest.'}
+- {control: Credential handling, description: 'Passwords are not stored on a web server and are end-to-end encrypted.'}
+- {control: Backup, description: 'Retrieved patient health information is backed up on the secure cloud platform.'}
+- {control: TLS floor, description: 'All API access requires TLS 1.2 or higher; plain HTTP is rejected.', source: 'https://developer.healthgorilla.com/reference/fhir-versions'}
+not_found:
+  trust_portal: https://trust.healthgorilla.com
+  trust_portal_result: DNS does not resolve (curl exit 6)
+  document_request_flow: none published
+  subprocessor_list: none found
+  pentest_report: none published
+  iso_27001: not claimed
+  fedramp: not claimed
+  soft_404_warning: >-
+    www.healthgorilla.com is a Webflow catch-all that answers HTTP 200 with the
+    same 70,722-byte site shell for every unknown path — /security, /compliance,
+    /trust-center and /legal/privacy-policy all returned that shell and are NOT
+    real pages. Only the /home/* paths listed in the sitemap are genuine.
+related:
+- conformance/health-gorilla-conformance.yml
+- security/health-gorilla-vulnerability-disclosure.yml
+- security/health-gorilla-domain-security.yml
+evidence:
+- {source: 'https://www.healthgorilla.com/home/company/health-data-security', http_status: 200, keywords: [HITRUST R2, SOC 2 Type 2, HIPAA, NIST 800-63A, IAL2, end-to-end encryption]}
+- {source: 'https://www.healthgorilla.com/sitemap.xml', http_status: 200, note: 'used to distinguish real pages from the Webflow soft-404 shell'}
+x-evidence:
+- {url: 'https://www.healthgorilla.com/home/company/health-data-security', http_status: 200, fetched: '2026-08-14'}
+- {url: 'https://www.healthgorilla.com/trust-center', http_status: 200, fetched: '2026-08-14', note: 'soft-404 shell — rejected'}
+- {url: 'https://trust.healthgorilla.com', http_status: 0, fetched: '2026-08-14', note: 'DNS does not resolve'}
