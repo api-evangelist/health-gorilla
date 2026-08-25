@@ -1,0 +1,14 @@
+{
+  "repo": "health-gorilla",
+  "feeds": [
+    {
+      "source": "https://support.healthgorilla.com",
+      "feed_url": "https://support.healthgorilla.com",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-22T20:20:02Z"
+}
