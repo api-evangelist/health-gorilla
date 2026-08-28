@@ -11,8 +11,14 @@ info:
     server base. Every step inlines its request so the flow is self-contained.
   version: 1.0.0
 sourceDescriptions:
-- name: healthGorillaFhir
-  url: ../openapi/health-gorilla-openapi.yml
+- name: diagnosticreportApi
+  url: ../openapi/health-gorilla-diagnosticreport-api-openapi.yml
+  type: openapi
+- name: observationApi
+  url: ../openapi/health-gorilla-observation-api-openapi.yml
+  type: openapi
+- name: patientApi
+  url: ../openapi/health-gorilla-patient-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: results-retrieval

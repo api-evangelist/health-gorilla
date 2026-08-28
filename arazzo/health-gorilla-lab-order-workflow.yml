@@ -12,8 +12,17 @@ info:
     Every step inlines its request so the flow is self-contained.
   version: 1.0.0
 sourceDescriptions:
-- name: healthGorillaFhir
-  url: ../openapi/health-gorilla-openapi.yml
+- name: capabilitystatementApi
+  url: ../openapi/health-gorilla-capabilitystatement-api-openapi.yml
+  type: openapi
+- name: patientApi
+  url: ../openapi/health-gorilla-patient-api-openapi.yml
+  type: openapi
+- name: requestgroupApi
+  url: ../openapi/health-gorilla-requestgroup-api-openapi.yml
+  type: openapi
+- name: servicerequestApi
+  url: ../openapi/health-gorilla-servicerequest-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: lab-order

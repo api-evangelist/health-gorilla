@@ -11,8 +11,11 @@ info:
     its request so the flow is self-contained.
   version: 1.0.0
 sourceDescriptions:
-- name: healthGorillaFhir
-  url: ../openapi/health-gorilla-openapi.yml
+- name: coverageApi
+  url: ../openapi/health-gorilla-coverage-api-openapi.yml
+  type: openapi
+- name: patientApi
+  url: ../openapi/health-gorilla-patient-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: coverage-retrieval
