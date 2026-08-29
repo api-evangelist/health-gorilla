@@ -6,6 +6,18 @@ description: Health Gorilla operates a national health-data interoperability net
   developers. Its HL7 FHIR R4 REST API provides access to patient records, person-authorized record retrieval across national
   exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility
   data under OAuth 2.0.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
