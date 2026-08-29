@@ -391,6 +391,9 @@ apis:
   - type: Overlay
     url: overlays/health-gorilla-servicerequest-api-overlay.yaml
 common:
+- type: CapabilityMap
+  url: capabilities/health-gorilla-capability-edges.yml
+  name: Health Gorilla Business Capability Map
 - type: AgenticAccess
   url: agentic-access/health-gorilla-agentic-access.yml
 - type: DomainSecurity

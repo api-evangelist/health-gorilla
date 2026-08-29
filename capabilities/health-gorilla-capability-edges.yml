@@ -1,0 +1,69 @@
+slug: health-gorilla
+provider: Health Gorilla
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Healthcare Providers
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: DiagnosticReport
+  spec_file: health-gorilla-diagnosticreport-api-openapi.yml
+  capability_id: BC-2860.60
+  capability_id_l1: BC-2860
+  capability_name: Diagnostic Results Management
+  confidence: 0.8
+  evidence: diagnostic (lab and radiology) ordering and results ... GET /DiagnosticReport  searchDiagnosticReports
+  reason: DiagnosticReport retrieval distributes lab/radiology results — Diagnostic Results Management.
+- tag: Coverage
+  spec_file: health-gorilla-coverage-api-openapi.yml
+  capability_id: BC-2800.30
+  capability_id_l1: BC-2800
+  capability_name: Eligibility & Benefits Verification
+  confidence: 0.75
+  evidence: coverage/eligibility data under OAuth 2.0 ... GET /Coverage  searchCoverage
+  reason: FHIR Coverage resources expose insurance coverage/benefits data, supporting eligibility and
+    benefits verification before service delivery.
+- tag: Binary
+  spec_file: health-gorilla-binary-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: GET /Binary/{id}  readBinary  Retrieve raw document content.
+  reason: FHIR Binary endpoint retrieves raw clinical document content over the interoperability network;
+    fits Healthcare Interoperability Operations (FHIR endpoints). Somewhat generic file-retrieval surface,
+    hence moderate confidence.
+- tag: DocumentReference
+  spec_file: health-gorilla-documentreference-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: GET /DocumentReference  searchDocumentReferences ... clinical documents
+  reason: Clinical document indexing/retrieval across the exchange network maps to healthcare interoperability
+    operations within Health Information Management.
+- tag: Patient
+  spec_file: health-gorilla-patient-api-openapi.yml
+  capability_id: BC-2900.60
+  capability_id_l1: BC-2900
+  capability_name: Healthcare Interoperability Operations
+  confidence: 0.7
+  evidence: GET /Patient/{id}/$everything  patientEverything  Retrieve all records for a patient.
+  reason: Patient create/update/search plus $everything record retrieval across QHIN/TEFCA networks is
+    provider-side interoperability and patient record access rather than registration workflow.
+- tag: RequestGroup
+  spec_file: health-gorilla-requestgroup-api-openapi.yml
+  capability_id: BC-2860
+  capability_id_l1: BC-2860
+  capability_name: Diagnostic Services Management
+  confidence: 0.7
+  evidence: POST /RequestGroup  createRequestGroup  Submit a diagnostic order.
+  reason: Submission and tracking of diagnostic orders (lab/radiology) sits in Diagnostic Services Management;
+    could alternatively be CPOE, so no L2 asserted.
