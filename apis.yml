@@ -84,40 +84,6 @@ apis:
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
   - type: Overlay
     url: overlays/health-gorilla-binary-api-overlay.yaml
-- aid: health-gorilla:health-gorilla-capabilitystatement-api
-  name: Health Gorilla CapabilityStatement API
-  description: FHIR server capability discovery.
-  humanURL: https://developer.healthgorilla.com/reference/r4-overview
-  baseURL: https://api.healthgorilla.com/fhir/R4
-  tags:
-  - CapabilityStatement
-  properties:
-  - type: OpenAPI
-    url: openapi/health-gorilla-capabilitystatement-api-openapi.yml
-  - type: Documentation
-    url: https://developer.healthgorilla.com/reference/r4-overview
-  - type: APIReference
-    url: https://developer.healthgorilla.com/reference/fhir-api-reference
-  - type: PostmanCollection
-    url: collections/health-gorilla.postman_collection.json
-  - type: OpenCollection
-    url: collections/health-gorilla.opencollection.json
-  - type: Documentation
-    url: https://developer.healthgorilla.com/docs/federated-fhir
-  - type: APIReference
-    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
-  - type: Documentation
-    url: https://developer.healthgorilla.com/docs/diagnostic-network
-  - type: APIReference
-    url: https://developer.healthgorilla.com/reference/servicerequest-1
-  - type: Documentation
-    url: https://developer.healthgorilla.com/reference/fhir-api-reference
-  - type: APIReference
-    url: https://developer.healthgorilla.com/reference/r4-overview
-  - type: Authentication
-    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
-  - type: Overlay
-    url: overlays/health-gorilla-capabilitystatement-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-coverage-api
   name: Health Gorilla Coverage API
   description: Patient insurance coverage / eligibility.
@@ -186,40 +152,6 @@ apis:
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
   - type: Overlay
     url: overlays/health-gorilla-diagnosticreport-api-overlay.yaml
-- aid: health-gorilla:health-gorilla-documentreference-api
-  name: Health Gorilla DocumentReference API
-  description: Clinical document metadata.
-  humanURL: https://developer.healthgorilla.com/reference/r4-overview
-  baseURL: https://api.healthgorilla.com/fhir/R4
-  tags:
-  - DocumentReference
-  properties:
-  - type: OpenAPI
-    url: openapi/health-gorilla-documentreference-api-openapi.yml
-  - type: Documentation
-    url: https://developer.healthgorilla.com/reference/r4-overview
-  - type: APIReference
-    url: https://developer.healthgorilla.com/reference/fhir-api-reference
-  - type: PostmanCollection
-    url: collections/health-gorilla.postman_collection.json
-  - type: OpenCollection
-    url: collections/health-gorilla.opencollection.json
-  - type: Documentation
-    url: https://developer.healthgorilla.com/docs/federated-fhir
-  - type: APIReference
-    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
-  - type: Documentation
-    url: https://developer.healthgorilla.com/docs/diagnostic-network
-  - type: APIReference
-    url: https://developer.healthgorilla.com/reference/servicerequest-1
-  - type: Documentation
-    url: https://developer.healthgorilla.com/reference/fhir-api-reference
-  - type: APIReference
-    url: https://developer.healthgorilla.com/reference/r4-overview
-  - type: Authentication
-    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
-  - type: Overlay
-    url: overlays/health-gorilla-documentreference-api-overlay.yaml
 - aid: health-gorilla:health-gorilla-observation-api
   name: Health Gorilla Observation API
   description: Individual result observations.
@@ -390,7 +322,75 @@ apis:
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
   - type: Overlay
     url: overlays/health-gorilla-servicerequest-api-overlay.yaml
+- aid: health-gorilla:health-gorilla-capability-statement-api
+  name: Health Gorilla Capability Statement API
+  description: FHIR server capability discovery.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - Capability Statement
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-capability-statement-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
+- aid: health-gorilla:health-gorilla-document-reference-api
+  name: Health Gorilla Document Reference API
+  description: Clinical document metadata.
+  humanURL: https://developer.healthgorilla.com/reference/r4-overview
+  baseURL: https://api.healthgorilla.com/fhir/R4
+  tags:
+  - Document Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/health-gorilla-document-reference-api-openapi.yml
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: PostmanCollection
+    url: collections/health-gorilla.postman_collection.json
+  - type: OpenCollection
+    url: collections/health-gorilla.opencollection.json
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/federated-fhir
+  - type: APIReference
+    url: https://developer.healthgorilla.com/docs/api-endpoints-overview
+  - type: Documentation
+    url: https://developer.healthgorilla.com/docs/diagnostic-network
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/servicerequest-1
+  - type: Documentation
+    url: https://developer.healthgorilla.com/reference/fhir-api-reference
+  - type: APIReference
+    url: https://developer.healthgorilla.com/reference/r4-overview
+  - type: Authentication
+    url: https://developer.healthgorilla.com/reference/oauth-20-authentication
 common:
+- type: Overlay
+  url: overlays/health-gorilla-capabilitystatement-api-overlay.yaml
+- type: Overlay
+  url: overlays/health-gorilla-documentreference-api-overlay.yaml
 - type: CapabilityMap
   url: capabilities/health-gorilla-capability-edges.yml
   name: Health Gorilla Business Capability Map
