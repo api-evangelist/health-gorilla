@@ -192,6 +192,8 @@ apis:
   humanURL: https://developer.healthgorilla.com/reference/r4-overview
   baseURL: https://api.healthgorilla.com/fhir/R4
   tags:
+  - Patients
+  tags_raw:
   - Patient
   properties:
   - type: OpenAPI
@@ -328,6 +330,8 @@ apis:
   humanURL: https://developer.healthgorilla.com/reference/r4-overview
   baseURL: https://api.healthgorilla.com/fhir/R4
   tags:
+  - CapabilityStatement
+  tags_raw:
   - Capability Statement
   properties:
   - type: OpenAPI
@@ -360,6 +364,8 @@ apis:
   humanURL: https://developer.healthgorilla.com/reference/r4-overview
   baseURL: https://api.healthgorilla.com/fhir/R4
   tags:
+  - DocumentReference
+  tags_raw:
   - Document Reference
   properties:
   - type: OpenAPI
