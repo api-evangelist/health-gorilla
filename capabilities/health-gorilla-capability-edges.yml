@@ -41,7 +41,8 @@ edges:
     fits Healthcare Interoperability Operations (FHIR endpoints). Somewhat generic file-retrieval surface,
     hence moderate confidence.
 - tag: DocumentReference
-  spec_file: health-gorilla-documentreference-api-openapi.yml
+  spec_file: health-gorilla-document-reference-api-openapi.yml
+  reanchored_from: health-gorilla-documentreference-api-openapi.yml
   capability_id: BC-2900.60
   capability_id_l1: BC-2900
   capability_name: Healthcare Interoperability Operations
