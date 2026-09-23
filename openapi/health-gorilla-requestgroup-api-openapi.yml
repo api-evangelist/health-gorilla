@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary RequestGroup API
+  title: Health Gorilla FHIR R4 Request Group API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -24,7 +24,7 @@ paths:
       operationId: createRequestGroup
       tags:
       - RequestGroup
-      summary: Submit a diagnostic order.
+      summary: Submit a diagnostic order
       description: Creates a RequestGroup parent order that nests one or more ServiceRequest resources (individual tests) for submission to a participating diagnostic laboratory or radiology partner.
       requestBody:
         required: true
@@ -43,7 +43,7 @@ paths:
       operationId: searchRequestGroups
       tags:
       - RequestGroup
-      summary: Search RequestGroup orders.
+      summary: Search RequestGroup orders
       parameters:
       - $ref: '#/components/parameters/patient'
       - $ref: '#/components/parameters/count'
@@ -59,7 +59,7 @@ paths:
       operationId: readRequestGroup
       tags:
       - RequestGroup
-      summary: Read a RequestGroup order by id.
+      summary: Read a RequestGroup order by id
       parameters:
       - $ref: '#/components/parameters/id'
       responses:
@@ -70,33 +70,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/RequestGroup'
 components:
+  parameters:
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
-    RequestGroup:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: RequestGroup
-        id:
-          type: string
-        status:
-          type: string
-          example: active
-        intent:
-          type: string
-          example: order
-        subject:
-          type: object
-        author:
-          type: object
-        action:
-          type: array
-          items:
-            type: object
-            properties:
-              resource:
-                type: object
-                description: Reference to a nested ServiceRequest.
     Bundle:
       type: object
       properties:
@@ -126,26 +120,32 @@ components:
                 type: string
               resource:
                 type: object
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
+    RequestGroup:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: RequestGroup
+        id:
+          type: string
+        status:
+          type: string
+          example: active
+        intent:
+          type: string
+          example: order
+        subject:
+          type: object
+        author:
+          type: object
+        action:
+          type: array
+          items:
+            type: object
+            properties:
+              resource:
+                type: object
+                description: Reference to a nested ServiceRequest.
   securitySchemes:
     bearerAuth:
       type: http

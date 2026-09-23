@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary CapabilityStatement API
+  title: Health Gorilla FHIR R4 Capability Statement API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -16,15 +16,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: CapabilityStatement
+- name: Capability Statement
   description: FHIR server capability discovery.
 paths:
   /metadata:
     get:
       operationId: getCapabilityStatement
       tags:
-      - CapabilityStatement
-      summary: Retrieve the FHIR server CapabilityStatement.
+      - Capability Statement
+      summary: Retrieve the FHIR server CapabilityStatement
       description: Returns the FHIR R4 CapabilityStatement describing supported resources, search parameters, operations, and authentication.
       responses:
         '200':

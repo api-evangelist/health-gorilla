@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary DocumentReference API
+  title: Health Gorilla FHIR R4 Document Reference API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -16,15 +16,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: DocumentReference
+- name: Document Reference
   description: Clinical document metadata.
 paths:
   /DocumentReference:
     get:
       operationId: searchDocumentReferences
       tags:
-      - DocumentReference
-      summary: Search DocumentReference resources.
+      - Document Reference
+      summary: Search DocumentReference resources
       parameters:
       - $ref: '#/components/parameters/patient'
       - name: type
@@ -43,8 +43,8 @@ paths:
     get:
       operationId: readDocumentReference
       tags:
-      - DocumentReference
-      summary: Read a DocumentReference resource by id.
+      - Document Reference
+      summary: Read a DocumentReference resource by id
       parameters:
       - $ref: '#/components/parameters/id'
       responses:
@@ -55,33 +55,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentReference'
 components:
+  parameters:
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
-    DocumentReference:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: DocumentReference
-        id:
-          type: string
-        status:
-          type: string
-        type:
-          type: object
-        subject:
-          type: object
-        content:
-          type: array
-          items:
-            type: object
-            properties:
-              attachment:
-                type: object
-                properties:
-                  contentType:
-                    type: string
-                  url:
-                    type: string
     Bundle:
       type: object
       properties:
@@ -111,26 +105,32 @@ components:
                 type: string
               resource:
                 type: object
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
+    DocumentReference:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: DocumentReference
+        id:
+          type: string
+        status:
+          type: string
+        type:
+          type: object
+        subject:
+          type: object
+        content:
+          type: array
+          items:
+            type: object
+            properties:
+              attachment:
+                type: object
+                properties:
+                  contentType:
+                    type: string
+                  url:
+                    type: string
   securitySchemes:
     bearerAuth:
       type: http

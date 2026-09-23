@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary Patient API
+  title: Health Gorilla FHIR R4 Patient API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -24,7 +24,7 @@ paths:
       operationId: searchPatients
       tags:
       - Patient
-      summary: Search Patient resources.
+      summary: Search Patient resources
       parameters:
       - $ref: '#/components/parameters/identifier'
       - $ref: '#/components/parameters/name'
@@ -49,7 +49,7 @@ paths:
       operationId: createPatient
       tags:
       - Patient
-      summary: Create a Patient resource.
+      summary: Create a Patient resource
       requestBody:
         required: true
         content:
@@ -68,7 +68,7 @@ paths:
       operationId: readPatient
       tags:
       - Patient
-      summary: Read a Patient resource by id.
+      summary: Read a Patient resource by id
       parameters:
       - $ref: '#/components/parameters/id'
       responses:
@@ -84,7 +84,7 @@ paths:
       operationId: updatePatient
       tags:
       - Patient
-      summary: Update a Patient resource.
+      summary: Update a Patient resource
       parameters:
       - $ref: '#/components/parameters/id'
       requestBody:
@@ -105,7 +105,7 @@ paths:
       operationId: patientEverything
       tags:
       - Patient
-      summary: Retrieve all records for a patient.
+      summary: Retrieve all records for a patient
       description: FHIR $everything operation returning a Bundle of all resources in the patient compartment, including federated records retrieved across the national exchange network.
       parameters:
       - $ref: '#/components/parameters/id'
@@ -119,6 +119,32 @@ paths:
         '202':
           description: Accepted - federated retrieval is in progress; poll the returned location for completed, partial, or failed status.
 components:
+  parameters:
+    name:
+      name: name
+      in: query
+      description: A portion of the name.
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    identifier:
+      name: identifier
+      in: query
+      description: A resource identifier (system|value).
+      schema:
+        type: string
   schemas:
     Patient:
       type: object
@@ -195,32 +221,6 @@ components:
                 type: string
               resource:
                 type: object
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    name:
-      name: name
-      in: query
-      description: A portion of the name.
-      schema:
-        type: string
-    identifier:
-      name: identifier
-      in: query
-      description: A resource identifier (system|value).
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
   responses:
     OperationOutcome:
       description: A FHIR OperationOutcome describing an error.

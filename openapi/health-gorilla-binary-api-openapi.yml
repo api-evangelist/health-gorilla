@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Health Gorilla FHIR R4 Binary API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
@@ -24,7 +24,7 @@ paths:
       operationId: readBinary
       tags:
       - Binary
-      summary: Retrieve raw document content.
+      summary: Retrieve raw document content
       parameters:
       - $ref: '#/components/parameters/id'
       responses:

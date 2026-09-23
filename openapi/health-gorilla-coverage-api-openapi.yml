@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary Coverage API
+  title: Health Gorilla FHIR R4 Coverage API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -24,7 +24,7 @@ paths:
       operationId: searchCoverage
       tags:
       - Coverage
-      summary: Search Coverage resources.
+      summary: Search Coverage resources
       parameters:
       - $ref: '#/components/parameters/patient'
       - $ref: '#/components/parameters/count'
@@ -40,7 +40,7 @@ paths:
       operationId: readCoverage
       tags:
       - Coverage
-      summary: Read a Coverage resource by id.
+      summary: Read a Coverage resource by id
       parameters:
       - $ref: '#/components/parameters/id'
       responses:
@@ -100,6 +100,12 @@ components:
               resource:
                 type: object
   parameters:
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
     id:
       name: id
       in: path
@@ -113,12 +119,6 @@ components:
       description: Number of results per page.
       schema:
         type: integer
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

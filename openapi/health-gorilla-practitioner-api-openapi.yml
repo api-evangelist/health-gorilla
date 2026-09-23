@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary Practitioner API
+  title: Health Gorilla FHIR R4 Practitioner API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -24,7 +24,7 @@ paths:
       operationId: searchPractitioners
       tags:
       - Practitioner
-      summary: Search Practitioner resources.
+      summary: Search Practitioner resources
       parameters:
       - $ref: '#/components/parameters/identifier'
       - $ref: '#/components/parameters/name'
@@ -41,7 +41,7 @@ paths:
       operationId: readPractitioner
       tags:
       - Practitioner
-      summary: Read a Practitioner resource by id.
+      summary: Read a Practitioner resource by id
       parameters:
       - $ref: '#/components/parameters/id'
       responses:
@@ -52,6 +52,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Practitioner'
 components:
+  parameters:
+    name:
+      name: name
+      in: query
+      description: A portion of the name.
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    identifier:
+      name: identifier
+      in: query
+      description: A resource identifier (system|value).
+      schema:
+        type: string
   schemas:
     Practitioner:
       type: object
@@ -98,32 +124,6 @@ components:
                 type: string
               resource:
                 type: object
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    name:
-      name: name
-      in: query
-      description: A portion of the name.
-      schema:
-        type: string
-    identifier:
-      name: identifier
-      in: query
-      description: A resource identifier (system|value).
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http

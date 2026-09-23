@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary Observation API
+  title: Health Gorilla FHIR R4 Observation API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -24,7 +24,7 @@ paths:
       operationId: searchObservations
       tags:
       - Observation
-      summary: Search Observation resources.
+      summary: Search Observation resources
       parameters:
       - $ref: '#/components/parameters/patient'
       - name: code
@@ -71,18 +71,18 @@ components:
               resource:
                 type: object
   parameters:
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
     patient:
       name: patient
       in: query
       description: Reference to the subject Patient (e.g. Patient/{id}).
       schema:
         type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

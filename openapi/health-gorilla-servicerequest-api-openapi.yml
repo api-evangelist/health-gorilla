@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Health Gorilla FHIR R4 Binary ServiceRequest API
+  title: Health Gorilla FHIR R4 Service Request API
   description: HL7 FHIR R4 REST API for the Health Gorilla health-data interoperability network. Provides access to patient records, person-authorized federated record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data. All requests require OAuth 2.0 bearer authentication.
   termsOfService: https://www.healthgorilla.com/terms-of-service
   contact:
@@ -24,7 +24,7 @@ paths:
       operationId: searchServiceRequests
       tags:
       - ServiceRequest
-      summary: Search ServiceRequest resources.
+      summary: Search ServiceRequest resources
       parameters:
       - $ref: '#/components/parameters/patient'
       - name: status
@@ -43,7 +43,7 @@ paths:
       operationId: createServiceRequest
       tags:
       - ServiceRequest
-      summary: Create a ServiceRequest resource.
+      summary: Create a ServiceRequest resource
       requestBody:
         required: true
         content:
@@ -62,7 +62,7 @@ paths:
       operationId: readServiceRequest
       tags:
       - ServiceRequest
-      summary: Read a ServiceRequest resource by id.
+      summary: Read a ServiceRequest resource by id
       parameters:
       - $ref: '#/components/parameters/id'
       responses:
@@ -73,7 +73,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceRequest'
 components:
+  parameters:
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
+    ServiceRequest:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: ServiceRequest
+        id:
+          type: string
+        status:
+          type: string
+          example: active
+        intent:
+          type: string
+          example: order
+        code:
+          type: object
+        subject:
+          type: object
+        requester:
+          type: object
+        performer:
+          type: array
+          items:
+            type: object
     Bundle:
       type: object
       properties:
@@ -103,50 +147,6 @@ components:
                 type: string
               resource:
                 type: object
-    ServiceRequest:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: ServiceRequest
-        id:
-          type: string
-        status:
-          type: string
-          example: active
-        intent:
-          type: string
-          example: order
-        code:
-          type: object
-        subject:
-          type: object
-        requester:
-          type: object
-        performer:
-          type: array
-          items:
-            type: object
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
