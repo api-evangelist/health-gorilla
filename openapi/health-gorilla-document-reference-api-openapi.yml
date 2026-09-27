@@ -55,26 +55,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentReference'
 components:
-  parameters:
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
   schemas:
     Bundle:
       type: object
@@ -131,6 +111,26 @@ components:
                     type: string
                   url:
                     type: string
+  parameters:
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

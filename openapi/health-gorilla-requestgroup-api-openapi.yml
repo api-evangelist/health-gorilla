@@ -70,26 +70,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/RequestGroup'
 components:
-  parameters:
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
   schemas:
     Bundle:
       type: object
@@ -146,6 +126,26 @@ components:
               resource:
                 type: object
                 description: Reference to a nested ServiceRequest.
+  parameters:
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -119,79 +119,7 @@ paths:
         '202':
           description: Accepted - federated retrieval is in progress; poll the returned location for completed, partial, or failed status.
 components:
-  parameters:
-    name:
-      name: name
-      in: query
-      description: A portion of the name.
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    identifier:
-      name: identifier
-      in: query
-      description: A resource identifier (system|value).
-      schema:
-        type: string
   schemas:
-    Patient:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: Patient
-        id:
-          type: string
-        identifier:
-          type: array
-          items:
-            type: object
-        name:
-          type: array
-          items:
-            type: object
-        gender:
-          type: string
-        birthDate:
-          type: string
-          format: date
-        address:
-          type: array
-          items:
-            type: object
-        telecom:
-          type: array
-          items:
-            type: object
-    OperationOutcome:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: OperationOutcome
-        issue:
-          type: array
-          items:
-            type: object
-            properties:
-              severity:
-                type: string
-              code:
-                type: string
-              diagnostics:
-                type: string
     Bundle:
       type: object
       properties:
@@ -221,6 +149,78 @@ components:
                 type: string
               resource:
                 type: object
+    OperationOutcome:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: OperationOutcome
+        issue:
+          type: array
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              code:
+                type: string
+              diagnostics:
+                type: string
+    Patient:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: Patient
+        id:
+          type: string
+        identifier:
+          type: array
+          items:
+            type: object
+        name:
+          type: array
+          items:
+            type: object
+        gender:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        address:
+          type: array
+          items:
+            type: object
+        telecom:
+          type: array
+          items:
+            type: object
+  parameters:
+    identifier:
+      name: identifier
+      in: query
+      description: A resource identifier (system|value).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      description: A portion of the name.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   responses:
     OperationOutcome:
       description: A FHIR OperationOutcome describing an error.
