@@ -52,7 +52,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/Practitioner'
 components:
+  parameters:
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    identifier:
+      name: identifier
+      in: query
+      description: A resource identifier (system|value).
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      description: A portion of the name.
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
   schemas:
+    Practitioner:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: Practitioner
+        id:
+          type: string
+        identifier:
+          type: array
+          items:
+            type: object
+        name:
+          type: array
+          items:
+            type: object
     Bundle:
       type: object
       properties:
@@ -82,48 +124,6 @@ components:
                 type: string
               resource:
                 type: object
-    Practitioner:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: Practitioner
-        id:
-          type: string
-        identifier:
-          type: array
-          items:
-            type: object
-        name:
-          type: array
-          items:
-            type: object
-  parameters:
-    identifier:
-      name: identifier
-      in: query
-      description: A resource identifier (system|value).
-      schema:
-        type: string
-    name:
-      name: name
-      in: query
-      description: A portion of the name.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

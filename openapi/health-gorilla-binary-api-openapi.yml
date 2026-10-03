@@ -39,14 +39,6 @@ paths:
                 type: string
                 format: binary
 components:
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
   schemas:
     Binary:
       type: object
@@ -61,6 +53,14 @@ components:
         data:
           type: string
           format: byte
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

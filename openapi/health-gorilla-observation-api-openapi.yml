@@ -40,6 +40,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bundle'
 components:
+  parameters:
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
   schemas:
     Bundle:
       type: object
@@ -70,19 +83,6 @@ components:
                 type: string
               resource:
                 type: object
-  parameters:
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http
