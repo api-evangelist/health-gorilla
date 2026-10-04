@@ -32,6 +32,9 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/health-gorilla.png
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 tags:
 - Health
 - Interoperability
@@ -330,6 +333,8 @@ apis:
   humanURL: https://developer.healthgorilla.com/reference/r4-overview
   baseURL: https://api.healthgorilla.com/fhir/R4
   tags:
+  - CapabilityStatement
+  tags_raw:
   - Capability Statement
   properties:
   - type: OpenAPI
@@ -362,6 +367,8 @@ apis:
   humanURL: https://developer.healthgorilla.com/reference/r4-overview
   baseURL: https://api.healthgorilla.com/fhir/R4
   tags:
+  - DocumentReference
+  tags_raw:
   - Document Reference
   properties:
   - type: OpenAPI
