@@ -56,12 +56,6 @@ paths:
                 $ref: '#/components/schemas/DocumentReference'
 components:
   parameters:
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
     id:
       name: id
       in: path
@@ -75,33 +69,13 @@ components:
       description: Reference to the subject Patient (e.g. Patient/{id}).
       schema:
         type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
-    DocumentReference:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: DocumentReference
-        id:
-          type: string
-        status:
-          type: string
-        type:
-          type: object
-        subject:
-          type: object
-        content:
-          type: array
-          items:
-            type: object
-            properties:
-              attachment:
-                type: object
-                properties:
-                  contentType:
-                    type: string
-                  url:
-                    type: string
     Bundle:
       type: object
       properties:
@@ -131,6 +105,32 @@ components:
                 type: string
               resource:
                 type: object
+    DocumentReference:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: DocumentReference
+        id:
+          type: string
+        status:
+          type: string
+        type:
+          type: object
+        subject:
+          type: object
+        content:
+          type: array
+          items:
+            type: object
+            properties:
+              attachment:
+                type: object
+                properties:
+                  contentType:
+                    type: string
+                  url:
+                    type: string
   securitySchemes:
     bearerAuth:
       type: http

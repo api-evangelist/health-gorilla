@@ -71,18 +71,6 @@ paths:
                 $ref: '#/components/schemas/RequestGroup'
 components:
   parameters:
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
     id:
       name: id
       in: path
@@ -90,33 +78,19 @@ components:
       description: The logical id of the resource.
       schema:
         type: string
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
-    RequestGroup:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: RequestGroup
-        id:
-          type: string
-        status:
-          type: string
-          example: active
-        intent:
-          type: string
-          example: order
-        subject:
-          type: object
-        author:
-          type: object
-        action:
-          type: array
-          items:
-            type: object
-            properties:
-              resource:
-                type: object
-                description: Reference to a nested ServiceRequest.
     Bundle:
       type: object
       properties:
@@ -146,6 +120,32 @@ components:
                 type: string
               resource:
                 type: object
+    RequestGroup:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: RequestGroup
+        id:
+          type: string
+        status:
+          type: string
+          example: active
+        intent:
+          type: string
+          example: order
+        subject:
+          type: object
+        author:
+          type: object
+        action:
+          type: array
+          items:
+            type: object
+            properties:
+              resource:
+                type: object
+                description: Reference to a nested ServiceRequest.
   securitySchemes:
     bearerAuth:
       type: http

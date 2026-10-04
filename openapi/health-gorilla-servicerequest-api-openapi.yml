@@ -74,18 +74,6 @@ paths:
                 $ref: '#/components/schemas/ServiceRequest'
 components:
   parameters:
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    patient:
-      name: patient
-      in: query
-      description: Reference to the subject Patient (e.g. Patient/{id}).
-      schema:
-        type: string
     id:
       name: id
       in: path
@@ -93,31 +81,19 @@ components:
       description: The logical id of the resource.
       schema:
         type: string
+    patient:
+      name: patient
+      in: query
+      description: Reference to the subject Patient (e.g. Patient/{id}).
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
-    ServiceRequest:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: ServiceRequest
-        id:
-          type: string
-        status:
-          type: string
-          example: active
-        intent:
-          type: string
-          example: order
-        code:
-          type: object
-        subject:
-          type: object
-        requester:
-          type: object
-        performer:
-          type: array
-          items:
-            type: object
     Bundle:
       type: object
       properties:
@@ -147,6 +123,30 @@ components:
                 type: string
               resource:
                 type: object
+    ServiceRequest:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: ServiceRequest
+        id:
+          type: string
+        status:
+          type: string
+          example: active
+        intent:
+          type: string
+          example: order
+        code:
+          type: object
+        subject:
+          type: object
+        requester:
+          type: object
+        performer:
+          type: array
+          items:
+            type: object
   securitySchemes:
     bearerAuth:
       type: http

@@ -41,18 +41,18 @@ paths:
                 $ref: '#/components/schemas/Bundle'
 components:
   parameters:
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
     patient:
       name: patient
       in: query
       description: Reference to the subject Patient (e.g. Patient/{id}).
       schema:
         type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
   schemas:
     Bundle:
       type: object

@@ -120,6 +120,19 @@ paths:
           description: Accepted - federated retrieval is in progress; poll the returned location for completed, partial, or failed status.
 components:
   parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      description: A portion of the name.
+      schema:
+        type: string
     count:
       name: _count
       in: query
@@ -132,20 +145,43 @@ components:
       description: A resource identifier (system|value).
       schema:
         type: string
-    name:
-      name: name
-      in: query
-      description: A portion of the name.
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
+  responses:
+    OperationOutcome:
+      description: A FHIR OperationOutcome describing an error.
+      content:
+        application/fhir+json:
+          schema:
+            $ref: '#/components/schemas/OperationOutcome'
   schemas:
+    Bundle:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: Bundle
+        type:
+          type: string
+          example: searchset
+        total:
+          type: integer
+        link:
+          type: array
+          items:
+            type: object
+            properties:
+              relation:
+                type: string
+              url:
+                type: string
+        entry:
+          type: array
+          items:
+            type: object
+            properties:
+              fullUrl:
+                type: string
+              resource:
+                type: object
     Patient:
       type: object
       properties:
@@ -192,42 +228,6 @@ components:
                 type: string
               diagnostics:
                 type: string
-    Bundle:
-      type: object
-      properties:
-        resourceType:
-          type: string
-          example: Bundle
-        type:
-          type: string
-          example: searchset
-        total:
-          type: integer
-        link:
-          type: array
-          items:
-            type: object
-            properties:
-              relation:
-                type: string
-              url:
-                type: string
-        entry:
-          type: array
-          items:
-            type: object
-            properties:
-              fullUrl:
-                type: string
-              resource:
-                type: object
-  responses:
-    OperationOutcome:
-      description: A FHIR OperationOutcome describing an error.
-      content:
-        application/fhir+json:
-          schema:
-            $ref: '#/components/schemas/OperationOutcome'
   securitySchemes:
     bearerAuth:
       type: http
