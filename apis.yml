@@ -392,6 +392,8 @@ apis:
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
 common:
+- type: Pricing
+  url: https://www.healthgorilla.com/home/contact
 - type: Overlay
   url: overlays/health-gorilla-capabilitystatement-api-overlay.yaml
 - type: Overlay
