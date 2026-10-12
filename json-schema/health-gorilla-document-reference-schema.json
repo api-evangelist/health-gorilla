@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/health-gorilla/main/json-schema/health-gorilla-document-reference-schema.json",
+  "title": "DocumentReference",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/health-gorilla-document-reference-api-openapi.yml#/components/schemas/DocumentReference",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "type": {
+      "type": "object"
+    },
+    "subject": {
+      "type": "object"
+    },
+    "content": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "attachment": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

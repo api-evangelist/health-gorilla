@@ -1,0 +1,85 @@
+generated: '2026-10-12'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/health-gorilla-binary-api-openapi.yml
+- openapi/health-gorilla-capability-statement-api-openapi.yml
+- openapi/health-gorilla-coverage-api-openapi.yml
+- openapi/health-gorilla-diagnosticreport-api-openapi.yml
+- openapi/health-gorilla-document-reference-api-openapi.yml
+vocabulary:
+  name: Health Gorilla Domain Vocabulary
+  description: 'Terms declared by Health Gorilla''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-12'
+  terms:
+  - term: Binary
+    definition: Raw clinical document content.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-binary-api-openapi.yml
+  - term: Capability Statement
+    definition: FHIR server capability discovery.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-capability-statement-api-openapi.yml
+  - term: Coverage
+    definition: Patient insurance coverage / eligibility.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-coverage-api-openapi.yml
+  - term: DiagnosticReport
+    definition: Structured lab and radiology results.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-diagnosticreport-api-openapi.yml
+  - term: Document Reference
+    definition: Clinical document metadata.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-document-reference-api-openapi.yml
+  - term: Observation
+    definition: Individual result observations.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-observation-api-openapi.yml
+  - term: Patient
+    definition: Patient demographics and patient-scoped record retrieval.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-patient-api-openapi.yml
+  - term: Practitioner
+    definition: Ordering and rendering providers.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-practitioner-api-openapi.yml
+  - term: RequestGroup
+    definition: Parent diagnostic orders nesting individual ServiceRequest tests.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-requestgroup-api-openapi.yml
+  - term: ServiceRequest
+    definition: Diagnostic (lab and radiology) order requests.
+    tags:
+    - Resource Group
+    source: openapi/health-gorilla-servicerequest-api-openapi.yml
+  - term: CapabilityStatement
+    definition: 'Object declared by the contract with fields: resourceType, status, fhirVersion, rest.'
+    tags:
+    - Object
+    source: openapi/health-gorilla-capability-statement-api-openapi.yml#/components/schemas/CapabilityStatement
+  - term: Bundle
+    definition: 'Object declared by the contract with fields: resourceType, type, total, link, entry.'
+    tags:
+    - Object
+    source: openapi/health-gorilla-coverage-api-openapi.yml#/components/schemas/Bundle
+  - term: DocumentReference
+    definition: 'Object declared by the contract with fields: resourceType, id, status, type, subject, content.'
+    tags:
+    - Object
+    source: openapi/health-gorilla-document-reference-api-openapi.yml#/components/schemas/DocumentReference
+  - term: OperationOutcome
+    definition: 'Object declared by the contract with fields: resourceType, issue.'
+    tags:
+    - Object
+    source: openapi/health-gorilla-patient-api-openapi.yml#/components/schemas/OperationOutcome

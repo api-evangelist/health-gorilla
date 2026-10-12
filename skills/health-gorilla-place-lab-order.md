@@ -1,5 +1,5 @@
 ---
-name: Place a Health Gorilla lab order
+name: health-gorilla-place-lab-order
 description: >-
   Confirm server capabilities, locate the patient, then submit a diagnostic
   (laboratory or radiology) order as a RequestGroup containing one ServiceRequest

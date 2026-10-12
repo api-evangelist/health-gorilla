@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/health-gorilla/main/json-schema/health-gorilla-binary-schema.json",
+  "title": "Binary",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/health-gorilla-binary-api-openapi.yml#/components/schemas/Binary",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "data": {
+      "type": "string",
+      "format": "byte"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 ---
-name: Check Health Gorilla patient coverage
+name: health-gorilla-check-coverage
 description: >-
   Locate a patient, search their insurance Coverage resources, and read one for
   full plan detail before placing an order or determining eligibility.

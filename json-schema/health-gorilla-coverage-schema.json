@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/health-gorilla/main/json-schema/health-gorilla-coverage-schema.json",
+  "title": "Coverage",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/health-gorilla-coverage-api-openapi.yml#/components/schemas/Coverage",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "beneficiary": {
+      "type": "object"
+    },
+    "payor": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "subscriberId": {
+      "type": "string"
+    }
+  }
+}

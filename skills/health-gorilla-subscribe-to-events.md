@@ -1,5 +1,5 @@
 ---
-name: Subscribe to Health Gorilla clinical events
+name: health-gorilla-subscribe-to-events
 description: >-
   Register a FHIR Subscription so Health Gorilla posts webhooks when clinical
   resources change, verify the HMAC-SHA512 signature on delivery, and reconcile

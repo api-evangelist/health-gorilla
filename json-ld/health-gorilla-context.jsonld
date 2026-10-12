@@ -1,0 +1,158 @@
+{
+  "@context": {
+    "@vocab": "https://healthgorilla.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "health": "https://healthgorilla.com/schema#",
+    "Binary": "health:Binary",
+    "resourceType": {
+      "@id": "health:resourceType",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "health:id",
+      "@type": "xsd:string"
+    },
+    "contentType": {
+      "@id": "health:contentType",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "health:data",
+      "@type": "xsd:string"
+    },
+    "CapabilityStatement": "health:CapabilityStatement",
+    "status": {
+      "@id": "health:status",
+      "@type": "xsd:string"
+    },
+    "fhirVersion": {
+      "@id": "health:fhirVersion",
+      "@type": "xsd:string"
+    },
+    "rest": {
+      "@id": "health:rest",
+      "@container": "@list"
+    },
+    "Coverage": "health:Coverage",
+    "beneficiary": {
+      "@id": "health:beneficiary"
+    },
+    "payor": {
+      "@id": "health:payor",
+      "@container": "@list"
+    },
+    "subscriberId": {
+      "@id": "health:subscriberId",
+      "@type": "xsd:string"
+    },
+    "Bundle": "health:Bundle",
+    "type": {
+      "@id": "health:type",
+      "@type": "xsd:string"
+    },
+    "total": {
+      "@id": "health:total",
+      "@type": "xsd:integer"
+    },
+    "link": {
+      "@id": "health:link",
+      "@container": "@list"
+    },
+    "entry": {
+      "@id": "health:entry",
+      "@container": "@list"
+    },
+    "DiagnosticReport": "health:DiagnosticReport",
+    "category": {
+      "@id": "health:category",
+      "@container": "@list"
+    },
+    "code": {
+      "@id": "health:code"
+    },
+    "subject": {
+      "@id": "health:subject"
+    },
+    "effectiveDateTime": {
+      "@id": "health:effectiveDateTime",
+      "@type": "xsd:dateTime"
+    },
+    "result": {
+      "@id": "health:result",
+      "@container": "@list"
+    },
+    "presentedForm": {
+      "@id": "health:presentedForm",
+      "@container": "@list"
+    },
+    "DocumentReference": "health:DocumentReference",
+    "content": {
+      "@id": "health:content",
+      "@container": "@list"
+    },
+    "Patient": "health:Patient",
+    "identifier": {
+      "@id": "health:identifier",
+      "@container": "@list"
+    },
+    "name": {
+      "@id": "health:name",
+      "@container": "@list"
+    },
+    "gender": {
+      "@id": "health:gender",
+      "@type": "xsd:string"
+    },
+    "birthDate": {
+      "@id": "health:birthDate",
+      "@type": "xsd:date"
+    },
+    "address": {
+      "@id": "health:address",
+      "@container": "@list"
+    },
+    "telecom": {
+      "@id": "health:telecom",
+      "@container": "@list"
+    },
+    "OperationOutcome": "health:OperationOutcome",
+    "issue": {
+      "@id": "health:issue",
+      "@container": "@list"
+    },
+    "Practitioner": "health:Practitioner",
+    "RequestGroup": "health:RequestGroup",
+    "intent": {
+      "@id": "health:intent",
+      "@type": "xsd:string"
+    },
+    "author": {
+      "@id": "health:author"
+    },
+    "action": {
+      "@id": "health:action",
+      "@container": "@list"
+    },
+    "ServiceRequest": "health:ServiceRequest",
+    "requester": {
+      "@id": "health:requester"
+    },
+    "performer": {
+      "@id": "health:performer",
+      "@container": "@list"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Health Gorilla API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Health Gorilla's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-12) from openapi/health-gorilla-binary-api-openapi.yml, openapi/health-gorilla-capability-statement-api-openapi.yml, openapi/health-gorilla-coverage-api-openapi.yml.",
+  "dcterms:created": "2026-10-12",
+  "dcterms:source": [
+    "openapi/health-gorilla-binary-api-openapi.yml",
+    "openapi/health-gorilla-capability-statement-api-openapi.yml",
+    "openapi/health-gorilla-coverage-api-openapi.yml",
+    "openapi/health-gorilla-diagnosticreport-api-openapi.yml",
+    "openapi/health-gorilla-document-reference-api-openapi.yml"
+  ]
+}

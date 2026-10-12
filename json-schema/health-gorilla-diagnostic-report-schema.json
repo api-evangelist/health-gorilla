@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/health-gorilla/main/json-schema/health-gorilla-diagnostic-report-schema.json",
+  "title": "DiagnosticReport",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/health-gorilla-diagnosticreport-api-openapi.yml#/components/schemas/DiagnosticReport",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "category": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "code": {
+      "type": "object"
+    },
+    "subject": {
+      "type": "object"
+    },
+    "effectiveDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "result": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "References to Observation resources."
+      }
+    },
+    "presentedForm": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

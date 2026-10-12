@@ -1,5 +1,5 @@
 ---
-name: Pull a complete Health Gorilla patient record
+name: health-gorilla-pull-patient-record
 description: >-
   Locate a patient, read the Patient resource, then pull the full longitudinal
   record with $everything — handling the asynchronous federated retrieval path

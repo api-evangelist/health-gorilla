@@ -1,5 +1,5 @@
 ---
-name: Retrieve Health Gorilla lab results
+name: health-gorilla-retrieve-lab-results
 description: >-
   Locate a patient, pull their laboratory DiagnosticReports, read one report, and
   fetch the discrete Observation values behind it — paging correctly with the

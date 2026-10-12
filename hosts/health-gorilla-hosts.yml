@@ -1,0 +1,92 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 6
+  own: 5
+  other_domain: 0
+  platform: 1
+  roles:
+  - api
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: api.healthgorilla.com
+  found_by:
+  - apis[]
+  - vendor-detect
+  types: []
+  serves:
+  - api
+  - api-gateway
+  vendor: kong
+  registrable_domain: healthgorilla.com
+  role: api
+  relation: own
+- host: developer.healthgorilla.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Documentation
+  - ChangeLog
+  - DeveloperPortal
+  - APIReference
+  - GettingStarted
+  - TermsOfService
+  serves:
+  - docs
+  registrable_domain: healthgorilla.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: status.healthgorilla.com
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: healthgorilla.com
+  role: status
+  relation: own
+- host: support.healthgorilla.com
+  found_by:
+  - pointer
+  types:
+  - Support
+  serves: []
+  registrable_domain: healthgorilla.com
+  role: support
+  relation: own
+- host: www.healthgorilla.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Newsroom
+  - Pricing
+  - Website
+  - Compliance
+  - Security
+  - Blog
+  - TermsOfService
+  - PrivacyPolicy
+  - Login
+  serves:
+  - cdn
+  vendor: cloudflare
+  registrable_domain: healthgorilla.com
+  role: website
+  relation: own
