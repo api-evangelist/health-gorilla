@@ -532,6 +532,10 @@ apis:
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
   - type: JSONSchema
     url: json-schema/health-gorilla-capability-statement-schema.json
+  - type: JSONSchema
+    url: json-schema/health-gorilla-bundle-schema.json
+  - type: JSONSchema
+    url: json-schema/health-gorilla-document-reference-schema.json
 - aid: health-gorilla:health-gorilla-document-reference-api
   name: Health Gorilla Document Reference API
   description: Clinical document metadata.
@@ -565,10 +569,11 @@ apis:
   - type: Authentication
     url: https://developer.healthgorilla.com/reference/oauth-20-authentication
   - type: JSONSchema
+    url: json-schema/health-gorilla-capability-statement-schema.json
+  - type: JSONSchema
     url: json-schema/health-gorilla-bundle-schema.json
   - type: JSONSchema
     url: json-schema/health-gorilla-document-reference-schema.json
-
 x-enrichment:
   date: '2026-10-12'
   status: enriched

@@ -52,32 +52,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Practitioner'
 components:
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: The logical id of the resource.
-      schema:
-        type: string
-    name:
-      name: name
-      in: query
-      description: A portion of the name.
-      schema:
-        type: string
-    count:
-      name: _count
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-    identifier:
-      name: identifier
-      in: query
-      description: A resource identifier (system|value).
-      schema:
-        type: string
   schemas:
     Bundle:
       type: object
@@ -124,6 +98,32 @@ components:
           type: array
           items:
             type: object
+  parameters:
+    identifier:
+      name: identifier
+      in: query
+      description: A resource identifier (system|value).
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: The logical id of the resource.
+      schema:
+        type: string
+    count:
+      name: _count
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+    name:
+      name: name
+      in: query
+      description: A portion of the name.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
