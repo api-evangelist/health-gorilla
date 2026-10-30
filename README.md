@@ -1,4 +1,4 @@
-# Health Gorilla (health-gorilla)
+# Health Gorilla
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,162 +66,217 @@
 
 Health Gorilla operates a national health-data interoperability network and a FHIR-first API suite for healthcare developers. Its HL7 FHIR R4 REST API provides access to patient records, person-authorized record retrieval across national exchange networks (QHIN / TEFCA), diagnostic (lab and radiology) ordering and results, clinical documents, and coverage/eligibility data under OAuth 2.0.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/health-gorilla/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/health-gorilla/refs/heads/main/apis.yml)
+**Areas:** Health · Interoperability · FHIR · Clinical Data · Lab Ordering · TEFCA · QHIN · Health Information Exchange · Lab Results · Clinical Documents · SMART on FHIR · Patient Records
 
-## Tags
+## Health Gorilla on APIs.io
 
-- Health
-- Interoperability
-- FHIR
-- Clinical Data
-- Lab Ordering
+Everything profiled for Health Gorilla is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/health-gorilla/](https://apis.io/providers/health-gorilla/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (10)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [Health Gorilla Binary API](https://apis.io/apis/health-gorilla/health-gorilla-binary-api/) — Raw clinical document content.
+- [Health Gorilla Coverage API](https://apis.io/apis/health-gorilla/health-gorilla-coverage-api/) — Patient insurance coverage / eligibility.
+- [Health Gorilla DiagnosticReport API](https://apis.io/apis/health-gorilla/health-gorilla-diagnosticreport-api/) — Structured lab and radiology results.
+- [Health Gorilla Observation API](https://apis.io/apis/health-gorilla/health-gorilla-observation-api/) — Individual result observations.
+- [Health Gorilla Patient API](https://apis.io/apis/health-gorilla/health-gorilla-patient-api/) — Patient demographics and patient-scoped record retrieval.
+- [Health Gorilla Practitioner API](https://apis.io/apis/health-gorilla/health-gorilla-practitioner-api/) — Ordering and rendering providers.
+- [Health Gorilla RequestGroup API](https://apis.io/apis/health-gorilla/health-gorilla-requestgroup-api/) — Parent diagnostic orders nesting individual ServiceRequest tests.
+- [Health Gorilla ServiceRequest API](https://apis.io/apis/health-gorilla/health-gorilla-servicerequest-api/) — Diagnostic (lab and radiology) order requests.
+- [Health Gorilla Capability Statement API](https://apis.io/apis/health-gorilla/health-gorilla-capability-statement-api/) — FHIR server capability discovery.
+- [Health Gorilla Document Reference API](https://apis.io/apis/health-gorilla/health-gorilla-document-reference-api/) — Clinical document metadata.
 
-## APIs
+### Published properties
 
-### Patients (FHIR)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-FHIR R4 Patient resources - read, search, create, update, and the patient-scoped $everything operation for retrieving a complete patient record as a FHIR Bundle.
+#### Arazzo workflows (4)
 
-- **Human URL:** [https://developer.healthgorilla.com/reference/r4-overview](https://developer.healthgorilla.com/reference/r4-overview)
-- **Base URL:** `https://api.healthgorilla.com/fhir/R4`
+Multi-step workflows that chain operations into a business task.
 
-#### Tags
+- [Health Gorilla Coverage Retrieval](https://apis.io/arazzos/health-gorilla/health-gorilla-coverage-workflow/)
+- [Health Gorilla FHIR Lab Order](https://apis.io/arazzos/health-gorilla/health-gorilla-lab-order-workflow/)
+- [Health Gorilla Patient Everything](https://apis.io/arazzos/health-gorilla/health-gorilla-patient-everything-workflow/)
+- [Health Gorilla Lab Results Retrieval](https://apis.io/arazzos/health-gorilla/health-gorilla-results-retrieval-workflow/)
 
-- Patients
-- FHIR
-- Demographics
+#### AsyncAPI (1)
 
-#### Properties
+Event-driven and webhook contracts.
 
-- [Documentation](https://developer.healthgorilla.com/reference/r4-overview)
-- [API Reference](https://developer.healthgorilla.com/reference/fhir-api-reference)
-- [OpenAPI](openapi/health-gorilla-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/health-gorilla.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/health-gorilla.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Health Gorilla Webhooks](https://apis.io/asyncapis/health-gorilla/health-gorilla-webhooks/)
 
-### Record Query/Retrieval
+#### MCP servers (1)
 
-Person-authorized federated FHIR query and record retrieval across national exchange networks. Initiate a retrieval, poll its status, and pull results as FHIR Bundles of DocumentReference and Binary resources.
+Model Context Protocol servers that expose the API to agents.
 
-- **Human URL:** [https://developer.healthgorilla.com/docs/federated-fhir](https://developer.healthgorilla.com/docs/federated-fhir)
-- **Base URL:** `https://api.healthgorilla.com/fhir/R4`
+- [health-gorilla-docs](https://apis.io/servers/health-gorilla/health-gorilla-docs/)
 
-#### Tags
+#### Agentic access (1)
 
-- Query
-- Record Retrieval
-- TEFCA
-- QHIN
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Properties
+- [Health Gorilla Agentic Access](https://apis.io/agentic-access/health-gorilla/health-gorilla-agentic-access/)
 
-- [Documentation](https://developer.healthgorilla.com/docs/federated-fhir)
-- [API Reference](https://developer.healthgorilla.com/docs/api-endpoints-overview)
-- [OpenAPI](openapi/health-gorilla-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/health-gorilla.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/health-gorilla.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### JSON Schema (10)
 
-### Lab Ordering
+The data models the API reads and writes.
 
-Submit laboratory and radiology orders to participating diagnostic partners using a RequestGroup parent order that nests individual ServiceRequest tests, then track order status.
+- [Binary](https://apis.io/schemas/health-gorilla/health-gorilla-binary/)
+- [Bundle](https://apis.io/schemas/health-gorilla/health-gorilla-bundle/)
+- [CapabilityStatement](https://apis.io/schemas/health-gorilla/health-gorilla-capability-statement/)
+- [Coverage](https://apis.io/schemas/health-gorilla/health-gorilla-coverage/)
+- [DiagnosticReport](https://apis.io/schemas/health-gorilla/health-gorilla-diagnostic-report/)
+- [DocumentReference](https://apis.io/schemas/health-gorilla/health-gorilla-document-reference/)
+- [Patient](https://apis.io/schemas/health-gorilla/health-gorilla-patient/)
+- [Practitioner](https://apis.io/schemas/health-gorilla/health-gorilla-practitioner/)
+- [RequestGroup](https://apis.io/schemas/health-gorilla/health-gorilla-request-group/)
+- [ServiceRequest](https://apis.io/schemas/health-gorilla/health-gorilla-service-request/)
 
-- **Human URL:** [https://developer.healthgorilla.com/docs/diagnostic-network](https://developer.healthgorilla.com/docs/diagnostic-network)
-- **Base URL:** `https://api.healthgorilla.com/fhir/R4`
+#### JSON-LD (1)
 
-#### Tags
+Linked-data contexts for the provider's vocabulary.
 
-- Lab Ordering
-- Diagnostics
-- ServiceRequest
-- RequestGroup
+- [Health Gorilla Context](https://apis.io/jsonld/health-gorilla/health-gorilla-context/)
 
-#### Properties
+#### Collections (11)
 
-- [Documentation](https://developer.healthgorilla.com/docs/diagnostic-network)
-- [API Reference](https://developer.healthgorilla.com/reference/servicerequest-1)
-- [OpenAPI](openapi/health-gorilla-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/health-gorilla.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/health-gorilla.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-### Diagnostic Reports
+- [Health Gorilla FHIR R4 API](https://apis.io/collections/health-gorilla/open-health-gorilla/)
+- [Health Gorilla FHIR R4 Binary API](https://apis.io/collections/health-gorilla/open-health-gorilla-binary-api/)
+- [Health Gorilla FHIR R4 Binary CapabilityStatement API](https://apis.io/collections/health-gorilla/open-health-gorilla-capabilitystatement-api/)
+- [Health Gorilla FHIR R4 Binary Coverage API](https://apis.io/collections/health-gorilla/open-health-gorilla-coverage-api/)
+- [Health Gorilla FHIR R4 Binary DiagnosticReport API](https://apis.io/collections/health-gorilla/open-health-gorilla-diagnosticreport-api/)
+- [Health Gorilla FHIR R4 Binary DocumentReference API](https://apis.io/collections/health-gorilla/open-health-gorilla-documentreference-api/)
+- [Health Gorilla FHIR R4 Binary Observation API](https://apis.io/collections/health-gorilla/open-health-gorilla-observation-api/)
+- [Health Gorilla FHIR R4 Binary Patient API](https://apis.io/collections/health-gorilla/open-health-gorilla-patient-api/)
+- [Health Gorilla FHIR R4 Binary Practitioner API](https://apis.io/collections/health-gorilla/open-health-gorilla-practitioner-api/)
+- [Health Gorilla FHIR R4 Binary RequestGroup API](https://apis.io/collections/health-gorilla/open-health-gorilla-requestgroup-api/)
+- [Health Gorilla FHIR R4 Binary ServiceRequest API](https://apis.io/collections/health-gorilla/open-health-gorilla-servicerequest-api/)
 
-Retrieve structured lab and radiology results as FHIR R4 DiagnosticReport resources with their associated Observation resources.
+#### Overlays (10)
 
-- **Human URL:** [https://developer.healthgorilla.com/reference/fhir-api-reference](https://developer.healthgorilla.com/reference/fhir-api-reference)
-- **Base URL:** `https://api.healthgorilla.com/fhir/R4`
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Tags
+- [Health Gorilla Binary Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-binary-api-overlay/)
+- [Health Gorilla Capabilitystatement Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-capabilitystatement-api-overlay/)
+- [Health Gorilla Coverage Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-coverage-api-overlay/)
+- [Health Gorilla Diagnosticreport Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-diagnosticreport-api-overlay/)
+- [Health Gorilla Documentreference Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-documentreference-api-overlay/)
+- [Health Gorilla Observation Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-observation-api-overlay/)
+- [Health Gorilla Patient Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-patient-api-overlay/)
+- [Health Gorilla Practitioner Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-practitioner-api-overlay/)
+- [Health Gorilla Requestgroup Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-requestgroup-api-overlay/)
+- [Health Gorilla Servicerequest Api Overlay](https://apis.io/overlays/health-gorilla/health-gorilla-servicerequest-api-overlay/)
 
-- Diagnostic Reports
-- Results
-- Observations
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://developer.healthgorilla.com/reference/fhir-api-reference)
-- [API Reference](https://developer.healthgorilla.com/reference/r4-overview)
-- [OpenAPI](openapi/health-gorilla-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/health-gorilla.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/health-gorilla.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Health Gorilla API Rules](https://apis.io/rules/health-gorilla/health-gorilla-rules/)
 
-### Documents
+#### Security (4)
 
-Access clinical documents via FHIR R4 DocumentReference resources and download the underlying content as Binary resources (CCDA, PDF, and other formats).
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://developer.healthgorilla.com/reference/fhir-api-reference](https://developer.healthgorilla.com/reference/fhir-api-reference)
-- **Base URL:** `https://api.healthgorilla.com/fhir/R4`
+- [Health Gorilla Authentication](https://apis.io/security/health-gorilla/health-gorilla-authentication/)
+- [Health Gorilla Domain Security](https://apis.io/security/health-gorilla/health-gorilla-domain-security/)
+- [Health Gorilla Trust Center](https://apis.io/security/health-gorilla/health-gorilla-trust-center/)
+- [Health Gorilla Vulnerability Disclosure](https://apis.io/security/health-gorilla/health-gorilla-vulnerability-disclosure/)
 
-#### Tags
+#### OAuth scopes (1)
 
-- Documents
-- DocumentReference
-- Binary
+The permissions the API asks for.
 
-#### Properties
+- [Health Gorilla Scopes](https://apis.io/scopes/health-gorilla/health-gorilla-scopes/)
 
-- [Documentation](https://developer.healthgorilla.com/reference/fhir-api-reference)
-- [API Reference](https://developer.healthgorilla.com/docs/api-endpoints-overview)
-- [OpenAPI](openapi/health-gorilla-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/health-gorilla.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/health-gorilla.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### Eligibility
+Published plans, tiers and prices.
 
-Coverage and identity data via FHIR R4 Coverage resources plus the OAuth 2.0 identity / IAS token flow used to authorize person-level queries.
+- [Health Gorilla Plans Pricing](https://apis.io/plans/health-gorilla/health-gorilla-plans-pricing/)
 
-- **Human URL:** [https://developer.healthgorilla.com/reference/fhir-r4-careplan](https://developer.healthgorilla.com/reference/fhir-r4-careplan)
-- **Base URL:** `https://api.healthgorilla.com/fhir/R4`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Eligibility
-- Coverage
-- Identity
+- [Health Gorilla Rate Limits](https://apis.io/rate-limits/health-gorilla/health-gorilla-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://developer.healthgorilla.com/reference/r4-overview)
-- [Authentication](https://developer.healthgorilla.com/reference/oauth-20-authentication)
-- [OpenAPI](openapi/health-gorilla-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/health-gorilla.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/health-gorilla.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-## Common Properties
+- [Health Gorilla Finops](https://apis.io/finops/health-gorilla/health-gorilla-finops/)
 
-- [GitHub Organization](https://github.com/healthgorilla)
-- [LinkedIn](https://www.linkedin.com/company/health-gorilla)
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.healthgorilla.com)
 - [Documentation](https://developer.healthgorilla.com)
-- [Plans](plans/health-gorilla-plans-pricing.yml)
-- [Rate Limits](rate-limits/health-gorilla-rate-limits.yml)
-- [Fin Ops](finops/health-gorilla-finops.yml)
+- [Getting started](https://developer.healthgorilla.com/docs/developer-quickstart)
+- [API reference](https://developer.healthgorilla.com/reference/api-reference)
+- [Pricing](https://www.healthgorilla.com/home/contact)
+- [Support](https://support.healthgorilla.com)
+- [Changelog](https://developer.healthgorilla.com/changelog)
+- [Blog](https://www.healthgorilla.com/home/resources/blogs)
+- [Security](https://www.healthgorilla.com/home/security-txt)
+- [Compliance](https://www.healthgorilla.com/home/company/health-data-security)
+- [Terms of service](https://www.healthgorilla.com/home/terms-of-use)
+- [Privacy policy](https://www.healthgorilla.com/home/privacy-policy)
+- [GitHub](https://github.com/healthgorilla)
+- [Status](https://status.healthgorilla.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 71.6** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 76.7 |
+| Contract quality | 65.5 |
+| Contract governance | 35.6 |
+| Operational transparency | 84.2 |
+| Developer ergonomics | 49.4 |
+| Access clarity | 85.5 |
+
+**Agent readiness 43.4** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 52.3** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/health-gorilla/](https://apis.io/providers/health-gorilla/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Health Gorilla: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/health-gorilla/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
